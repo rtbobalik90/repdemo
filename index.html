@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v812">
 <head>
 <style id="connect-v793-layer-order">@layer connect-call793;</style>
 <script id="connect-srep-standalone-prelude">
@@ -42,46 +42,47 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style id="connect-v789-standalone-critical">
-/* Standalone SREP opens directly into the Rep Portal. No blocking splash/loading curtain. */
-html.connect-srep-prep body{background:#eef5f8!important;}
-html.connect-srep-prep body > *:not(#rp-overlay):not(script):not(style){display:none!important;}
-html.connect-srep-prep #rp-overlay{display:block!important;}
+<style id="connect-v789-standalone-critical">/* V812: hide only the legacy app shell; keep CROWN and body-mounted dialogs independent. */
+html.connect-alex-standalone body > .wrap,
+html.connect-alex-standalone body > #navReopen,
+html.connect-alex-standalone body > #tabBar {display:none!important;}
+html.connect-srep-prep body{background:#eef3f7!important;}
+html.connect-srep-prep body > *:not(#rp-overlay):not(#crown-bot-v789):not(script):not(style){display:none!important;}
+html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 </style>
 <!-- Connect v622: dashboard explainability layer + readable coaching metric provenance; retains v620 integrity and v621 readability -->
 <!-- v617 second sweep: removed unused globals/theme tokens after v616 cleanup; preserved v614 durable autosave + v615 full-state safety. -->
-<title>Connect v790 — Alex Morgan Demo Sales Portal</title>
-<script id="connect-build-authority-v723">
-(function(){
+<title>Connect v812 — Alex Morgan Demo Sales Portal</title>
+<script id="connect-build-authority-v723">(function(){
   'use strict';
-  var BUILD='v811',DISPLAY='V811',TITLE='Connect v811 — Alex Morgan Demo Sales Portal';
-  window.CONNECT_BUILD_AUTHORITY=BUILD;
-  window.CONNECT_BUILD_DISPLAY=DISPLAY;
-  window.CONNECT_BUILD_TITLE=TITLE;
-  window.CONNECT_BUILD=BUILD;
-  window.TCP_BUILD_VERSION=BUILD;
-  try{
-    document.documentElement.setAttribute('data-connect-authoritative',BUILD);
-    document.documentElement.setAttribute('data-connect-release',BUILD);
-    document.documentElement.setAttribute('data-tcp-build',BUILD);
-    document.documentElement.setAttribute('data-connect-build',BUILD);
-    document.title=TITLE;
-  }catch(e){}
-  function enforce(){
-    try{
-      window.CONNECT_BUILD=BUILD;
-      window.TCP_BUILD_VERSION=BUILD;
-      if(document.documentElement.getAttribute('data-tcp-build')!==BUILD)document.documentElement.setAttribute('data-tcp-build',BUILD);
-      if(document.documentElement.getAttribute('data-connect-build')!==BUILD)document.documentElement.setAttribute('data-connect-build',BUILD);
-      if(document.title!==TITLE)document.title=TITLE;
-    }catch(e){}
+  // V812: one release identity. Legacy modules delegate here instead of competing.
+  var release=Object.freeze({version:'v812',display:'V812',title:'Connect v812 — Alex Morgan Demo Sales Portal'});
+  window.CONNECT_RELEASE=release;
+  window.CONNECT_SET_RELEASE_ATTR=function(target,name){
+    if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
+    return release.version;
+  };
+  window.CONNECT_SET_RELEASE_TITLE=function(){
+    if(document.title!==release.title)document.title=release.title;
+    return release.title;
+  };
+  window.CONNECT_SET_BUILD_BADGE=function(node){
+    var text='Sales Portal · Build '+release.display;
+    if(node&&node.textContent!==text)node.textContent=text;
+    return text;
+  };
+  function sync(){
+    window.CONNECT_BUILD_AUTHORITY=release.version;window.CONNECT_BUILD_DISPLAY=release.display;
+    window.CONNECT_BUILD_TITLE=release.title;window.CONNECT_BUILD=release.version;window.TCP_BUILD_VERSION=release.version;
+    ['data-connect-authoritative','data-connect-release','data-connect-build','data-tcp-build'].forEach(function(name){window.CONNECT_SET_RELEASE_ATTR(document.documentElement,name)});
+    window.CONNECT_SET_RELEASE_TITLE();
+    if(document.body)document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge,.connect-v777-version').forEach(window.CONNECT_SET_BUILD_BADGE);
   }
-  try{
-    new MutationObserver(enforce).observe(document.documentElement,{attributes:true,attributeFilter:['data-tcp-build','data-connect-build']});
-    var titleNode=document.querySelector('title');
-    if(titleNode)new MutationObserver(enforce).observe(titleNode,{childList:true,subtree:true,characterData:true});
-  }catch(e){}
-  window.CONNECT_ENFORCE_BUILD=enforce;
+  window.CONNECT_SYNC_RELEASE=sync;
+  window.CONNECT_ENFORCE_BUILD=sync;
+  sync();
+  // No title/subtree observer is needed: every actual build writer uses these helpers.
+  document.addEventListener('DOMContentLoaded',sync,{once:true});
 })();
 </script>
 <style id="connect-build-authority-v707-css">
@@ -89,9 +90,9 @@ html[data-connect-authoritative="v707"]{--connect-build-long:"Cloud Sync • Adm
 html[data-connect-authoritative="v707"] body .tabs:after{content:var(--connect-build-long)!important;}
 html[data-connect-authoritative="v706"] body.nav-rail .tabs:after{content:var(--connect-build-short)!important;}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 /*
   STANDALONE DARK THEME
@@ -7680,6 +7681,7 @@ async function _rpAttemptLogin(){
 }
 function _rpLogout(){ _rpSetSession(null); location.reload(); }
 function _rpApply(){
+  if(window.CONNECT_STANDALONE_SREP&&!window.CONNECT_DEMO_BOOT_ALLOW)return;
   _rpCss();
   var G=_rpEnsure(),ov=document.getElementById('rp-overlay');
   if(!ov){ ov=document.createElement('div'); ov.id='rp-overlay'; document.body.appendChild(ov); }
@@ -7939,7 +7941,7 @@ document.addEventListener('visibilitychange',function(){
   }catch(e){}
 });
 
-function _rpBoot(){ try{ _rpEnsure(); var gid=_rpUrlGist(); if(gid){ _rpCss(); var ov=document.getElementById('rp-overlay'); if(!ov){ ov=document.createElement('div'); ov.id='rp-overlay'; document.body.appendChild(ov); } ov.style.display='block'; ov.innerHTML='<div class="rp-login-wrap"><div class="rp-login-card"><div class="rp-login-logo">Triple Crown \u2014 Rep Portal</div><div class="rp-login-sub">Loading your portal\u2026</div></div></div>'; Promise.resolve().then(function(){ return _rpPullGist(gid); }).then(function(){ _rpEnsure(); _rpApply(); }); return; } if(S.repPortal.enabled)_rpApply(); }catch(e){} }
+function _rpBoot(){ if(window.CONNECT_STANDALONE_SREP)return; try{ _rpEnsure(); var gid=_rpUrlGist(); if(gid){ _rpCss(); var ov=document.getElementById('rp-overlay'); if(!ov){ ov=document.createElement('div'); ov.id='rp-overlay'; document.body.appendChild(ov); } ov.style.display='block'; ov.innerHTML='<div class="rp-login-wrap"><div class="rp-login-card"><div class="rp-login-logo">Triple Crown \u2014 Rep Portal</div><div class="rp-login-sub">Loading your portal\u2026</div></div></div>'; Promise.resolve().then(function(){ return _rpPullGist(gid); }).then(function(){ _rpEnsure(); _rpApply(); }); return; } if(S.repPortal.enabled)_rpApply(); }catch(e){} }
 
 /* ---------- rep bundle (filter S to one rep) ---------- */
 
@@ -13283,7 +13285,7 @@ var _originalSetItem = null;
 // Open the IndexedDB used to remember the file handle across sessions
 function _openHandleDB(){
   return new Promise(function(resolve,reject){
-    var req = indexedDB.open('tcp_tracker_handles', 1);
+    var req = indexedDB.open(window.CONNECT_STANDALONE_SREP?'connect_alex_demo_handles':'tcp_tracker_handles', 1);
     req.onupgradeneeded = function(){ req.result.createObjectStore('handles'); };
     req.onsuccess = function(){ resolve(req.result); };
     req.onerror = function(){ reject(req.error); };
@@ -35590,7 +35592,7 @@ window._rp2NotificationsDraw=function(){if(typeof Chart!=='function'||window._rp
 
 <script id="tcp-storage-cloud-v528-js">
 (function(){
- var DB_NAME='tcp_sales_tracker_large_v528',DB_VERSION=1,DB_STORE='snapshots';
+ var DB_NAME=window.CONNECT_STANDALONE_SREP?'connect_alex_demo_large_v528':'tcp_sales_tracker_large_v528',DB_VERSION=1,DB_STORE='snapshots';
  var HEAVY_FIELDS=['customers','orders','orderLineItems','orderLineItemsUnmatched','reviews','artErrors','cms','dailySales','coachingNotes','hrViolations'];
  window._tcpStorageMeta=window._tcpStorageMeta||{mode:'initializing',lastSaved:'',lastHydrated:'',cacheError:''};
 
@@ -45213,7 +45215,7 @@ h1,h2,.dash-hero h1,.entry-hero h1,.reviews-hero h1,.reports-hero h1,
 (function(){
  'use strict';
 
- var DB_NAME='tcp_sales_tracker_persistent';
+ var DB_NAME=window.CONNECT_STANDALONE_SREP?'connect_alex_demo_persistent':'tcp_sales_tracker_persistent';
  var DB_VERSION=1;
  var DB_STORE='records';
  var ACTIVE_KEY='active';
@@ -45668,11 +45670,21 @@ h1,h2,.dash-hero h1,.entry-hero h1,.reviews-hero h1,.reports-hero h1,
    var record=await dbGet(PREVIOUS_KEY);
    return verifyEnvelope(record)?record.state:null
   },
-  saveNow:async function(source){
-   await startBoot();
-   var record=await stageAndCommit(currentState(),source||'manual-save',collectAuxiliary());
-   setSaveStatus('Auto-saved ✓','#5DCAA5');
-   return record
+  saveNow:function(source){
+   var task=(async function(){
+    await startBoot();
+    var record=await stageAndCommit(currentState(),source||'manual-save',collectAuxiliary());
+    setSaveStatus('Auto-saved ✓','#5DCAA5');
+    return record;
+   })();
+   task.catch(function(error){
+    lastError=(error&&error.message)||String(error);
+    window._tcpPersistentMeta.lastError=lastError;
+    window._tcpPersistentMeta.mode='save-failed';
+    setSaveStatus('Local backup unavailable — export your data','#F09595');
+    console.warn('[Connect local backup]',error);
+   });
+   return task;
   },
   diagnostics:async function(){
    var active=await dbGet(ACTIVE_KEY),previous=await dbGet(PREVIOUS_KEY),aux=await dbGet(AUX_KEY);
@@ -46724,6 +46736,7 @@ h1,h2,.dash-hero h1,.entry-hero h1,.reviews-hero h1,.reports-hero h1,
 <script id="tcp-gist-credential-persistence-v554-js">
 (function(){
  'use strict';
+ if(window.CONNECT_STANDALONE_SREP){window._tcpGistCredentialsReady=Promise.resolve({token:'',id:''});return;}
 
  var VERSION='v554';
  var DEVICE_DB='tcp_sales_tracker_device_settings';
@@ -57460,8 +57473,8 @@ body.nav-rail .tabs:after{content:"v624"!important;white-space:normal!important;
  if(typeof priorRender==='function'){window.renderDash=render;window.renderDashWidgets=render}
  window.TCP_DASHBOARD_CALL_COVERAGE_V625={version:BUILD,snapshot:snapshot,render:installCenter};
  window.TCP_PROJECT_SIMPLIFY_DASHBOARD_V625=window.TCP_PROJECT_SIMPLIFY_DASHBOARD_V624||window.TCP_PROJECT_SIMPLIFY_DASHBOARD_V558;
- window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v625 — Call Coverage + Coaching Forecast'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
  setTimeout(function(){var p=document.getElementById('pg-dash');if(p&&p.classList.contains('active'))installCenter()},120);
 })();
 </script>
@@ -57525,8 +57538,8 @@ body.nav-rail .tabs:after{content:"v638"!important;white-space:normal!important;
     repLink:window._rpRepLinkForView,
     copyPhasedDevCode:window._rpCopyPhasedDevCode
   };
-  window.TCP_BUILD_VERSION='v638';
-  try{document.documentElement.setAttribute('data-tcp-build','v638');document.title='Connect v638 — Rep Portal Links & DEV Handoff';}catch(e){}
+  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+  try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
 })();
 </script>
 
@@ -57690,7 +57703,7 @@ function applyBadge(){
 }
 var priorRender=window.renderDash;function render(){var result=typeof priorRender==='function'?priorRender.apply(this,arguments):undefined;try{applyBadge()}catch(e){console.warn('[v643 badge]',e)}return result}if(typeof priorRender==='function'){window.renderDash=render;window.renderDashWidgets=render}
 window._tcpDataEntryUploadStatus=statusFor;window._tcpDataEntryUploadStatusV643=statusFor;window._tcpApplyHistoricalUploadBadge=applyBadge;window.TCP_WEEKLY_ENTRY_V643={version:BUILD,status:statusFor,validateWorkbook:validateWorkbook,applyBadge:applyBadge,expectedRoster:expectedRoster};
-window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v643 — Verified Weekly Sheet Status'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(applyBadge,120)},{once:true});else setTimeout(applyBadge,120);
 })();
 </script>
@@ -57702,8 +57715,8 @@ body.nav-rail .tabs:after{content:"v647"!important}
 </style>
 <script id="tcp-v647-module-removal-js">
 (function(){
-  window.TCP_BUILD_VERSION='v647';
-  try{document.documentElement.setAttribute('data-tcp-build','v647');document.title='Connect v647 — Lean Core';}catch(e){}
+  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+  try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
 })();
 </script>
 
@@ -57784,7 +57797,7 @@ window._tcp648StartDay=function(){var a=window._tcp648FirstAction;if(!a){_rp2Go(
 window._rp2Page=function(){if(phased()&&window._rp2&&_rp2.page==='home')return home();return typeof priorPage==='function'?priorPage.apply(this,arguments):''};
 window.TCP_REP_HOME_INTEGRITY_V648={version:BUILD,model:model,render:home,cycle:function(){return cycle(window._rp2&&_rp2.rep,new Date())},invalidate:function(){modelCache={key:'',value:null};cycleCache={key:'',value:null}}};
 var priorMark=window.markDirty;if(typeof priorMark==='function'&&!priorMark._tcp648){var wrap=function(){modelCache={key:'',value:null};cycleCache={key:'',value:null};return priorMark.apply(this,arguments)};wrap._tcp648=true;window.markDirty=wrap}
-window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v648 — Rep Home Integrity + Daily Responsiveness'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 <script id="tcp-v648-phased-dev-handoff-js">
@@ -58149,7 +58162,7 @@ window._call652OpenCompanyDone=function(){var company=clean(window._call532&&_ca
 window._call652Phone=function(encoded){var phone=decodeURIComponent(encoded||'');if(!phone)return;try{location.href='tel:'+phone.replace(/[^+0-9]/g,'')}catch(e){}};
 window._rp2CallDiagnostics=function(){if(!isPhased())return typeof priorDiag==='function'?priorDiag.apply(this,arguments):{};var d=data(),q=queueState(d);return{version:BUILD,mode:'phased',company:d.company,renderer:'single-v652',legacyRendererComposed:false,dialerBuilt:false,prepMode:'automatic-plus-history-promotions',queue:arr(d.g&&d.g.calls).length,queueMode:q.mode,queueRemaining:q.remainingRequired,queuePage:q.page+1,callType:ensureDraft(d).callType,stage:stage(),talkingPoints:prepPoints(d).length,applicablePromotions:applicablePromotions(d).length,seasonalSignal:!!seasonalSignal(d)}};
 window.TCP_PHASED_CALL_WORKSPACE_V652={version:BUILD,render:render,data:data,prepPoints:prepPoints,inferType:inferType,seasonalSignal:seasonalSignal,applicablePromotions:applicablePromotions,diagnostics:window._rp2CallDiagnostics};
-window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v653 — Required Calls & Eligibility'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 setTimeout(function(){if(isPhased()&&window._rp2&&_rp2.page==='call')rerender(true)},0);
 })();</script>
 <script id="tcp-v652-phased-dev-handoff-js">(function(){
@@ -58202,7 +58215,7 @@ html[data-connect-authoritative="v714"] body.nav-rail .tabs:after{content:var(--
  function polish(){
   try{
    if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
-   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY});
+   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',polish,{once:true});else polish();
@@ -60857,7 +60870,7 @@ body:has(#rp-overlay[style*="display:block"]){overflow:hidden!important;}
 (function(){
  'use strict';
  var VERSION='v615';
- var SAFETY_DB='tcp_sales_tracker_full_state_safety';
+ var SAFETY_DB=window.CONNECT_STANDALONE_SREP?'connect_alex_demo_full_state_safety':'tcp_sales_tracker_full_state_safety';
  var SAFETY_DB_VERSION=1;
  var SNAP_STORE='snapshots';
  var META_STORE='meta';
@@ -61076,6 +61089,7 @@ body:has(#rp-overlay[style*="display:block"]){overflow:hidden!important;}
      var after=safeCapture();updateBaseline(after);await saveSnapshot(after,source||'protected-autosave-v615');renderSafetyPanel();return result
     }finally{inProtectedSave=false}
    });
+   saveQueue.catch(function(error){uiState.lastError=(error&&error.message)||String(error);if(window._tcpPersistentMeta){window._tcpPersistentMeta.lastError=uiState.lastError;window._tcpPersistentMeta.mode='save-failed';}console.warn('[Connect recovery point]',error);});
    return saveQueue
   }
  }
@@ -61287,8 +61301,8 @@ body:has(#rp-overlay[style*="display:block"]){overflow:hidden!important;}
     window.renderDashWidgets=render;
   }
   window._tcpHistoricalUploadStatus=historicalUploadStatus;
-  window.TCP_BUILD_VERSION=BUILD;
-  try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v626 — Historical Upload Badge';}catch(e){}
+  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+  try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){try{applyHistoricalBadge();}catch(e){}},0);},{once:true});
   else setTimeout(function(){try{applyHistoricalBadge();}catch(e){}},0);
 })();
@@ -61483,8 +61497,8 @@ body:has(#rp-overlay[style*="display:block"]){overflow:hidden!important;}
   if(typeof priorRender==='function'){window.renderDash=render;window.renderDashWidgets=render;}
   window._tcpDataEntryUploadStatus=dataEntryUploadStatus;
   window._tcpApplyHistoricalUploadBadge=applyBadge;
-  window.TCP_BUILD_VERSION=BUILD;
-  try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v627 — Verified Data Entry Uploads';}catch(e){}
+  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+  try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(applyBadge,50);},{once:true});else setTimeout(applyBadge,50);
 })();
 </script>
@@ -61609,8 +61623,8 @@ body:has(#rp-overlay[style*="display:block"]){overflow:hidden!important;}
  function render(){var result=typeof priorRender==='function'?priorRender.apply(this,arguments):undefined;try{install()}catch(e){console.warn('[v628 call metrics]',e)}return result}
  if(typeof priorRender==='function'){window.renderDash=render;window.renderDashWidgets=render}
  window.TCP_CALL_METRICS_INTEGRITY_V628={version:BUILD,metrics:metrics,render:install};
- window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v628 — Call Metrics Integrity'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
  setTimeout(function(){var page=document.getElementById('pg-dash');if(page&&page.classList.contains('active'))install()},150);
 })();
 </script>
@@ -61849,8 +61863,8 @@ body.tcp-brand-standard .intel-source::before{color:#FA873D!important;}
     try{if(typeof renderAdminTheme==='function')renderAdminTheme();}catch(e){}
   }
   window.TCP_BRAND_STANDARDS_V629={version:BUILD,preset:BRAND_PRESET,apply:function(){ensurePreset();if(typeof selectThemePreset==='function')selectThemePreset('tcpbrand');},sync:function(){syncBrandClass(activeTheme());}};
-  window.TCP_BUILD_VERSION=BUILD;
-  try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v629 — TCP Brand Standards';}catch(e){}
+  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+  try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(migrateOnce,0);},{once:true});else setTimeout(migrateOnce,0);
 })();
 </script>
@@ -62047,7 +62061,7 @@ body.nav-rail #tabBar.tabs:before{
  function open(btn){var page=ensurePage();document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('#tabBar .tab').forEach(function(b){b.classList.remove('active');});page.classList.add('active');if(btn)btn.classList.add('active');populateCustomers();}
  function installNav(){ensurePage();if(document.querySelector('[data-rep1calc-nav="1"]'))return;var items=document.querySelector('#tabBar .nav-group[data-group="opsg"] .nav-group-items');if(!items){var groups=[].slice.call(document.querySelectorAll('#tabBar .nav-group'));var g=groups.filter(function(x){var l=x.querySelector('.nav-group-label');return l&&clean(l.textContent)==='Operations';})[0];items=g&&g.querySelector('.nav-group-items');}if(!items)return;var btn=document.createElement('button');btn.type='button';btn.className='tab nav-item';btn.dataset.rep1calcNav='1';btn.dataset.navLabel='Earned Rep1 Calculator';btn.dataset.navIcon='👑';btn.innerHTML='<span class="nav-icon">👑</span><span class="nav-label">Earned Rep1 Calculator</span>';btn.onclick=function(){open(btn);};var calc=[].slice.call(items.querySelectorAll('button')).filter(function(b){return /calculator/i.test(b.textContent||'');})[0];if(calc&&calc.nextSibling)items.insertBefore(btn,calc.nextSibling);else items.appendChild(btn);}
  window._rep1Open=open;window._rep1LoadCustomer=loadCustomer;window._rep1ResetYears=resetYears;window._rep1AddYear=addYear;window._rep1RefreshFqy=refreshFqy;window._rep1Calculate=calculate;window._rep1CopyResponse=copyResponse;
- window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v631 — Earned Rep1 Calculator';}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(installNav,150);},{once:true});else setTimeout(installNav,150);
  var navHost=document.getElementById('tabBar'),navTimer=null;var obs=new MutationObserver(function(){if(document.querySelector('[data-rep1calc-nav="1"]')||navTimer)return;navTimer=setTimeout(function(){navTimer=null;installNav()},300)});if(navHost)obs.observe(navHost,{childList:true,subtree:true});
 })();
@@ -62119,8 +62133,8 @@ body.nav-rail #tabBar.tabs:before{
  document.addEventListener('input',function(e){if(e.target&&e.target.closest&&e.target.closest('#pg-rep1calc')&&(e.target.classList.contains('rep1-year')||e.target.classList.contains('rep1-money'))){setTimeout(refresh,0);}},true);
  document.addEventListener('click',function(e){var b=e.target&&e.target.closest?e.target.closest('#pg-rep1calc .rep1-sales-table button'):null;if(b)setTimeout(refresh,0);},true);
  window._rep1DuplicateYears=duplicates;
- window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v632 — Earned Rep1 Calculator Fix';}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
 })();
 </script>
 
@@ -62211,7 +62225,7 @@ body.nav-rail #tabBar.tabs:before{
  var priorMark=window.markDirty;if(typeof priorMark==='function')window.markDirty=function(){var r=priorMark.apply(this,arguments);schedule(8000,false);return r};
  var priorNotif=window.renderNotifLog;if(typeof priorNotif==='function')window.renderNotifLog=function(){var r=priorNotif.apply(this,arguments);schedule(250,false);return r};
  window._rep1MonitorScan=function(silent){return scan(!!silent)};window._rep1ApproveCandidate=approve;window._rep1HoldCandidate=hold;window._rep1ReviewCandidate=review;window._rep1MonitorStatus=function(){return load()};
- window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v633 — Earned REP1 Monitor & Approval'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){renderMonitor();runIdleScan(false)},15000)},{once:true});else setTimeout(function(){renderMonitor();runIdleScan(false)},15000);
  setInterval(function(){schedule(100,false)},15*60*1000);
 })();
@@ -62311,8 +62325,8 @@ body.nav-rail .tabs:after{content:"v637"!important;white-space:normal!important;
   return result;
  };
  window.TCP_CUSTOMER_OWNERSHIP_V634={version:BUILD,keyFor:keyFor,records:recordsFor,get:status,isEarned:function(input,rep){return status(input,rep).earnedRep1},backfill:backfill,refresh:decorate};
- window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v634 — Unified Customer Ownership';}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
  var decorateTimer=null;function queueDecorate(){if(decorateTimer)return;decorateTimer=setTimeout(function(){decorateTimer=null;if(document.querySelector('#rp-overlay,.cux8-section-company,#rep1MonitorPanel'))decorate()},350)}
  var observer=new MutationObserver(function(){queueDecorate()});
  var ownershipRoot=document.getElementById('rp-overlay')||document.getElementById('rep1MonitorPanel');
@@ -62323,8 +62337,8 @@ body.nav-rail .tabs:after{content:"v637"!important;white-space:normal!important;
 
 <script id="tcp-build-identity-v635-js">
 (function(){
-  window.TCP_BUILD_VERSION='v637';
-  try{document.documentElement.setAttribute('data-tcp-build','v637');document.title='Connect v637 — Clean Boot';}catch(e){}
+  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+  try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
 })();
 </script>
 
@@ -63039,8 +63053,8 @@ html[data-connect-ui="777"] #rp-overlay .hub784-learning-detail h3{margin:12px 0
  window._rp2Page=function(){if(isPhased()&&window._rp2&&_rp2.page==='home')return home();return priorPage.apply(this,arguments)};
  window._rp2Html=function(rep){if(isPhased(rep))return phasedShell(rep);return priorHtml.apply(this,arguments)};
  window.TCP_PHASED_REP_DAILY_COCKPIT_V639={version:BUILD,render:home,mode:mode,workData:workData,nextActions:nextActions,allActions:demoActionRows};
- window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v639 — Phased Rep Daily Cockpit'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
  /* Re-render an already-open phased portal after late patch installation. */
  setTimeout(function(){try{if(window._rp2&&_rp2.rep&&isPhased(_rp2.rep)&&document.querySelector('#rp-overlay .rp2-app'))window._rp2Go(_rp2.page||'home')}catch(e){console.warn('[v639 refresh]',e)}},0);
 })();
@@ -63196,7 +63210,7 @@ body.nav-rail .tabs:after{content:"v640"!important}
 (function(){
  'use strict';
  var BUILD='v640';
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v640 — Phased Rep Portal Readability'}catch(e){}
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
  var priorBundle=window._rpPhasedDevBundle;
  window._rpPhasedDevBundle=function(){
   var base=typeof priorBundle==='function'?priorBundle():'';
@@ -63429,7 +63443,7 @@ function render(){var result=typeof priorRender==='function'?priorRender.apply(t
 if(typeof priorRender==='function'){window.renderDash=render;window.renderDashWidgets=render}
 installEntry641();
 window.TCP_DASHBOARD_TRUTH_V641={version:BUILD,model:model,install:install,uploadInfo:uploadInfo,latestCompleteDaily:latestCompleteDaily};
-window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v642 — Quiet Integrity Dashboard'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 setTimeout(function(){try{var p=document.getElementById('pg-dash');if(p&&p.classList.contains('active'))install()}catch(e){}},100);
 })();
 
@@ -63548,7 +63562,7 @@ var _tcp644DashTimer=null;
 function render(){var result=typeof priorRender==='function'?priorRender.apply(this,arguments):undefined;if(_tcp644DashTimer)clearTimeout(_tcp644DashTimer);_tcp644DashTimer=setTimeout(function(){_tcp644DashTimer=null;applyDashboard()},0);return result}
 if(typeof priorRender==='function'){window.renderDash=render;window.renderDashWidgets=render}
 window._tcpDataEntryUploadStatus=statusFor;window._tcpDataEntryUploadStatusV644=statusFor;window._tcpApplyHistoricalUploadBadge=applyBadge;window.TCP_WEEKLY_ENTRY_V644={version:BUILD,status:statusFor,validateWorkbook:validateWorkbook,expectedRoster:expectedRoster,applyBadge:applyBadge};
-window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v644 — Calls Made Weekly Workflow'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){applyBadge();applyDashboard()},180)},{once:true});else setTimeout(function(){applyBadge();applyDashboard()},180);
 })();
 </script>
@@ -63557,7 +63571,7 @@ html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v645"!important}
 body.nav-rail .tabs:after{content:"v645"!important}
 </style>
 <script id="tcp-v645-report-call-reconciliation-js">
-(function(){window.TCP_BUILD_VERSION='v645';window.TCP_REPORT_CALLS_V645={version:'v645',reportCalls:_tcp645TrustedCalls,canonicalField:'calls'};try{document.documentElement.setAttribute('data-tcp-build','v645');document.title='Connect v645 — Report Call Reconciliation'}catch(e){}})();
+(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.TCP_REPORT_CALLS_V645={version:'v645',reportCalls:_tcp645TrustedCalls,canonicalField:'calls'};try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();
 </script>
 
 <style id="tcp-v646-performance-hardening-css">
@@ -63583,7 +63597,7 @@ body.nav-rail .tabs:after{content:"v646"!important}
  }
  periodicTimer=setInterval(idleSave,15*60*1000);
  window.TCP_PERFORMANCE_V646={version:BUILD,invalidate:invalidate,status:function(){return{dataRevision:window.__tcpPerfDataRevV646,lastInteraction:lastInteraction,legacyCloudTimerRemoved:true,legacyDomPollingRemoved:true,dashboardCache:!!window.__tcp641ModelCacheV646,reportCache:!!window.__tcpMtgEngineCacheV646}}};
- window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v646 — Performance Hardening'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -63660,9 +63674,9 @@ function boot(){if(!wrap())return setTimeout(boot,120);[0,300,1000,2500].forEach
 
 <script id="tcp-v653-phased-dev-handoff-js">(function(){var prior=window._rpPhasedDevBundle;function src(id){var e=document.getElementById(id);return e?e.textContent:''}window._rpPhasedDevBundle=function(){var base=typeof prior==='function'?prior():'';return base+'\n\n/* v653 required-today queue + Admin call eligibility */\n<style>'+src('tcp-v653-required-queue-css')+'<\/style>\n<style>'+src('tcp-v653-call-eligibility-css')+'<\/style>\n<script>'+src('tcp-v653-call-eligibility-js')+'<\\/script>'};})();</script>
 
-<script id="tcp-v652-final-identity-js">(function(){window.TCP_BUILD_VERSION='v652';try{document.documentElement.setAttribute('data-tcp-build','v652');document.title='Connect v652 — Call Prep & Queue Rollout'}catch(e){}})();</script>
+<script id="tcp-v652-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
-<style id="tcp-v653-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v653"!important}body.nav-rail .tabs:after{content:"v653"!important}</style><script id="tcp-v653-final-identity-js">(function(){window.TCP_BUILD_VERSION='v653';try{document.documentElement.setAttribute('data-tcp-build','v653');document.title='Connect v653 — Required Calls & Eligibility'}catch(e){}})();</script>
+<style id="tcp-v653-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v653"!important}body.nav-rail .tabs:after{content:"v653"!important}</style><script id="tcp-v653-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 
 <!-- v654 Phased Follow-Ups Workspace -->
@@ -63793,11 +63807,11 @@ var previousAfter=window._at537AfterCall;window._at537AfterCall=function(payload
 var priorPage=window._rp2Page;window._rp2Page=function(){if(phased()&&window._rp2&&_rp2.page==='action')return render();return typeof priorPage==='function'?priorPage.apply(this,arguments):''};
 window.TCP_PHASED_FOLLOWUPS_V654={version:BUILD,render:render,rows:rows,stats:stats,migrateLegacy:migrateLegacy,syncManager:syncManager,upsert:upsert,syncCallPayload:syncCallPayload};
 try{syncAll()}catch(e){}
-try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v654 — Phased Follow-Ups Workspace'}catch(e){}
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 <script id="tcp-v654-phased-dev-handoff-js">(function(){var prior=window._rpPhasedDevBundle;function src(id){var e=document.getElementById(id);return e?e.textContent:''}window._rpPhasedDevBundle=function(){var base=typeof prior==='function'?prior():'';return base+'\n\n/* v654 Phased Follow-Ups Workspace */\n<style>'+src('tcp-v654-phased-followups-css')+'<\/style>\n<script>'+src('tcp-v654-phased-followups-js')+'<\\/script>'};})();</script>
-<style id="tcp-v654-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v654"!important}body.nav-rail .tabs:after{content:"v654"!important}</style><script id="tcp-v654-final-identity-js">(function(){window.TCP_BUILD_VERSION='v654';try{document.documentElement.setAttribute('data-tcp-build','v654');document.title='Connect v654 — Phased Follow-Ups Workspace'}catch(e){}})();</script>
+<style id="tcp-v654-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v654"!important}body.nav-rail .tabs:after{content:"v654"!important}</style><script id="tcp-v654-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 \n<style id="tcp-v655-call-data-reconciliation-css">
 html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v655"!important}
 body.nav-rail .tabs:after{content:"v655"!important}
@@ -63810,8 +63824,8 @@ function invalidate(){window.__tcp641ModelCacheV646=null;window.__tcp645CallsCac
 var priorMark=window.markDirty;
 if(typeof priorMark==='function'&&!priorMark._tcp655){var wrapped=function(){invalidate();return priorMark.apply(this,arguments)};wrapped._tcp655=true;window.markDirty=wrapped;}
 window.TCP_CALL_DATA_V655={version:BUILD,canonicalField:'calls',neverUse:'acctsCalled',sources:['Daily Calls','Verified Weekly Calls Made','Stored Tracker Calls Made'],invalidate:invalidate};
-window.TCP_BUILD_VERSION=BUILD;
-try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v655 — Call Data Reconciliation'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 invalidate();
 setTimeout(function(){try{var p=document.getElementById('pg-dash');if(p&&p.classList.contains('active')&&typeof window.renderDash==='function')window.renderDash()}catch(e){}},160);
 })();
@@ -64184,12 +64198,12 @@ setTimeout(function(){mountManagerBuilderSetting();var tries=0,t=setInterval(fun
 var cc658PriorTab=window._cc547AdminTab;if(typeof cc658PriorTab==='function'&&!cc658PriorTab._cc658){var cc658Tab=function(){var r=cc658PriorTab.apply(this,arguments);setTimeout(mountManagerBuilderSetting,20);return r};cc658Tab._cc658=true;window._cc547AdminTab=cc658Tab}var cc658PriorGt=window.gt;if(typeof cc658PriorGt==='function'&&!cc658PriorGt._cc658){var cc658Gt=function(){var r=cc658PriorGt.apply(this,arguments);setTimeout(mountManagerBuilderSetting,60);return r};cc658Gt._cc658=true;window.gt=cc658Gt}
 window.TCP_PHASED_CALL_HUB_V663={version:BUILD,render:hub,desktop:desktop,pace:pace,clockInfo:clockInfo,zoneFor:zoneFor,activePromotions:activePromos,promoMatches:promoMatches,salesFor:salesFor,salesRange:salesRange,todayState:todayState,filterCustomers:filterBuilderCustomers,facets:facets,lists:myLists};window.TCP_PHASED_CALL_HUB_V662=window.TCP_PHASED_CALL_HUB_V663;window.TCP_PHASED_CALL_HUB_V661=window.TCP_PHASED_CALL_HUB_V663;window.TCP_PHASED_CALL_HUB_V660=window.TCP_PHASED_CALL_HUB_V663;window.TCP_PHASED_CALL_HUB_V659=window.TCP_PHASED_CALL_HUB_V663;window.TCP_PHASED_CALL_HUB_V658=window.TCP_PHASED_CALL_HUB_V663;window.TCP_PHASED_CALL_HUB_V656=window.TCP_PHASED_CALL_HUB_V663;
 window._rpPhasedDevBundle=function(){var base=typeof priorBundle==='function'?priorBundle():'',css=document.getElementById('tcp-v656-call-workspace-hub-css'),extra=document.getElementById('tcp-v658-call-list-builder-css'),v663=document.getElementById('tcp-v663-my-call-lists-css'),js=document.getElementById('tcp-v658-call-workspace-hub-js');return base+'\n\n/* v663 My Call Lists + Contextual Call Source */\n<style id=\"tcp-v656-call-workspace-hub-css\">'+(css?css.textContent:'')+'<\/style>\n<style id=\"tcp-v658-call-list-builder-css\">'+(extra?extra.textContent:'')+'<\/style>\n<style id=\"tcp-v663-my-call-lists-css\">'+(v663?v663.textContent:'')+'<\/style>\n<script id=\"tcp-v658-call-workspace-hub-js\">'+(js?js.textContent:'')+'<\/script>'};
-window.TCP_BUILD_VERSION=BUILD;try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v663 — My Call Lists Command Center'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 setTimeout(function(){try{if(isPhased()&&window._rp2&&_rp2.page==='call'&&!window._call656Detail)renderHub(0)}catch(e){console.warn('[v663 initial hub]',e)}},0);
 })();
 </script>
 <style id="tcp-v656-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v656"!important}body.nav-rail .tabs:after{content:"v656"!important}</style>
-<script id="tcp-v656-final-identity-js">(function(){window.TCP_BUILD_VERSION='v656';try{document.documentElement.setAttribute('data-tcp-build','v656');document.title='Connect v656 — Call Workspace Hub'}catch(e){}})();</script>
+<script id="tcp-v656-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 
 <!-- v657 Rep Portal Admin Layout / Style Initialization Fix -->
@@ -64262,12 +64276,12 @@ try{
   if(host&&host.children.length===0&&typeof window._rpRenderAdmin==='function')window._rpRenderAdmin();
 }catch(e){console.warn('[v657 admin redraw]',e)}
 window.TCP_REP_PORTAL_ADMIN_LAYOUT_V657={version:BUILD,ensure:ensureAdminCss};
-window.TCP_BUILD_VERSION=BUILD;
-try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v657 — Rep Portal Admin Layout Fix'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 <style id="tcp-v657-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v657"!important}body.nav-rail .tabs:after{content:"v657"!important}</style>
-<script id="tcp-v657-final-identity-js">(function(){window.TCP_BUILD_VERSION='v657';try{document.documentElement.setAttribute('data-tcp-build','v657');document.title='Connect v657 — Rep Portal Admin Layout Fix'}catch(e){}})();</script>
+<script id="tcp-v657-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 
 <!-- v658 List Builder + universal list view sizes -->
@@ -64362,7 +64376,7 @@ try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title
 </style>
 
 <style id="tcp-v658-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v658"!important}body.nav-rail .tabs:after{content:"v658"!important}</style>
-<script id="tcp-v658-final-identity-js">(function(){window.TCP_BUILD_VERSION='v658';try{document.documentElement.setAttribute('data-tcp-build','v658');document.title='Connect v658 — List Builder & View Sizes'}catch(e){}})();</script>
+<script id="tcp-v658-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 
 <!-- v659 List Builder usability + data-source polish -->
@@ -64459,7 +64473,7 @@ try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title
 @media(max-width:650px){#rp-overlay .c658-builder{padding:15px}#rp-overlay .c658-builder-head h2{font-size:24px}#rp-overlay .c659-validation-banner{align-items:flex-start;flex-direction:column}#rp-overlay .c659-result-metrics{grid-template-columns:1fr}#rp-overlay .c659-result-primary{grid-column:auto}#rp-overlay .c658-savebar>div{min-width:0;width:100%}}
 </style>
 <style id="tcp-v659-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v659"!important}body.nav-rail .tabs:after{content:"v659"!important}</style>
-<script id="tcp-v659-final-identity-js">(function(){window.TCP_BUILD_VERSION='v659';try{document.documentElement.setAttribute('data-tcp-build','v659');document.title='Connect v659 — List Builder Usability Polish'}catch(e){}})();</script>
+<script id="tcp-v659-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 <style id="tcp-v660-list-builder-wizard-css">
 /* v660 Guided List Builder — step workflow aligned to current Connect visual language */
@@ -64573,10 +64587,10 @@ try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title
 </style>
 <script id="tcp-v660-phased-dev-handoff-js">(function(){var prior=window._rpPhasedDevBundle;window._rpPhasedDevBundle=function(){var base=typeof prior==='function'?prior():'',css=document.getElementById('tcp-v660-list-builder-wizard-css');return base+'\n\n/* v660 Guided List Builder */\n<style id="tcp-v660-list-builder-wizard-css">'+(css?css.textContent:'')+'<\/style>'};})();</script>
 <style id="tcp-v660-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v660"!important}body.nav-rail .tabs:after{content:"v660"!important}</style>
-<script id="tcp-v660-final-identity-js">(function(){window.TCP_BUILD_VERSION='v660';try{document.documentElement.setAttribute('data-tcp-build','v660');document.title='Connect v660 — Guided List Builder'}catch(e){}})();</script>
+<script id="tcp-v660-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 <!-- v661 List Builder final stabilization: scroll retention, fresh-after-save drafts, Customer Level defaults -->
 <style id="tcp-v661-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v661"!important}body.nav-rail .tabs:after{content:"v661"!important}</style>
-<script id="tcp-v661-final-identity-js">(function(){window.TCP_BUILD_VERSION='v661';try{document.documentElement.setAttribute('data-tcp-build','v661');document.title='Connect v661 — List Builder Final Polish'}catch(e){}})();</script>
+<script id="tcp-v661-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 <!-- v662 Contextual Call Lists: Call Prep stays attached to Today / All / selected saved list -->
 <style id="tcp-v662-contextual-call-source-css">
@@ -64595,7 +64609,7 @@ try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title
 @media(max-width:900px){#rp-overlay .c662-source-head{align-items:flex-start;flex-direction:column}#rp-overlay .c662-source-controls{width:100%;justify-content:flex-start}#rp-overlay .c662-source-controls label{min-width:min(100%,280px)}}
 </style>
 <style id="tcp-v662-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v662"!important}body.nav-rail .tabs:after{content:"v662"!important}</style>
-<script id="tcp-v662-final-identity-js">(function(){window.TCP_BUILD_VERSION='v662';try{document.documentElement.setAttribute('data-tcp-build','v662');document.title='Connect v662 — Contextual Call Lists'}catch(e){}})();</script>
+<script id="tcp-v662-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 <!-- v663 My Call Lists Command Center: rep-facing required / suggested / personal list operations -->
 <style id="tcp-v663-my-call-lists-css">
@@ -64681,7 +64695,7 @@ try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title
 @media(max-width:760px){#rp-overlay .c663-lists{padding:14px}#rp-overlay .c663-list-tools{align-items:stretch;flex-direction:column}#rp-overlay .c663-list-search{width:100%}#rp-overlay .c663-list-search input{width:auto;flex:1}#rp-overlay .c663-list-metrics,#rp-overlay .c663-refresh-metrics{grid-template-columns:1fr 1fr}#rp-overlay .c663-open-toolbar,#rp-overlay .c663-complete-banner{align-items:flex-start;flex-direction:column}#rp-overlay .c663-open-toolbar>div:last-child{justify-content:flex-start}}
 </style>
 <style id="tcp-v663-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v663"!important}body.nav-rail .tabs:after{content:"v663"!important}</style>
-<script id="tcp-v663-final-identity-js">(function(){window.TCP_BUILD_VERSION='v663';try{document.documentElement.setAttribute('data-tcp-build','v663');document.title='Connect v663 — My Call Lists Command Center'}catch(e){}})();</script>
+<script id="tcp-v663-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 <!-- v664 Manager Campaign Builder: manager-defined Required/Suggested call lists pushed as rep-owned static snapshots -->
 <style id="tcp-v664-manager-campaign-css">
 #pg-callcampaigns #cc664-campaigns{margin:18px 0 22px;border:1px solid rgba(255,255,255,.10);border-radius:24px;background:radial-gradient(circle at 90% 0,rgba(0,175,239,.09),transparent 34%),linear-gradient(145deg,rgba(17,27,42,.96),rgba(8,15,26,.96));box-shadow:0 20px 52px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden}
@@ -64853,7 +64867,7 @@ var priorBundle=window._rpPhasedDevBundle;window._rpPhasedDevBundle=function(){v
 })();
 </script>
 <style id="tcp-v664-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v664"!important}body.nav-rail .tabs:after{content:"v664"!important}</style>
-<script id="tcp-v664-final-identity-js">(function(){window.TCP_BUILD_VERSION='v664';try{document.documentElement.setAttribute('data-tcp-build','v664');document.title='Connect v664 — Manager Campaign Builder'}catch(e){}})();</script>
+<script id="tcp-v664-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 <!-- v665 Call Campaigns dedicated manager tab -->
 <style id="tcp-v665-call-campaigns-page-css">
@@ -64862,7 +64876,7 @@ var priorBundle=window._rpPhasedDevBundle;window._rpPhasedDevBundle=function(){v
 @media(max-width:1050px){#pg-callcampaigns.call-campaigns-page{padding:0 0 34px}}
 html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v665"!important}body.nav-rail .tabs:after{content:"v665"!important}
 </style>
-<script id="tcp-v665-final-identity-js">(function(){window.TCP_BUILD_VERSION='v665';try{document.documentElement.setAttribute('data-tcp-build','v665');document.title='Connect v665 — Call Campaigns'}catch(e){}})();</script>
+<script id="tcp-v665-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 <!-- v666 Campaign modal button + scroll-position polish -->
 <style id="tcp-v666-campaign-modal-polish-css">
@@ -64883,7 +64897,7 @@ html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v665"!important}b
 @media(max-width:620px){.cc664-modal .cc664-btn{min-height:42px;padding:10px 14px}}
 html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v666"!important}body.nav-rail .tabs:after{content:"v666"!important}
 </style>
-<script id="tcp-v666-final-identity-js">(function(){window.TCP_BUILD_VERSION='v666';try{document.documentElement.setAttribute('data-tcp-build','v666');document.title='Connect v666 — Call Campaign Modal Polish'}catch(e){}})();</script>
+<script id="tcp-v666-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 
 <style id="tcp-v668-performance-scorecard-css">
@@ -64963,7 +64977,7 @@ return'<div class="mp668"><header class="mp668-hero"><div><div class="mp668-kick
 '<section class="mp668-section"><div class="mp668-section-head"><div><div class="mp668-section-kicker">HOW YOUR SCORE IS BUILT</div><h2>Five weighted categories</h2></div><p>Calls Made is shown above as an operating metric. The official weighted score uses Account Coverage for the outbound component, so the two are intentionally kept separate.</p></div><div class="mp668-score-grid">'+comp('Sales Performance',w.sales,m.sales,salesCtx,co.sales,'#FA873D')+comp('Account Coverage',w.outbound,m.outbound,covCtx,co.outbound,'#00AFEF')+comp('Work Hours',w.hours,m.hours,n(r.hoursActual).toFixed(1)+' actual / '+n(r.hoursTarget).toFixed(1)+' paced hours',co.hours,'#66D4FA')+comp('Art Errors',w.art,m.art,artCtx,co.art,'#F09595')+comp('Credit Memos',w.credit,m.credit,creditCtx,co.credit,'#EF9F27')+'</div></section>'+
 '<div class="mp668-lower"><section class="mp668-panel"><div class="mp668-section-kicker">SCORECARD DETAILS</div><h3>What the numbers mean</h3><div class="mp668-panel-copy">Simple source context without making the rep decode a formula.</div><div class="mp668-detail-list">'+detail('Sales',salesCtx,pc(m.sales,1)+' score')+detail('Calls Made',callsCtx,x.callPace==null?'—':pc(x.callPace,0)+' pace')+detail('Account Coverage',covCtx,pc(m.outbound,1)+' score')+detail('Art Quality',artCtx,pc(m.art,1)+' score')+detail('Credit Quality',creditCtx,pc(m.credit,1)+' score')+'</div><div class="mp668-actions"><button class="mp668-btn" onclick="_rp2Go(\'call\')">Open Call Workspace</button><button class="mp668-btn" onclick="_rp2Go(\'orders\')">Review Orders</button><button class="mp668-btn" onclick="_rp2Go(\'action\')">Open Follow-Ups</button></div></section><aside class="mp668-panel"><div class="mp668-section-kicker">WHAT NEEDS ATTENTION</div><h3>Your clearest priorities</h3><div class="mp668-panel-copy">Only scorecard items with a meaningful gap are surfaced here.</div><div class="mp668-focus-list">'+focusList.slice(0,4).join('')+'</div></aside></div><div class="mp668-note">Scorecard calculations reuse the tracker’s existing Traffic Score and data-integrity systems. No separate performance data store is created by this page.</div></div>'}
 window._rp2Page=function(){if(phased()&&window._rp2&&_rp2.page==='profile'){try{return render()}catch(err){console.error('[v668 performance scorecard]',err);return priorPage.apply(this,arguments)}}return priorPage.apply(this,arguments)};
-window.TCP_MY_PERFORMANCE_V668={version:'v668',render:render,model:model};window.TCP_BUILD_VERSION='v668';try{document.documentElement.setAttribute('data-tcp-build','v668');document.title='Connect v668 — My Performance Scorecard'}catch(err){}
+window.TCP_MY_PERFORMANCE_V668={version:'v668',render:render,model:model};window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(err){}
 })();
 </script>
 <style id="tcp-v668-build-identity">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v668"!important}body.nav-rail .tabs:after{content:"v668"!important}</style>
@@ -65221,8 +65235,8 @@ function render(){
 }
 window._rp2Page=function(){if(phased()&&window._rp2&&_rp2.page==='profile'){try{return render()}catch(err){console.error('[v669 unified scorecard]',err);return priorPage.apply(this,arguments)}}return priorPage.apply(this,arguments)};
 window.TCP_MY_PERFORMANCE_V669={version:'v669',render:render,model:model};
-window.TCP_BUILD_VERSION='v669';
-try{document.documentElement.setAttribute('data-tcp-build','v669');document.title='Connect v669 — Unified My Performance Scorecard'}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 <style id="tcp-v669-build-identity">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v669"!important}body.nav-rail .tabs:after{content:"v669"!important}</style>
@@ -65473,10 +65487,10 @@ try{document.documentElement.setAttribute('data-tcp-build','v669');document.titl
 <style id="tcp-v670-build-identity">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v670"!important}body.nav-rail .tabs:after{content:"v670"!important}</style>
 <script id="tcp-v670-build-js">
 (function(){
-  window.TCP_BUILD_VERSION='v670';
+  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
   try{
-    document.documentElement.setAttribute('data-tcp-build','v670');
-    document.title='Connect v670 — Performance Scorecard Scale Polish';
+    window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");
+    window.CONNECT_SET_RELEASE_TITLE();
   }catch(e){}
 })();
 </script>
@@ -65745,10 +65759,10 @@ try{document.documentElement.setAttribute('data-tcp-build','v669');document.titl
 </script>
 <script id="tcp-v671-build-js">
 (function(){
-  window.TCP_BUILD_VERSION='v671';
+  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
   try{
-    document.documentElement.setAttribute('data-tcp-build','v671');
-    document.title='Connect v671 — Orders Simplification';
+    window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");
+    window.CONNECT_SET_RELEASE_TITLE();
   }catch(e){}
 })();
 </script>
@@ -65906,8 +65920,8 @@ body.nav-rail .tabs:after{content:"v672"!important}
  }
  window._ord672Print=function(mode){var g=currentGroup();if(!g)return;mode=mode==='pdf'?'pdf':'print';var w=window.open('','_blank');if(!w){alert('Please allow pop-ups to create the print-friendly order document.');return}w.document.open();w.document.write(printDocument(g,mode));w.document.close();try{w.focus()}catch(e){}};
  try{document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('o671-modal'))window._ord671Close()})}catch(e){}
- window.TCP_BUILD_VERSION='v672';
- try{document.documentElement.setAttribute('data-tcp-build','v672');document.title='Connect v672 — Order Detail + Print/PDF'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -66099,7 +66113,7 @@ body.nav-rail .tabs:after{content:"v672"!important}
  window._rp2DealDeskApplyFilters=function(){var company=clean((document.getElementById('dd3-company')||{}).value);if(company){state.view='all';var chips=document.querySelectorAll('#rp2-page [data-q673-chip]');Array.prototype.forEach.call(chips,function(c){c.classList.toggle('on',c.getAttribute('data-q673-chip')==='all')})}if(company&&document.getElementById('q673-search')&&!clean(document.getElementById('q673-search').value))document.getElementById('q673-search').value='';window._rp2Quote673ApplyFilters()};
  window._rp2Quote673OpenUrl=function(encoded){try{var url=decodeURIComponent(encoded||'');if(!url)return;if(!/^(https?:)?\/\//i.test(url)&&url.charAt(0)!=='/')return;window.open(url,'_blank','noopener,noreferrer')}catch(e){}};
  var baseGo=window._rp2Go;if(typeof baseGo==='function'&&!window._rp2Quote673GoWrapped){window._rp2Quote673GoWrapped=true;window._rp2Go=function(p){var r=baseGo.apply(this,arguments);if(p==='dealdesk')setTimeout(function(){try{var sort=document.getElementById('q673-sort');if(sort)sort.value=state.sort||'priority';window._rp2Quote673Sort(state.sort||'priority')}catch(e){}},0);return r}}
- window.TCP_BUILD_VERSION='v673';try{document.documentElement.setAttribute('data-tcp-build','v673');document.title='Connect v673 — Quotes Simplification'}catch(e){};
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){};
  setTimeout(function(){try{if(_rp2&&_rp2.page==='dealdesk'){var page=document.getElementById('rp2-page');if(page){page.innerHTML=window._rp2DealDeskV3();window._rp2Quote673Sort(state.sort||'priority')}}}catch(e){}},0);
 })();
 </script>
@@ -66574,8 +66588,8 @@ body.nav-rail .tabs:after{content:"v672"!important}
   };
  }
  window.TCP_REP_PORTAL_VISUAL_FOUNDATION_V674={version:BUILD,decorate:decorate};
- window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v674 — Rep Portal Visual Foundation'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 <!-- ======================================================================
@@ -66851,8 +66865,8 @@ body.nav-rail .tabs:after{content:"v672"!important}
   };
  }
  window.TCP_REP_PORTAL_MANAGER_SCALE_V675={version:BUILD,refresh:readableFloor};
- window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v675 — Rep Portal Manager Scale'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -67050,8 +67064,8 @@ body.nav-rail .tabs:after{content:"v672"!important}
    wrapped._v676=true;
    window._rpPhasedDevBundle=wrapped;
  }
- window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v676 — Rep Portal Page Cohesion'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -67295,9 +67309,9 @@ body.nav-rail .tabs:after{content:"v672"!important}
    wrapped._v677=true;
    window._rpPhasedDevBundle=wrapped;
  }
- window.TCP_BUILD_VERSION=BUILD;
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
  window.TCP_REP_PORTAL_MY_DAY_ALIGNMENT_V677={version:BUILD};
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v677 — Rep Portal My Day Alignment'}catch(e){}
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -67372,9 +67386,9 @@ body.nav-rail .tabs:after{content:"v672"!important}
    wrapped._v678=true;
    window._rpPhasedDevBundle=wrapped;
  }
- window.TCP_BUILD_VERSION=BUILD;
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
  window.TCP_REP_PORTAL_SECTION_GUTTERS_V678={version:BUILD};
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v678 — Rep Portal Section Gutters'}catch(e){}
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -67643,8 +67657,8 @@ body.nav-rail .tabs:after{content:"v672"!important}
 
  var priorBundle=window._rpPhasedDevBundle;
  if(typeof priorBundle==='function'&&!priorBundle._v679){var bundle=function(){var base=priorBundle.apply(this,arguments),css=document.getElementById('tcp-v679-rep-portal-workspace-controls-css'),js=document.getElementById('tcp-v679-rep-portal-workspace-controls-js');return base+'\n\n<!-- v679 REP PORTAL WORKSPACE CONTROLS -->\n<style id="tcp-v679-rep-portal-workspace-controls-css">\n'+(css?css.textContent:'')+'\n<\/style>\n<script id="tcp-v679-rep-portal-workspace-controls-js">\n'+(js?js.textContent:'')+'\n<\\/script>'};bundle._v679=true;window._rpPhasedDevBundle=bundle}
- window.TCP_BUILD_VERSION=BUILD;window.TCP_REP_PORTAL_WORKSPACE_CONTROLS_V679={version:BUILD,install:install};
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v679 — Rep Portal Workspace Controls'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.TCP_REP_PORTAL_WORKSPACE_CONTROLS_V679={version:BUILD,install:install};
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -67938,8 +67952,8 @@ html[data-rp-theme="light"] #rp-overlay .rp680-caller-context{background:#F0F5F8
  var baseToggle=window._rp679ToggleTheme;if(typeof baseToggle==='function'&&!baseToggle._v680){var wrapped=function(){var r=baseToggle.apply(this,arguments);syncTheme();return r};wrapped._v680=true;window._rp679ToggleTheme=wrapped}
  var baseSide=window._rp679SetSideMode;if(typeof baseSide==='function'&&!baseSide._v680){var side=function(){var r=baseSide.apply(this,arguments);setTimeout(function(){try{if(typeof window._rp679RefreshTodo==='function')window._rp679RefreshTodo()}catch(e){}},0);return r};side._v680=true;window._rp679SetSideMode=side}
  syncTheme();
- window.TCP_BUILD_VERSION=BUILD;window.TCP_REP_PORTAL_LIVE_ASSIST_V681={version:BUILD,syncTheme:syncTheme};
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v681 — Rep Portal Light Polish + Email Review'}catch(e){}
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.TCP_REP_PORTAL_LIVE_ASSIST_V681={version:BUILD,syncTheme:syncTheme};
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -68089,9 +68103,9 @@ html[data-rp-theme="light"] #rp-overlay .rp680-caller-context{background:#F0F5F8
    else if(label.indexOf('notification')>=0)handled=openNotifications();
    if(handled){e.preventDefault();e.stopImmediatePropagation();}
  },true);
- window.TCP_BUILD_VERSION=BUILD;
+ window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
  window.TCP_REP_PORTAL_LIGHT_CONTRAST_TODO_LINKS_V682={version:BUILD,openTodo:window._rp682TodoOpen};
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v682 — Light Contrast + To Do Links'}catch(e){}
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 <!-- v683 light action contrast -->
@@ -68124,7 +68138,7 @@ html[data-rp-theme="light"] #rp-overlay .rp680-caller-context{background:#F0F5F8
 #rp-overlay .rp2-app.rp2-mode-phased.rp2-v639.rp679-light :is(.q673-attn.clear,.o671-status.good,.o671-tag.good){background:#E8F6F0!important;border-color:#8DD0B6!important;color:#176F52!important}
 #rp-overlay .rp2-app.rp2-mode-phased.rp2-v639.rp679-light .q673-mini.blue{background:var(--v683-c)!important;border-color:#006F96!important;color:#fff!important}
 </style>
-<script id="tcp-v683-light-action-contrast-js">(function(){var B="v683";window.TCP_BUILD_VERSION=B;try{document.documentElement.setAttribute("data-tcp-build",B);document.title="Connect v683 — Light Theme Action Contrast"}catch(e){}})();</script>
+<script id="tcp-v683-light-action-contrast-js">(function(){var B="v683";window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 
 <!-- ======================================================================
      v686 · GROWTH OPPORTUNITIES INTELLIGENCE WORKSPACE
@@ -68379,8 +68393,8 @@ html[data-rp-theme="light"] #rp-overlay .rp680-caller-context{background:#F0F5F8
  window._rp2Go=function(page){if(page==='growth')return openGrowth();return priorGo.apply(this,arguments)};
  window._rp2After=function(){var r=typeof priorAfter==='function'?priorAfter.apply(this,arguments):undefined;setTimeout(decorate,20);setTimeout(decorate,180);return r};
  window._go686Open=openGrowth;window._go686SetFilter=setFilter;window._go686FilterRows=filterRows;window._go686Focus=focus;window._go686ClearFocus=clearFocus;window._go686Why=why;window._go686CloseWhy=function(){var x=qs('#rp-overlay #go686WhyModal');if(x)x.remove()};window._go686OpenCompany=openCompany;window._go686Call=call;window._go686BuildModel=function(force){return buildModel(!!force)};
- window.TCP_GROWTH_OPPORTUNITIES_V686={version:BUILD,model:window._go686BuildModel,open:openGrowth};window.TCP_BUILD_VERSION=BUILD;
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v686 — Growth Opportunities'}catch(e){}
+ window.TCP_GROWTH_OPPORTUNITIES_V686={version:BUILD,model:window._go686BuildModel,open:openGrowth};window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
  setTimeout(function(){cache.key='';decorate()},0);setTimeout(decorate,500);
 })();
 </script>
@@ -68553,8 +68567,8 @@ window._rp2After=function(){var r=typeof priorAfter==='function'?priorAfter.appl
 window._go687SetFilter=setFilter;window._go687Search=search;window._go687Focus=focus;window._go687ClearFocus=clearFocus;window._go687Why=why;window._go687Render=render;window._go687Rows=ranked;
 /* Keep old v686 entry points compatible with the simplified page. */
 window._go686Why=why;window._go686SetFilter=setFilter;window._go686FilterRows=search;window._go686Focus=focus;window._go686ClearFocus=clearFocus;
-window.TCP_GROWTH_OPPORTUNITIES_V687={version:BUILD,render:render,rows:ranked};window.TCP_BUILD_VERSION=BUILD;
-try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v687 — Growth Opportunities Simplified'}catch(e){}
+window.TCP_GROWTH_OPPORTUNITIES_V687={version:BUILD,render:render,rows:ranked};window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 setTimeout(decorate,0);setTimeout(decorate,500);
 })();
 </script>
@@ -68668,8 +68682,8 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()}
 window._go688Menu=menu;window._go688Disposition=dispositionSet;window._go688Restore=restore;window._go688Undo=undo;window._go688SetFilter=setFilter;window._go688Search=search;window._go688Focus=focus;window._go688ClearFocus=clearFocus;window._go688Render=render;window._go688ActiveRows=activeRows;
 /* Keep the existing page entry points working, but route the visible Growth page through v688. */
 window._go687SetFilter=setFilter;window._go687Search=search;window._go687Focus=focus;window._go687ClearFocus=clearFocus;window._go687Render=render;
-window.TCP_GROWTH_OPPORTUNITY_LIFECYCLE_V688={version:BUILD,activeRows:activeRows,restore:restore};window.TCP_BUILD_VERSION=BUILD;
-try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v688 — Growth Opportunity Lifecycle'}catch(e){}
+window.TCP_GROWTH_OPPORTUNITY_LIFECYCLE_V688={version:BUILD,activeRows:activeRows,restore:restore};window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 setTimeout(decorate,0);setTimeout(decorate,600);
 })();
 </script>
@@ -68872,8 +68886,8 @@ if(typeof priorDisp==='function'){
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&qs('#rp-overlay #go688ActionMenu'))close()},true);
 document.addEventListener('click',function(){setTimeout(function(){if(!qs('#rp-overlay #go688ActionMenu'))removeBackdrop()},0)},true);
 window._go689CloseGrowthAction=close;
-window.TCP_GROWTH_CENTERED_ACTION_MODAL_V689={version:BUILD};window.TCP_BUILD_VERSION=BUILD;
-try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v689 — Growth Opportunity Centered Actions'}catch(e){}
+window.TCP_GROWTH_CENTERED_ACTION_MODAL_V689={version:BUILD};window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 
@@ -68935,8 +68949,8 @@ function start(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 setTimeout(relocate,0);setTimeout(relocate,500);
-window.TCP_BUILD_VERSION=BUILD;
-try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v690 — Growth Opportunity Close Corner';}catch(e){}
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
 })();
 </script>
 
@@ -68991,9 +69005,9 @@ clearStaleGrowthTest();
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(wire,0);setTimeout(wire,500)},{once:true});
 else{setTimeout(wire,0);setTimeout(wire,500)}
 clearInterval(timer);timer=setInterval(function(){if(phased()){wire();cleanRail()}},700);
-window.TCP_BUILD_VERSION=BUILD;
+window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
 window.TCP_REP_TODO_TEST_ISOLATION_V691={version:BUILD,clean:cleanRail};
-try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v691 Recovery — To Do Tester Isolation'}catch(e){}
+try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
 })();
 </script>
 <!-- ===== CONNECT v692 · FULL PRODUCT REBRAND ===== -->
@@ -69001,8 +69015,8 @@ try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title
 (function(){
   try{
     document.documentElement.setAttribute('data-product-name','Connect');
-    document.documentElement.setAttribute('data-tcp-build','v692-connect');
-    document.title='Connect — Triple Crown Products';
+    window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");
+    window.CONNECT_SET_RELEASE_TITLE();
   }catch(e){}
 })();
 </script>
@@ -69055,8 +69069,8 @@ try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title
     setTimeout(apply,250);
   },true);
   try{
-    document.documentElement.setAttribute('data-tcp-build',BUILD);
-    document.title='Connect — Sales Portal';
+    window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");
+    window.CONNECT_SET_RELEASE_TITLE();
   }catch(e){}
 })();
 </script>
@@ -69293,7 +69307,7 @@ html[data-rp-theme="light"] #rp-overlay .cux694-mini-btn.orange{background:#FFF4
  window._cux694ToggleMore=function(btn){var w=btn&&btn.closest('.cux694-more');if(!w)return;var open=w.classList.contains('open');window._cux694CloseMore();if(!open)w.classList.add('open')};
  window._cux694CloseMore=function(){document.querySelectorAll('.cux694-more.open').forEach(function(x){x.classList.remove('open')})};
  document.addEventListener('click',function(e){if(!e.target.closest||!e.target.closest('.cux694-more'))window._cux694CloseMore()},true);
- try{document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect — Sales Portal'}catch(e){}
+ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
  window.TCP_COMPANY_SALES_WORKSPACE_V694={version:BUILD,focus:'company overview as a rep-first sales workspace',upgrade:upgrade};
 })();
 </script>
@@ -69454,7 +69468,7 @@ body.nav-rail .tabs:after{content:attr(data-connect-build-short)!important;}
        var user=side.querySelector('.p639-user'),out=side.querySelector('.rp2-out');
        var badge=side.querySelector('.cux695-build-badge');
        if(!badge){badge=document.createElement('div');badge.className='cux695-build-badge';}
-       badge.textContent='Sales Portal · Build '+BUILD;
+       window.CONNECT_SET_BUILD_BADGE(badge);
        if(user&&(badge.parentNode!==side||badge.nextElementSibling!==user))side.insertBefore(badge,user);
        else if(!user&&out&&badge.parentNode!==side)side.insertBefore(badge,out);
      });
@@ -69462,12 +69476,12 @@ body.nav-rail .tabs:after{content:attr(data-connect-build-short)!important;}
  }
  function brand(){
    try{
-     window.CONNECT_BUILD=BUILD;
-     window.TCP_BUILD_VERSION=BUILD;
-     document.documentElement.setAttribute('data-tcp-build',BUILD);
-     document.documentElement.setAttribute('data-connect-build',BUILD);
+     window.CONNECT_BUILD=window.CONNECT_RELEASE.version;
+     window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+     window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");
+     window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");
      document.querySelectorAll('.tabs').forEach(function(t){t.setAttribute('data-connect-build-long','Cloud Sync • Admin  ·  BUILD '+BUILD);t.setAttribute('data-connect-build-short','BUILD '+BUILD)});
-     document.title='Connect '+BUILD+' — Sales Portal';
+     window.CONNECT_SET_RELEASE_TITLE();
      buildBadge();
    }catch(e){}
  }
@@ -69699,7 +69713,7 @@ html[data-rp-theme="light"] #rp-overlay .cux696-plan-row>span{color:#087FA4!impo
  function placeBuild(){
    try{document.querySelectorAll('#rp-overlay .rp2-side').forEach(function(side){var badge=side.querySelector('.cux695-build-badge'),user=side.querySelector('.p639-user');if(!badge||!user)return;badge.classList.add('cux696-build-fixed');if(badge.parentNode!==side||badge.nextElementSibling!==user)side.insertBefore(badge,user)})}catch(e){}
  }
- function brand(){try{window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-tcp-build',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.querySelectorAll('.tabs').forEach(function(t){t.setAttribute('data-connect-build-long','Cloud Sync • Admin  ·  BUILD '+BUILD);t.setAttribute('data-connect-build-short','BUILD '+BUILD)});document.querySelectorAll('#rp-overlay .cux695-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+BUILD});document.title='Connect '+BUILD+' — Sales Portal';placeBuild()}catch(e){}}
+ function brand(){try{window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");document.querySelectorAll('.tabs').forEach(function(t){t.setAttribute('data-connect-build-long','Cloud Sync • Admin  ·  BUILD '+BUILD);t.setAttribute('data-connect-build-short','BUILD '+BUILD)});document.querySelectorAll('#rp-overlay .cux695-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});window.CONNECT_SET_RELEASE_TITLE();placeBuild()}catch(e){}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',brand,{once:true});else brand();document.addEventListener('click',function(){setTimeout(brand,80);setTimeout(brand,420);setTimeout(brand,760)},true);setTimeout(brand,650);setTimeout(brand,920);
  window.TCP_COMPANY_SALES_COACH_CLEANUP_V696={version:BUILD,focus:'rep-first company overview cleanup, coaching context, execution status, overflow safety',upgrade:cleanup,brand:brand};
 })();
@@ -69909,7 +69923,7 @@ html[data-rp-theme="light"] #rp-overlay .cux696-plan-row>span{color:#087FA4!impo
  function wrapCompany(base){return typeof base==='function'?function(){return enhanceCompany(base.apply(this,arguments))}:base}
  window._rp2CompanyProfileV3=wrapCompany(BASE_PROFILE);window._rp2CustomersV2=wrapCompany(BASE_CUSTOMERS);
 
- function brand(){try{window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-tcp-build',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.querySelectorAll('.tabs').forEach(function(t){t.setAttribute('data-connect-build-long','Cloud Sync • Admin  ·  BUILD '+BUILD);t.setAttribute('data-connect-build-short','BUILD '+BUILD)});document.querySelectorAll('#rp-overlay .cux695-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+BUILD});document.title='Connect '+BUILD+' — Sales Portal'}catch(e){}}
+ function brand(){try{window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");document.querySelectorAll('.tabs').forEach(function(t){t.setAttribute('data-connect-build-long','Cloud Sync • Admin  ·  BUILD '+BUILD);t.setAttribute('data-connect-build-short','BUILD '+BUILD)});document.querySelectorAll('#rp-overlay .cux695-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});window.CONNECT_SET_RELEASE_TITLE()}catch(e){}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',brand,{once:true});else brand();
  document.addEventListener('click',function(){setTimeout(brand,80);setTimeout(brand,420)},true);setTimeout(brand,700);setTimeout(brand,1000);
  window.TCP_COMPANY_ACCOUNT_STRATEGY_V697={version:BUILD,focus:'merged Connect sales workspace + strategic account depth',planStore:PLAN_STORE,enhanceCompany:enhanceCompany,enhancePlanMarkup:enhancePlanMarkup,brand:brand};
@@ -70123,7 +70137,7 @@ html[data-rp-theme="light"] #rp-overlay .cux696-plan-row>span{color:#087FA4!impo
  /* Strong final build authority. Earlier version scripts re-apply branding on delayed timers,
     so v698 brands after portal renders and only mutates nodes when needed. */
  var brandQueued=false;
- function brand(){brandQueued=false;try{window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-tcp-build',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.querySelectorAll('.tabs').forEach(function(t){if(t.getAttribute('data-connect-build-long')!=='Cloud Sync • Admin  ·  BUILD '+BUILD)t.setAttribute('data-connect-build-long','Cloud Sync • Admin  ·  BUILD '+BUILD);if(t.getAttribute('data-connect-build-short')!=='BUILD '+BUILD)t.setAttribute('data-connect-build-short','BUILD '+BUILD)});document.querySelectorAll('#rp-overlay .cux695-build-badge').forEach(function(b){var x='Sales Portal · Build '+BUILD;if(b.textContent!==x)b.textContent=x});if(document.title!=='Connect '+BUILD+' — Sales Portal')document.title='Connect '+BUILD+' — Sales Portal'}catch(e){}}
+ function brand(){brandQueued=false;try{window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");document.querySelectorAll('.tabs').forEach(function(t){if(t.getAttribute('data-connect-build-long')!=='Cloud Sync • Admin  ·  BUILD '+BUILD)t.setAttribute('data-connect-build-long','Cloud Sync • Admin  ·  BUILD '+BUILD);if(t.getAttribute('data-connect-build-short')!=='BUILD '+BUILD)t.setAttribute('data-connect-build-short','BUILD '+BUILD)});document.querySelectorAll('#rp-overlay .cux695-build-badge').forEach(function(b){var x='Sales Portal · Build '+BUILD;if(b.textContent!==x)b.textContent=x});if(document.title!=='Connect '+BUILD+' — Sales Portal')window.CONNECT_SET_RELEASE_TITLE()}catch(e){}}
  function scheduleBrand(){if(brandQueued)return;brandQueued=true;setTimeout(brand,35)}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',scheduleBrand,{once:true});else scheduleBrand();
  [120,450,900,1400,2200].forEach(function(ms){setTimeout(brand,ms)});
@@ -70436,12 +70450,12 @@ html[data-rp-theme="light"] #rp-overlay .cux696-plan-row>span{color:#087FA4!impo
  function brand(){
    brandTimer=0;
    try{
-     window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;
-     document.documentElement.setAttribute('data-tcp-build',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);
+     window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+     window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");
      document.querySelectorAll('.tabs').forEach(function(t){t.setAttribute('data-connect-build-long','Cloud Sync • Admin  ·  BUILD '+DISPLAY);t.setAttribute('data-connect-build-short','BUILD '+DISPLAY)});
      document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){var x='Sales Portal · Build '+DISPLAY;if(clean(b.textContent)!==x)b.textContent=x});
-     document.querySelectorAll('#rp-overlay .rp2-side *').forEach(function(el){if(el.children.length)return;var t=clean(el.textContent);if(/^sales portal\s*[·•-]\s*build\s*v\d+$/i.test(t))el.textContent='Sales Portal · Build '+DISPLAY});
-     document.title=(window.CONNECT_BUILD_TITLE||('Connect '+BUILD+' — Sales Portal'));if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
+     document.querySelectorAll('#rp-overlay .rp2-side *').forEach(function(el){if(el.children.length)return;var t=clean(el.textContent);if(/^sales portal\s*[·•-]\s*build\s*v\d+$/i.test(t))window.CONNECT_SET_BUILD_BADGE(el)});
+     window.CONNECT_SET_RELEASE_TITLE();if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
    }catch(e){}
  }
  function queueBrand(){if(brandTimer)return;brandTimer=setTimeout(brand,25)}
@@ -70628,7 +70642,7 @@ html[data-rp-theme="light"] #rp-overlay .cux702-card-copy b{color:#29465B!import
  }
  function wrap(base){return typeof base==='function'?function(){window._cux10NotesTab='summary';return enhance(base.apply(this,arguments))}:base}
  window._rp2CustomersV2=wrap(BASE_CUSTOMERS);window._rp2CompanyProfileV3=wrap(BASE_PROFILE);
- function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+ function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',brand,{once:true});else brand();[100,500,1200,2600].forEach(function(ms){setTimeout(brand,ms)});
  window.TCP_COMPANY_SIGNAL_KPI_V702={version:BUILD,growthTarget:GROWTH,focus:'Next Best Step · seasonal Sales Pace · Relationship Health · Opportunity',enhance:enhance};window.TCP_SALES_PACE_TRACKER_V703={version:BUILD,alwaysVisible:true};window.TCP_BUILD_IDENTITY_V703={version:BUILD,authority:true};
 })();
@@ -70781,7 +70795,7 @@ html[data-rp-theme="light"] #rp-overlay .cux702-card-copy b{color:#29465B!import
   function brand(){
     try{
       if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
-      document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY});
+      document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});
     }catch(e){}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',brand,{once:true});else brand();
@@ -70974,7 +70988,7 @@ html[data-rp-theme="light"] #rp-overlay .cux702-card-copy b{color:#29465B!import
   }
   function wrap(fn){return typeof fn==='function'?function(){return refine(fn.apply(this,arguments))}:fn}
   window._rp2CustomersV2=wrap(BASE_CUSTOMERS);window._rp2CompanyProfileV3=wrap(BASE_PROFILE);
-  function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+  function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',brand,{once:true});else brand();
   [120,600,1500,3000].forEach(function(ms){setTimeout(brand,ms)});
   window.TCP_COMPANY_VISUAL_HIERARCHY_V705={version:BUILD,focus:'quieter command header, manager-style KPI hierarchy, stronger sales pace tracker, roomier conversation prep'};
@@ -71166,7 +71180,7 @@ html[data-rp-theme="light"] #rp-overlay .cux706-sales-kpi strong{color:#173044!i
  function refine(markup){if(!markup||String(markup).indexOf('cux702-signal-grid')<0)return markup;var t=document.createElement('template');t.innerHTML=String(markup).trim();var f=t.content,shell=f.querySelector('.cux702-company');if(!shell)return markup;shell.classList.add('cux706-company');var intel=f.querySelector('.cux700-intelligence'),hist=f.querySelector('.cux700-history');if(intel)intel.remove();if(hist)hist.remove();var nav=f.querySelector('.cux700-subnav');if(nav&&!Array.prototype.some.call(nav.querySelectorAll('button'),function(b){return /sales history/i.test(clean(b.textContent))})){var btn=document.createElement('button');btn.textContent='Sales History';btn.setAttribute('onclick','_cux706SalesHistory()');var ordersBtn=Array.prototype.slice.call(nav.querySelectorAll('button')).filter(function(b){return clean(b.textContent)==='Orders'})[0];if(ordersBtn&&ordersBtn.nextSibling)nav.insertBefore(btn,ordersBtn.nextSibling);else nav.appendChild(btn)}var more=f.querySelector('.cux8-actions .cux694-more');if(more){var note=document.createElement('button');note.className='cux8-action';note.setAttribute('onclick',"_cux8Action('note')");note.textContent='＋ Add Note';more.replaceWith(note)}var sales=f.querySelector('.cux702-sales');if(sales){sales.setAttribute('onclick','_cux706SalesHistory()');var foot=sales.querySelector('.cux702-card-copy');if(foot&&/seasonal pace will activate/i.test(clean(foot.textContent)))foot.textContent='Open Sales History to see year-by-year sales and the buying rhythm behind this pace.'}var d=document.createElement('div');d.appendChild(f.cloneNode(true));return d.innerHTML}
  function wrap(fn){return typeof fn==='function'?function(){return refine(fn.apply(this,arguments))}:fn}
  window._rp2CustomersV2=wrap(BASE_CUSTOMERS);window._rp2CompanyProfileV3=wrap(BASE_PROFILE);
- function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+ function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',brand,{once:true});else brand();[100,450,1100,2200].forEach(function(ms){setTimeout(brand,ms)});
  window.TCP_COMPANY_SALES_HISTORY_V707={version:BUILD,growthTarget:GROWTH,focus:'all available customer sales years + buying rhythm'};window.TCP_BUILD_IDENTITY_V707={version:BUILD,authority:true};
 })();
@@ -71310,7 +71324,7 @@ html[data-rp-theme="light"] #rp-overlay .cux706-sales-kpi strong{color:#173044!i
 (function(){
  'use strict';
  var BUILD=window.CONNECT_BUILD_AUTHORITY||'v708',DISPLAY=window.CONNECT_BUILD_DISPLAY||'V708';
- function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+ function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',brand,{once:true});else brand();[120,500,1200,2400].forEach(function(ms){setTimeout(brand,ms)});
  window.TCP_COMPANY_READABILITY_V708={version:BUILD,focus:'manager-dashboard typography scale + company readability'};
  window.TCP_BUILD_IDENTITY_V708={version:BUILD,authority:true};
@@ -71466,7 +71480,7 @@ html[data-connect-authoritative="v710"] body.nav-rail .tabs:after{content:var(--
    }catch(e){}
  }
  function schedule(){if(raf)return;raf=requestAnimationFrame(fit)}
- function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+ function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){schedule();brand()},{once:true});else{schedule();brand()}
  window.addEventListener('resize',schedule,{passive:true});
  if(window.visualViewport)window.visualViewport.addEventListener('resize',schedule,{passive:true});
@@ -71577,7 +71591,7 @@ html[data-connect-authoritative="v711"] body.nav-rail .tabs:after{content:var(--
  function refine(markup){if(!markup||String(markup).indexOf('cux702-company')<0)return markup;var t=document.createElement('template');t.innerHTML=String(markup).trim();var f=t.content,shell=f.querySelector('.cux702-company');if(!shell)return markup;shell.classList.add('cux711-company');var name=currentName(f),own=ownership(name),sub=f.querySelector('.cux8-sub');if(sub){var parts=clean(sub.textContent).split('·').map(clean).filter(Boolean).filter(function(x){return !/^owned by\b/i.test(x)&&!/^rep\s*[12]\s*:/i.test(x)});parts.push('Rep 1: '+own.rep1);parts.push('Rep 2: '+own.rep2);sub.textContent=parts.join(' · ')}var contact=f.querySelector('.cux8-contact');if(contact){var health=contact.querySelector('.cux694-rel-pill');var dm=decisionMaker(name);contact.innerHTML='<strong>Decision Maker: '+esc(dm||'Not selected')+'</strong>';if(health)contact.appendChild(health)}var nav=f.querySelector('.cux700-subnav');if(nav&&!Array.prototype.some.call(nav.querySelectorAll('button'),function(b){return clean(b.textContent).toLowerCase()==='profile'})){var b=document.createElement('button');b.className='profile';b.textContent='Profile';b.setAttribute('onclick','_cux711Profile()');var strategy=Array.prototype.slice.call(nav.querySelectorAll('button')).filter(function(x){return clean(x.textContent).toLowerCase()==='strategy'})[0];if(strategy&&strategy.nextSibling)nav.insertBefore(b,strategy.nextSibling);else nav.appendChild(b)}var d=document.createElement('div');d.appendChild(f.cloneNode(true));return d.innerHTML}
  function wrap(fn){return typeof fn==='function'?function(){return refine(fn.apply(this,arguments))}:fn}
  window._rp2CustomersV2=wrap(BASE_CUSTOMERS);window._rp2CompanyProfileV3=wrap(BASE_PROFILE);
- function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+ function brand(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',brand,{once:true});else brand();[100,500,1300].forEach(function(ms){setTimeout(brand,ms)});
  window.TCP_COMPANY_OWNERSHIP_PROFILE_V711={version:BUILD,focus:'REP1/REP2 + selected decision maker + billing/shipping company Profile tab'};window.TCP_BUILD_IDENTITY_V711={version:BUILD,authority:true};
 })();
@@ -71660,7 +71674,7 @@ html[data-connect-authoritative="v712"] body.nav-rail .tabs:after{content:var(--
     prep.style.setProperty('width','100%','important');
    });
    if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
-   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY});
+   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  var raf=0;function queue(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;repair()})}
@@ -71789,7 +71803,7 @@ html[data-connect-authoritative="v713"] body.nav-rail .tabs:after{content:var(--
  function polish(){
   try{
    if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
-   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY});
+   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',polish,{once:true});else polish();
@@ -71901,7 +71915,7 @@ html[data-connect-authoritative="v715"] body.nav-rail .tabs:after{content:var(--
     panel.style.setProperty('align-self','stretch','important');
    });
    if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
-   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY});
+   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  var raf=0;function queue(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;repair()})}
@@ -72043,7 +72057,7 @@ html[data-connect-authoritative="v716"] body.nav-rail .tabs:after{content:var(--
     plan.style.setProperty('margin-top','clamp(12px,1.35vh,16px)','important');
    });
    if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
-   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY});
+   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  var raf=0;function queue(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;finish()})}
@@ -72230,7 +72244,7 @@ html[data-connect-ui="777"] body.nav-rail .tabs:after{content:var(--connect-buil
  var OLD_SAVE=window._cw4SaveContact;
  if(typeof OLD_SAVE==='function')window._cw4SaveContact=function(encoded){var wants=(document.getElementById('cw4-f-decision')||{}).value==='Yes',result=OLD_SAVE.apply(this,arguments);if(wants){setTimeout(function(){var name=currentCompany(),x=accountFor(name);if(!x.data)return;var rows=arr(x.data.contacts),chosen=encoded?decodeURIComponent(encoded):'';if(!chosen){var hits=rows.filter(function(c){return !!c.decisionMaker}).sort(function(a,b){return String(b.updatedAt||'').localeCompare(String(a.updatedAt||''))});chosen=hits[0]&&clean(hits[0].id)||''}if(chosen){rows.forEach(function(c){c.decisionMaker=clean(c.id)===chosen});x.data.contacts=rows;saveAccount(x);rerender()}},20)}return result};
  window._cux721RenderContacts=render; window._cux721Contacts=contacts; window._cux721CurrentCompany=currentCompany;
- function boot(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+ function boot(){try{if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();[120,450,1000].forEach(function(ms){setTimeout(boot,ms)});
  window.TCP_RELATIONSHIP_WORKSPACE_V720={version:BUILD};window.TCP_BUILD_IDENTITY_V720={version:BUILD,authority:true};
 })();
@@ -72257,7 +72271,7 @@ html[data-connect-ui="777"] #rp-overlay .cux719-detail{display:block!important}
    if(!content.querySelector('.cux719-workspace')) content.innerHTML=window._cux721RenderContacts(n);
    var shell=document.querySelector('#rp-overlay .cux8-shell');
    if(shell)shell.classList.add('cux719-contacts-page');
-   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY});
+   document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});
    return true;
   }catch(e){console.warn('[v721 contacts]',e);return false}
  }
@@ -72268,7 +72282,7 @@ html[data-connect-ui="777"] #rp-overlay .cux719-detail{display:block!important}
  if(typeof oldDraw==='function')window._rp2CompanyProfileDraw=function(){var r=oldDraw.apply(this,arguments);[0,30,90].forEach(function(ms){setTimeout(apply,ms)});return r};
  var observer=new MutationObserver(function(){if(contactsOpen())setTimeout(apply,0)});
  function boot(){
-  try{document.documentElement.setAttribute('data-connect-authoritative',BUILD);if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD()}catch(e){}
+  try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD()}catch(e){}
   var root=document.getElementById('rp-overlay');if(root)try{observer.observe(root,{childList:true,subtree:true})}catch(e){}
   [0,100,350,900].forEach(function(ms){setTimeout(apply,ms)});
  }
@@ -72428,18 +72442,18 @@ html[data-connect-ui="777"] #rp-overlay .cux719-input textarea{min-height:88px!i
 <script id="connect-v723-contact-parity-boot">
 (function(){
  'use strict';
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
  function enforce(){
   try{
-   window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;
-   document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);
-   if(document.title!==TITLE)document.title=TITLE;
-   document.querySelectorAll('.rp-build-badge,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build '+DISPLAY});
+   window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+   window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");
+   if(document.title!==TITLE)window.CONNECT_SET_RELEASE_TITLE();
+   document.querySelectorAll('.rp-build-badge,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enforce,{once:true});else enforce();
  [80,250,700].forEach(function(ms){setTimeout(enforce,ms)});
- window.CONNECT_ENFORCE_BUILD=enforce;
+ window.CONNECT_ENFORCE_BUILD=window.CONNECT_SYNC_RELEASE;
 })();
 </script>
 <style id="connect-v723-contacts-roster-finish">
@@ -72472,7 +72486,7 @@ html[data-connect-ui="777"] #rp-overlay .cux8-shell .cux700-subnav.cux726-persis
 <script id="connect-v727-persistent-company-nav-js">
 (function(){
  'use strict';
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
  var timer=0;
  function clean(v){return String(v==null?'':v).replace(/\s+/g,' ').trim()}
  function companyOpen(){return !!(window._rp2CompanyOpenKey||window._cw4CompanyName||document.querySelector('#rp-overlay .cux8-shell'))}
@@ -72554,10 +72568,10 @@ html[data-connect-ui="777"] #rp-overlay .cux8-shell .cux700-subnav.cux726-persis
  var obs=new MutationObserver(queue);
  function boot(){
    try{
-     window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;
-     document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.title=TITLE;
+     window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+     window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_TITLE();
      if(typeof window.CONNECT_ENFORCE_BUILD==='function')window.CONNECT_ENFORCE_BUILD();
-     document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){b.textContent='Sales Portal · Build '+DISPLAY});
+     document.querySelectorAll('#rp-overlay .cux695-build-badge,#rp-overlay .cux700-build-badge').forEach(function(b){window.CONNECT_SET_BUILD_BADGE(b)});
    }catch(e){}
    var root=document.getElementById('rp-overlay');if(root)try{obs.observe(root,{childList:true,subtree:true})}catch(e){}
    [0,100,350,900].forEach(function(ms){setTimeout(ensure,ms)});
@@ -72624,8 +72638,8 @@ html[data-connect-ui="777"] #rp-overlay .ord727-empty{display:flex;flex-directio
 </style>
 <script id="ord728-build-identity">
 (function(){
- window.CONNECT_BUILD='v739';
- try{document.title='Connect v739 — Sales Portal';document.documentElement.setAttribute('data-connect-build','v739');}catch(e){}
+ window.CONNECT_BUILD=window.CONNECT_RELEASE.version;
+ try{window.CONNECT_SET_RELEASE_TITLE();window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");}catch(e){}
  function mark(){document.querySelectorAll('[data-build],.rp2-build,.rp2-side-build').forEach(function(el){var t=el.textContent||'';if(/BUILD\s*V?\d+/i.test(t))el.textContent=t.replace(/BUILD\s*V?\d+/i,'BUILD V739')});}
  mark();setTimeout(mark,0);setTimeout(mark,120);setTimeout(mark,600);
 })();
@@ -72641,7 +72655,7 @@ html[data-connect-ui="777"] #rp-overlay .cux719-roster-meta{display:flex!importa
 <script id="connect-v724-contact-name-role-build">
 (function(){
   var BUILD='v739', DISPLAY='V739', TITLE='Connect v739 — Sales Portal';
-  function apply(){try{document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.title=TITLE;if(window.CONNECT_BUILD!==undefined)window.CONNECT_BUILD=BUILD;document.querySelectorAll('[data-build-label],.rp-build-badge,.portal-build,.sales-portal-build').forEach(function(el){if(/build/i.test(el.textContent||'')||el.hasAttribute('data-build-label'))el.textContent='SALES PORTAL · BUILD '+DISPLAY;});}catch(e){}}
+  function apply(){try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_TITLE();if(window.CONNECT_BUILD!==undefined)window.CONNECT_BUILD=window.CONNECT_RELEASE.version;document.querySelectorAll('[data-build-label],.rp-build-badge,.portal-build,.sales-portal-build').forEach(function(el){if(/build/i.test(el.textContent||'')||el.hasAttribute('data-build-label'))el.textContent='SALES PORTAL · BUILD '+DISPLAY;});}catch(e){}}
   apply();setTimeout(apply,0);setTimeout(apply,250);
 })();
 </script>
@@ -72709,7 +72723,7 @@ html[data-connect-ui="777"] #rp-overlay .cux725-empty{padding:26px 8px!important
  var oldSelect=window._cux719Select;if(typeof oldSelect==='function')window._cux719Select=function(){var r=oldSelect.apply(this,arguments);filter='All Activity';setTimeout(enhance,0);return r};
  var oldForce=window._cux721ForceContacts;if(typeof oldForce==='function')window._cux721ForceContacts=function(){var r=oldForce.apply(this,arguments);setTimeout(enhance,0);return r};
  var obs=new MutationObserver(function(){if(document.querySelector('#rp-overlay .cux719-workspace'))schedule()});
- function boot(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.title='Connect v739 — Sales Portal';var root=document.getElementById('rp-overlay');if(root)obs.observe(root,{childList:true,subtree:true});[0,100,350,800].forEach(function(ms){setTimeout(enhance,ms)});document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){console.warn('[v727 activity timeline]',e)}}
+ function boot(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_TITLE();var root=document.getElementById('rp-overlay');if(root)obs.observe(root,{childList:true,subtree:true});[0,100,350,800].forEach(function(ms){setTimeout(enhance,ms)});document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){console.warn('[v727 activity timeline]',e)}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
  window.TCP_CONTACT_ACTIVITY_TIMELINE_V727={version:BUILD,refresh:enhance};
 })();
@@ -73013,8 +73027,8 @@ html[data-connect-ui="777"] #rp-overlay .art736-protected{display:inline-flex;al
 
 <script id="connect-v739-final-authority-eof">
 (function(){
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
- function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.title=TITLE;document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){var t=b.textContent||'';if(/build/i.test(t))b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
+ function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){var t=b.textContent||'';if(/build/i.test(t))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
  enforce();[0,60,180,500,1200].forEach(function(ms){setTimeout(enforce,ms)});
  /* v739: no subtree build observer — early build authority is already idempotent */
 })();
@@ -73118,8 +73132,8 @@ html[data-connect-ui="777"] #rp-overlay .prof737-modal-actions{display:flex;just
 </script>
 <script id="connect-v739-final-authority-eof">
 (function(){
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
- function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){var t=b.textContent||'';if(/build/i.test(t))b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
+ function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){var t=b.textContent||'';if(/build/i.test(t))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
  enforce();[0,60,180,500,1200].forEach(function(ms){setTimeout(enforce,ms)});
 })();
 </script>
@@ -73213,7 +73227,7 @@ html[data-connect-ui="777"] .str738-toast{position:fixed;right:24px;bottom:24px;
 })();
 </script>
 <script id="connect-v739-final-authority-eof">
-(function(){var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}enforce();[0,60,180,500,1200].forEach(function(ms){setTimeout(enforce,ms)});})();
+(function(){var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[0,60,180,500,1200].forEach(function(ms){setTimeout(enforce,ms)});})();
 </script>
 
 
@@ -73284,7 +73298,7 @@ html[data-connect-ui="777"] #rp-overlay .str739-strategy-product{border-color:rg
 })();
 </script>
 <script id="connect-v740-final-authority-integration">
-(function(){var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}enforce();[0,60,180,500,1200].forEach(function(ms){setTimeout(enforce,ms)});})();
+(function(){var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[0,60,180,500,1200].forEach(function(ms){setTimeout(enforce,ms)});})();
 </script>
 
 <!-- ========================================================================
@@ -74294,7 +74308,7 @@ var priorGo=window._rp2Go;window._rp2Go=function(page){if(page==='customers'){wi
 var priorPage=window._rp2Page;window._rp2Page=function(){var page=window._rp2&&window._rp2.page||'home';if(page==='customers'&&window._cm758CurrentMaster)return masterProfile(window._cm758CurrentMaster);var html=typeof priorPage==='function'?priorPage.apply(this,arguments):'';if(page==='customers'&&!window._cw4CompanyName&&!window._rp2CompanyOpenKey)return patchDirectory(html);return html};
 var priorFilter=window._cw4FilterRows;if(typeof priorFilter==='function')window._cw4FilterRows=function(){var r=priorFilter.apply(this,arguments);setTimeout(applyHierarchy,0);return r};
 var priorToggle=window._cw4ToggleRow;if(typeof priorToggle==='function')window._cw4ToggleRow=function(){var r=priorToggle.apply(this,arguments);return r};
-function authority(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE='Connect v760 — Sales Portal';window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v760 — Sales Portal';document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'})}catch(e){}}
+function authority(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
 authority();[0,50,200,700,1600,3200,6000].forEach(function(ms){setTimeout(authority,ms)});
 window.CONNECT_V758_COMPANY_MASTER={version:BUILD,storageKey:STORE,masters:masters,open:function(id){return window._cm758OpenMaster(id)},create:function(){return window._cm758OpenWizard()},diagnostics:function(){var list=masters(),used=usedMap('');return{version:BUILD,rep:rep(),masters:list.length,memberAccounts:Object.keys(used).length,corporateNavRetired:true}}};
 })();
@@ -74350,7 +74364,7 @@ window._rp2Go=function(page){var r=typeof priorGo759==='function'?priorGo759.app
 var queued=false;
 try{new MutationObserver(function(){if(queued)return;queued=true;setTimeout(function(){queued=false;ensureCreateControls()},25)}).observe(document.documentElement,{childList:true,subtree:true})}catch(e){}
 [0,60,180,500,1200,2500].forEach(function(ms){setTimeout(ensureCreateControls,ms)});
-function authority759(){try{window.CONNECT_BUILD_AUTHORITY='v760';window.CONNECT_BUILD_DISPLAY='V760';window.CONNECT_BUILD_TITLE='Connect v760 — Sales Portal';window.CONNECT_BUILD='v760';window.TCP_BUILD_VERSION='v760';document.documentElement.setAttribute('data-connect-release','v760');document.documentElement.setAttribute('data-connect-build','v760');document.documentElement.setAttribute('data-tcp-build','v760');document.title='Connect v760 — Sales Portal';document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'})}catch(e){}}
+function authority759(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
 authority759();[100,500,1600,4000].forEach(function(ms){setTimeout(authority759,ms)});
 })();
 </script>
@@ -74408,13 +74422,13 @@ authority759();[100,500,1600,4000].forEach(function(ms){setTimeout(authority759,
  'use strict';
  function removeDuplicateLauncher(){try{document.querySelectorAll('#rp-overlay .cm759-master-launcher').forEach(function(n){n.remove()})}catch(e){}}
  function authority760(){try{
-   window.CONNECT_BUILD_AUTHORITY='v760';window.CONNECT_BUILD_DISPLAY='V760';window.CONNECT_BUILD_TITLE='Connect v760 — Sales Portal';
-   window.CONNECT_BUILD='v760';window.TCP_BUILD_VERSION='v760';
-   document.documentElement.setAttribute('data-connect-release','v760');
-   document.documentElement.setAttribute('data-connect-build','v760');
-   document.documentElement.setAttribute('data-tcp-build','v760');
-   document.title='Connect v760 — Sales Portal';
-   document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'});
+   window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;
+   window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+   window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");
+   window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");
+   window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");
+   window.CONNECT_SET_RELEASE_TITLE();
+   document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)});
    removeDuplicateLauncher();
  }catch(e){}}
  authority760();[80,250,700,1800,4200,7000].forEach(function(ms){setTimeout(authority760,ms)});
@@ -74650,15 +74664,15 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light :is(
 <script id="connect-v766-light-system-authority-js">
 (function(){
  'use strict';
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
  function authority(){
   try{
-   window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;
-   if(document.documentElement.getAttribute('data-connect-release')!==BUILD)document.documentElement.setAttribute('data-connect-release',BUILD);
-   if(document.documentElement.getAttribute('data-connect-build')!==BUILD)document.documentElement.setAttribute('data-connect-build',BUILD);
-   if(document.documentElement.getAttribute('data-tcp-build')!==BUILD)document.documentElement.setAttribute('data-tcp-build',BUILD);
-   if(document.title!==TITLE)document.title=TITLE;
-   document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||'')&&b.textContent!=='Sales Portal · Build V790')b.textContent='Sales Portal · Build V790'});
+   window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+   if(document.documentElement.getAttribute('data-connect-release')!==BUILD)window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");
+   if(document.documentElement.getAttribute('data-connect-build')!==BUILD)window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");
+   if(document.documentElement.getAttribute('data-tcp-build')!==BUILD)window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");
+   if(document.title!==TITLE)window.CONNECT_SET_RELEASE_TITLE();
+   document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||'')&&b.textContent!=='Sales Portal · Build V790')window.CONNECT_SET_BUILD_BADGE(b)});
    var light=document.documentElement.getAttribute('data-rp-theme')==='light';document.documentElement.style.colorScheme=light?'light':'dark';
   }catch(e){}
  }
@@ -75349,12 +75363,12 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light :is(.cw4-company-sub,.cw4-c
 <script id="connect-v766-frosted-acrylic-light-authority-js">
 (function(){
  'use strict';
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
  function authority(){
   try{
-   window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;
-   document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;
-   document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'});
+   window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+   window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();
+   document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  authority();[120,420,1000,2600,6000].forEach(function(ms){setTimeout(authority,ms)});
@@ -75398,12 +75412,12 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light .cw4-expand{border-radius:9
 <script id="connect-v766-stable-authority-js">
 (function(){
  'use strict';
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
  function authority(){
   try{
-   window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;
-   document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;
-   document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'});
+   window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+   window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();
+   document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  authority();[100,400,1200,3200,6500,9000].forEach(function(ms){setTimeout(authority,ms)});
@@ -75490,12 +75504,12 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-empty-strategy{borde
 html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-note-compose[open] .cm758-note-box{background:#F7FBFD;border-color:#BFD1DD;box-shadow:0 20px 46px rgba(33,75,101,.18)}
 </style>
 <script id="connect-v768-company-master-authority-js">
-(function(){'use strict';var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'})}catch(e){}}enforce();[50,250,800,1800,4000,7000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V768_COMPANY_MASTER={version:BUILD,focus:'sales workspace overview'};})();
+(function(){'use strict';var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[50,250,800,1800,4000,7000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V768_COMPANY_MASTER={version:BUILD,focus:'sales workspace overview'};})();
 </script>
 
 <!-- CONNECT V768 FINAL BUILD AUTHORITY — true EOF authority -->
 <script id="connect-v768-final-build-authority-js">
-(function(){'use strict';var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'})}catch(e){}}enforce();[20,100,300,800,1800,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V768_FIX={version:BUILD,fix:'EOF-safe Company Master workspace injection'};})();
+(function(){'use strict';var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[20,100,300,800,1800,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V768_FIX={version:BUILD,fix:'EOF-safe Company Master workspace injection'};})();
 </script>
 
 
@@ -75525,7 +75539,7 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-performance-wrap{bor
 html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-expansion{background:radial-gradient(circle at 96% 0%,rgba(21,184,233,.16),transparent 31%),linear-gradient(145deg,#FFF8F3,#F1F8FB)!important;border-color:rgba(233,112,45,.22)!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-expansion-hot{background:linear-gradient(120deg,rgba(255,144,79,.16),rgba(27,184,227,.11),rgba(255,255,255,.58))!important;border-color:rgba(211,99,35,.20)!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-expansion-main p,html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-action-card p{color:#567183!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-proof{color:#A64C18!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-action-target{background:linear-gradient(135deg,#FFF7F1,#F4FAFC)!important;border-color:rgba(211,99,35,.16)!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-action-target strong{color:#0B2940!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-coverage-grid>div{background:linear-gradient(145deg,#FFFFFF,#E6F1F7)!important;border-color:rgba(42,98,131,.13)!important;box-shadow:inset 0 1px 0 #fff,0 8px 18px rgba(39,87,112,.05)!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-coverage-grid strong{color:#0B2940!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-empty-strategy{background:rgba(241,248,251,.72)!important;border-color:rgba(42,98,131,.16)!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-empty-strategy strong,html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-latest-note strong{color:#0B2940!important}html[data-rp-theme="light"] #rp-overlay .rp679-light .cm767-latest-note{background:linear-gradient(90deg,rgba(255,135,56,.08),rgba(255,255,255,.60))!important}
 @media(max-width:1380px){#rp-overlay .cm767-kpis{grid-template-columns:repeat(3,1fr)!important}#rp-overlay .cm767-coverage-grid{grid-template-columns:repeat(2,1fr)!important}}@media(max-width:900px){#rp-overlay .cm767-hero{padding:24px!important}#rp-overlay .cm767-hero h1{font-size:32px!important}#rp-overlay .cm767-overview>.cm758-card{padding:20px!important}#rp-overlay .cm767-expansion-hot{grid-template-columns:54px 1fr!important}#rp-overlay .cm767-signal-icon{width:52px!important;height:52px!important}.cm767-action-stack{grid-column:1/-1!important;flex-direction:row!important}}@media(max-width:680px){#rp-overlay .cm767-kpis{grid-template-columns:1fr!important}#rp-overlay .cm767-coverage-grid{grid-template-columns:1fr!important}}
 </style>
-<script id="connect-v769-final-build-authority-js">(function(){'use strict';var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V769_MASTER_VISUAL={version:BUILD,benchmark:'manager tracker command center',darkLightParity:true};})();</script>
+<script id="connect-v769-final-build-authority-js">(function(){'use strict';var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V769_MASTER_VISUAL={version:BUILD,benchmark:'manager tracker command center',darkLightParity:true};})();</script>
 
 <!-- ===== CONNECT V770 · REP READABILITY + CALM LIGHT NAV AUTHORITY ===== -->
 <style id="connect-v770-rep-readability-authority-css">
@@ -75681,7 +75695,7 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light .cw4-table-shell{
 }
 </style>
 <script id="connect-v770-final-build-authority-js">
-(function(){'use strict';var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V770_READABILITY={version:BUILD,goal:'18-to-60-plus rapid scan readability',lightNav:'blue-active-only',layoutChanges:false};})();
+(function(){'use strict';var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V770_READABILITY={version:BUILD,goal:'18-to-60-plus rapid scan readability',lightNav:'blue-active-only',layoutChanges:false};})();
 </script>
 
 <!-- ===== CONNECT V772 · LIGHT NAV AUTHORITY + DRAGGABLE COLUMN ORDER ===== -->
@@ -75884,7 +75898,7 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light .cw4-table-shell{
 })();
 </script>
 <script id="connect-v772-final-build-authority-js">
-(function(){'use strict';var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V772_UX={version:BUILD,lightNav:'quiet-until-active-blue',columnReorder:'drag-persist'};})();
+(function(){'use strict';var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V772_UX={version:BUILD,lightNav:'quiet-until-active-blue',columnReorder:'drag-persist'};})();
 </script>
 
 <!-- ===== CONNECT V776 · VISUAL HIERARCHY + READABILITY AUTHORITY ===== -->
@@ -76045,7 +76059,7 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light .cw4-table-shell{
 })();
 </script>
 <script id="connect-v776-final-build-authority-js">
-(function(){'use strict';var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});})();
+(function(){'use strict';var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});})();
 </script>
 
 
@@ -76423,12 +76437,12 @@ html:not([data-rp-theme="light"]) #rp-overlay .rp2-app.rp2-mode-phased #rp2-page
 <script id="connect-v776-global-visual-system-js">
 (function(){
  'use strict';
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
  function enforce(){
   try{
-   window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;
-   document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;
-   document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'});
+   window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+   window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();
+   document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});
@@ -76665,12 +76679,12 @@ html[data-rp-theme="light"] #rp-overlay .rp679-light #rp2-page :is(
 <script id="connect-v776-global-authority-js">
 (function(){
  'use strict';
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
  function enforce(){
   try{
-   window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;
-   document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;
-   document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V790'});
+   window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
+   window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();
+   document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}
  }
  enforce();[20,100,350,900,1900,4000,7000,10000,12000].forEach(function(ms){setTimeout(enforce,ms)});
@@ -76755,7 +76769,7 @@ html.connect-alex-standalone #rp-overlay{
    try{
      document.documentElement.classList.add('connect-alex-standalone');
      Array.prototype.forEach.call(document.body.children,function(el){
-       if(el.id==='rp-overlay'||el.tagName==='SCRIPT'||el.tagName==='STYLE'||el.matches('dialog,[role=dialog],[class*=modal],[class*=toast]'))return;
+       if(el.id==='rp-overlay'||el.id==='crown-bot-v789'||el.hasAttribute('data-connect-persistent')||el.tagName==='SCRIPT'||el.tagName==='STYLE'||el.matches('dialog,[role=dialog],[class*=modal],[class*=toast]'))return;
        el.setAttribute('data-connect-standalone-hidden','1');
        el.style.setProperty('display','none','important');
      });
@@ -76794,6 +76808,7 @@ html.connect-alex-standalone #rp-overlay{
        }
      }catch(e){}
 
+     window.CONNECT_DEMO_BOOT_ALLOW=true;
      window._rpSetSession({role:'rep',rep:REP,portal:'',standalone:true});
 
      if(window._rp2){
@@ -76815,15 +76830,10 @@ html.connect-alex-standalone #rp-overlay{
        applyVisualCanary();
        hideManagerShell();
        document.documentElement.classList.remove('connect-srep-prep');
-       document.title='Connect v789 — Alex Morgan Demo Sales Portal';
+       window.CONNECT_SET_RELEASE_TITLE();
      },0);
 
-     [100,350,900,1800].forEach(function(ms){
-       setTimeout(function(){
-         applyVisualCanary();
-         hideManagerShell();
-       },ms);
-     });
+     document.dispatchEvent(new CustomEvent('connect:demo-ready'));
 
      done=true;
      window.CONNECT_ALEX_STANDALONE_READY=true;
@@ -76834,8 +76844,7 @@ html.connect-alex-standalone #rp-overlay{
    }
  }
 
- setTimeout(takeover,0);
- window.addEventListener('load',function(){setTimeout(takeover,0)},{once:true});
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',takeover,{once:true});else takeover();
 })();
 </script>
 
@@ -77169,7 +77178,7 @@ html.connect-alex-standalone #rp-overlay{
   var app=document.querySelector('#rp-overlay .rp2-app'),user=app&&app.querySelector('.p639-user');
   if(user&&!user.querySelector('.connect-v777-utility')){
    var utility=document.createElement('div');utility.className='connect-v777-utility';
-   var version=document.createElement('span');version.className='connect-v777-version';version.textContent='DEMO · V790';
+   var version=document.createElement('span');version.className='connect-v777-version';window.CONNECT_SET_BUILD_BADGE(version);
    var btn=document.createElement('button');btn.type='button';btn.className='connect-v777-theme';
    btn.addEventListener('click',function(){if(typeof window._rp679ToggleTheme==='function')window._rp679ToggleTheme()});
    utility.append(version,btn);user.prepend(utility);
@@ -77195,7 +77204,7 @@ html.connect-alex-standalone #rp-overlay{
   // Resolve the displayed application revision without changing historical module IDs.
   if(app)app.querySelectorAll('[class$="-kick"],[class$="-kicker"],.rp2-build,.rp2-side-build').forEach(function(e){
    if(e.children.length)return;
-   var old=e.textContent,next=old.replace(/\bBUILD\s+V\d+\b/ig,'Build V790');
+   var old=e.textContent,next=old.replace(/\bBUILD\s+V\d+\b/ig,'Build '+window.CONNECT_RELEASE.display);
    if(next!==old)e.textContent=next;
   });
   // Accessible names for actual form fields; retain any explicit label/name already supplied.
@@ -78699,8 +78708,9 @@ window.CROWN_BOT_CSS=":host{all:initial;--ink:#15344d;--muted:#49637a;--blue:#23
     if (!host) return; connectActivity(); var o = document.getElementById('rp-overlay');
     if (o !== overlay) { if (overlayObserver) overlayObserver.disconnect(); overlay = o; if (o) { overlayObserver = new MutationObserver(syncVisibility); overlayObserver.observe(o, { attributes:true, attributeFilter:['style','class','hidden'], childList:true }); } }
     var visible = !!(o && o.querySelector('.rp2-app') && getComputedStyle(o).display !== 'none' && (!window._rp2 || !window._rp2.rep || window._rp2.rep === 'Alex Morgan'));
-    host.dataset.theme = document.documentElement.getAttribute('data-rp-theme') === 'dark' ? 'dark' : 'light';
-    host.style.setProperty('display', visible ? 'block' : 'none', 'important'); active = visible; if (active) { scheduleLayout(); maybeGreet(); }
+    var theme=document.documentElement.getAttribute('data-rp-theme')==='dark'?'dark':'light';
+    if(host.dataset.theme!==theme)host.dataset.theme=theme;
+    var display=visible?'block':'none';if(host.style.getPropertyValue('display')!==display)host.style.setProperty('display',display,'important'); active = visible; if (active) { scheduleLayout(); maybeGreet(); }
   }
   function maybeGreet() { if (welcomed || greetTimer) return; greetTimer = setTimeout(function () { greetTimer = 0; if (!active || welcomed) return; welcomed = true; persist(); if (!mode && !pref.hidden && !quiet()) deliver({ title:'Ready when you are.', text:'Want a quick plan for today?', kind:'welcome', source:'Your demo companion', actions:[{ label:'Plan my day', type:'ask', query:'Give me my morning briefing' }, { label:'Ask a question', type:'ask', query:'What can you do?' }] }); }, 1400); }
   function mount() {
@@ -78712,7 +78722,9 @@ window.CROWN_BOT_CSS=":host{all:initial;--ink:#15344d;--muted:#49637a;--blue:#23
     mascot = shadow.querySelector('.mascot'); mascot.querySelector('img').src = window.CROWN_BOT_ASSET || ''; speech = shadow.querySelector('.speech'); body = shadow.querySelector('.body'); thread = shadow.querySelector('.thread'); notice = shadow.querySelector('.notice-content'); settings = shadow.querySelector('.settings'); composer = shadow.querySelector('.composer'); input = shadow.querySelector('#crown-question'); status = shadow.querySelector('.action-status'); pending = shadow.querySelector('.queue-button'); crown = shadow.querySelector('.crown-toggle'); unread = shadow.querySelector('.unread'); subtitle = shadow.querySelector('.subtitle'); live = shadow.querySelector('[role="status"]');
     contextBar=el('div','context-bar'); contextBar.hidden=true; speech.querySelector('.head').after(contextBar);
     if(engine()&&engine().restoreContext){engine().restoreContext(context);context=engine().context();}
+    host.setAttribute('data-connect-persistent','crown');
     bind(); connectActivity(); render(); scheduleSnooze(); scheduleItems(); syncVisibility();
+    document.dispatchEvent(new CustomEvent('connect:crown-ready'));
     new MutationObserver(syncVisibility).observe(document.documentElement, { attributes:true, attributeFilter:['data-rp-theme','class'] });
     new MutationObserver(syncVisibility).observe(document.body, { childList:true });
     window.CrownBotDemo = { version:'v790', open:function () { openChat(); }, hide:function () { pref.hidden = true; savePrefs(); closePanel(false); }, show:function () { pref.hidden = false; savePrefs(); render(); }, trigger:trigger, ask:ask, size:function (s) { pref.size = typeof s === 'number' ? clamp(s, 128, 200) : { sm:128, md:164, lg:200 }[s] || 164; savePrefs(); render(); }, quiet:function (on) { pref.quiet = on !== false; savePrefs(); render(); }, debug:function () { return { mode:mode, queue:queue.length, history:history.length, active:active, preferences:Object.assign({}, pref), bot:currentBot }; } };
@@ -78741,8 +78753,6 @@ window.CROWN_BOT_CSS=":host{all:initial;--ink:#15344d;--muted:#49637a;--blue:#23
 })();
 </script>
 
-</body>
-</html>
 
 <style id="connect-v781-home-hub-css">
 /* V781: native HTML dashboard hub. Reuses the V777 dual-theme semantic palette.
@@ -79153,8 +79163,8 @@ window.CROWN_BOT_CSS=":host{all:initial;--ink:#15344d;--muted:#49637a;--blue:#23
 <script id="connect-v783-final-authority">
 (function(){
  'use strict';
- var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';
- function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge,.connect-v777-version').forEach(function(b){if(/build|local demo/i.test(b.textContent||''))b.textContent='Sales Portal · Build '+DISPLAY;});}catch(e){}}
+ var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
+ function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge,.connect-v777-version').forEach(function(b){if(/build|local demo/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b);});}catch(e){}}
  enforce();[20,100,350,900,1900,4000].forEach(function(ms){setTimeout(enforce,ms)});
 })();
 </script>
@@ -84258,8 +84268,8 @@ var month=H.month;H.month=function(){state().selected='';return month.apply(this
  }
 }
 </style>
-<script id="connect-v809-final-build-authority-js">
-(function(){'use strict';var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V809_LIST_BUILDER={version:BUILD,scope:'List Builder visual hierarchy + four-step UX refresh',logicPreserved:true};})();
+<script id="connect-v808-list-builder-release-js">
+(function(){'use strict';var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V809_LIST_BUILDER={version:BUILD,scope:'List Builder visual hierarchy + four-step UX refresh',logicPreserved:true};})();
 </script>
 
 
@@ -84651,7 +84661,7 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
 }
 </style>
 <script id="connect-v809-final-build-authority-js">
-(function(){'use strict';var BUILD='v810',DISPLAY='V810',TITLE='Connect v810 — Alex Morgan Demo Sales Portal';function enforce(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD_TITLE=TITLE;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title=TITLE;document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build '+DISPLAY})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V809_CALL_LISTS={version:BUILD,scope:'My Call Lists landing + open list visual unification',logicPreserved:true};})();
+(function(){'use strict';var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD_TITLE=window.CONNECT_RELEASE.title;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}enforce();[20,100,350,900,1900,4000,7000,10000].forEach(function(ms){setTimeout(enforce,ms)});window.CONNECT_V809_CALL_LISTS={version:BUILD,scope:'My Call Lists landing + open list visual unification',logicPreserved:true};})();
 </script>
 
 <!-- ===== CONNECT V810 · CROWN BOT PROJECT ASSISTANT ===== -->
@@ -84659,7 +84669,7 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
 (function(){
   'use strict';
 
-  var BUILD='v810', DISPLAY='V810';
+  var BUILD=window.CONNECT_RELEASE.version, DISPLAY=window.CONNECT_RELEASE.display;
   var STORE='connect.crown.projectAssistant.v810';
   var CHANGES='connect.crown.projectAssistant.changes.v810';
   var CHAT='connect.crown.projectAssistant.chat.v810';
@@ -84753,11 +84763,11 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
     }
     var root=document.querySelector('#rp-overlay #rp2-page')||document.querySelector('#rp-overlay');
     var headings=[], controls=[];
-    if(root){
+    if(root&&!extra.lightweight){
       Array.prototype.slice.call(root.querySelectorAll('h1,h2,h3')).forEach(function(el){if(visible(el)&&headings.length<18){var t=clean(el.textContent);if(t&&headings.indexOf(t)<0)headings.push(t)}});
       Array.prototype.slice.call(root.querySelectorAll('button,select,input,textarea')).forEach(function(el){if(!visible(el)||controls.length>=55)return;var t='';if(el.tagName==='BUTTON')t=clean(el.innerText||el.getAttribute('aria-label'));else{var id=el.id,lab=id&&root.querySelector('label[for="'+CSS.escape(id)+'"]');t=clean((lab&&lab.innerText)||el.getAttribute('aria-label')||el.placeholder||el.name||id)}if(t&&controls.indexOf(t)<0)controls.push(t)});
     }
-    var bodyText=root?clean(root.innerText):''; if(bodyText.length>18000)bodyText=bodyText.slice(0,18000)+' …';
+    var bodyText=root&&!extra.lightweight?clean(root.innerText):''; if(bodyText.length>18000)bodyText=bodyText.slice(0,18000)+' …';
     var specific=pageId==='call'?(section&&CALL_SECTIONS[section.split(' · ')[0]]||null):(PAGE_SECTIONS[pageId+':'+section]||null);
     if(pageId==='call'&&section.indexOf('List Builder')>=0){
       var parts=section.split(' · ');specific=CALL_SECTIONS[parts[parts.length-1]]||CALL_SECTIONS['List Builder'];
@@ -84917,7 +84927,7 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
     return '<div class="cpa-project" '+(s.mode==='project'?'':'hidden')+'><div class="cpa-h"><strong>Project Assistant</strong><span class="cpa-badge">'+list.length+' change'+(list.length===1?'':'s')+'</span></div><label class="cpa-field"><span>Meeting / session</span><input data-pa-field="meeting" value="'+esc(s.meeting)+'" placeholder="Management Demo Review"></label><label class="cpa-field"><span>Claude connection</span><select data-pa-field="connection"><option value="direct" '+(s.connection==='direct'?'selected':'')+'>Direct API key · prototype</option><option value="proxy" '+(s.connection==='proxy'?'selected':'')+'>Secure proxy · recommended</option></select></label>'+(s.connection==='direct'?'<label class="cpa-field"><span>Claude API key · this tab only</span><input data-pa-key type="password" value="'+esc(key)+'" autocomplete="off" placeholder="sk-ant-…"></label><div class="cpa-warning">Prototype only: a browser-held API key can be inspected by someone with access to this browser session. It is never written into this HTML file or localStorage. Project Assistant sends the current page/section snapshot to the configured Claude endpoint when you ask a question.</div>':'<label class="cpa-field"><span>Secure proxy URL</span><input data-pa-field="proxyUrl" value="'+esc(s.proxyUrl)+'" placeholder="https://…/claude"></label><p class="cpa-note">The proxy should keep the Claude key server-side and accept an Anthropic-style message body.</p>')+'<label class="cpa-field"><span>Claude model</span><input data-pa-field="model" value="'+esc(s.model)+'" placeholder="claude-sonnet-5"></label><label class="cpa-field" style="display:flex;align-items:center;gap:7px"><input data-pa-auto type="checkbox" '+(s.autoCapture?'checked':'')+' style="width:auto;min-height:0"><span style="margin:0">Automatically capture clear update requests</span></label><div class="cpa-actions"><button type="button" class="primary" data-pa-test>Test Claude</button><button type="button" data-pa-copy>Copy changes</button><button type="button" data-pa-export>Download CSV</button></div><div class="cpa-status" data-pa-status></div><div class="cpa-list">'+(recent.length?recent.map(function(x){return '<div class="cpa-change"><div><strong>'+esc(x.id+' · '+x.page+(x.section?' > '+x.section:''))+'</strong><p>'+esc(x.request)+'</p></div><button type="button" data-pa-remove="'+esc(x.id)+'" aria-label="Remove '+esc(x.id)+'">×</button></div>'}).join(''):'<div class="cpa-empty">No changes captured yet.</div>')+'</div></div>'
   }
   function updateModePresentation(host,sh){
-    if(!host||!sh)return;var s=currentSettings();host.dataset.crownMode=s.mode;
+    if(!host||!sh)return;var s=currentSettings();if(host.dataset.crownMode!==s.mode)host.dataset.crownMode=s.mode;
     var subtitle=sh.querySelector('.subtitle'),input=sh.querySelector('#crown-question'),hint=sh.querySelector('.composer-hint span:first-child');
     var subText=s.mode==='project'?'Project assistant · page aware':'Demo companion';
     var placeholder=s.mode==='project'?'Ask about this page or tell me what needs to change…':'What can I help you move forward?';
@@ -84968,10 +84978,12 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
     mode:function(v){if(v)saveSettings({mode:v});return currentSettings().mode}
   };
 
-  function enforceBuild(){try{window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v810 — Alex Morgan Demo Sales Portal';document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V810'})}catch(e){}}
+  function enforceBuild(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
   enforceBuild();
   [0,80,250,700,1500,3500,7000].forEach(function(ms){setTimeout(function(){enforceBuild();boot()},ms)});
-  var mo=new MutationObserver(function(){boot()});mo.observe(document.documentElement,{childList:true,subtree:true});
+  // The CROWN host is persistent; ordinary page mutations do not need to reboot it.
+  document.addEventListener('connect:crown-ready',boot);
+  document.addEventListener('DOMContentLoaded',boot,{once:true});
 })();
 </script>
 
@@ -84980,7 +84992,7 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
 (function(){
   'use strict';
 
-  var BUILD='v811', DISPLAY='V811';
+  var BUILD=window.CONNECT_RELEASE.version, DISPLAY=window.CONNECT_RELEASE.display;
   var CURRENT_KEY='connect.crown.meeting.current.v811';
   var HISTORY_KEY='connect.crown.meeting.history.v811';
   var PREF_KEY='connect.crown.meeting.preferences.v811';
@@ -85024,7 +85036,7 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
   function savePref(next){write(localStorage,PREF_KEY,Object.assign({},settings(),next||{}));refreshUi()}
   function assistant(){return window.CROWN_PROJECT_ASSISTANT_V810||null}
   function assistantSettings(){var a=assistant();try{return a&&a.settings?a.settings():{}}catch(e){return{}}}
-  function currentView(){var a=assistant();try{return a&&a.view?a.view({page:window._rp2&&window._rp2.page||'home'}):{pageId:'home',pageName:'Current page',section:'',headings:[],controls:[],visibleText:''}}catch(e){return{pageId:'home',pageName:'Current page',section:'',headings:[],controls:[],visibleText:''}}}
+  function currentView(){var a=assistant();try{return a&&a.view?a.view({page:window._rp2&&window._rp2.page||'home',lightweight:true}):{pageId:'home',pageName:'Current page',section:'',headings:[],controls:[],visibleText:''}}catch(e){return{pageId:'home',pageName:'Current page',section:'',headings:[],controls:[],visibleText:''}}}
   function isActive(){return !!(runtime.session&&runtime.session.status==='recording')}
   function isPaused(){return !!(runtime.session&&runtime.session.status==='paused')}
   function activeOrPaused(){return isActive()||isPaused()}
@@ -85155,6 +85167,8 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
     try{
       var r=new Ctor();runtime.recognition=r;r.continuous=true;r.interimResults=true;r.lang=settings().language||'en-US';r.maxAlternatives=1;
       r.onresult=function(evt){
+        if(!isActive())return;
+        runtime.speechRestarts=0;
         var interim='';
         for(var i=evt.resultIndex;i<evt.results.length;i++){
           var result=evt.results[i],alt=result&&result[0],txt=clean(alt&&alt.transcript||'');if(!txt)continue;
@@ -85164,10 +85178,11 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
       };
       r.onerror=function(evt){
         var code=evt&&evt.error||'speech error';
+        if(['not-allowed','service-not-allowed','audio-capture','language-not-supported'].indexOf(code)>=0)runtime.speechBlocked=true;
         if(code!=='no-speech'&&code!=='aborted')addEvent('system','Live transcription: '+code+'. Audio recording continues.',currentView(),{source:'browser'});
       };
       r.onend=function(){
-        if(isActive()&&!runtime.restartingRecognition){runtime.restartingRecognition=true;setTimeout(function(){runtime.restartingRecognition=false;if(isActive())startRecognition()},350)}
+        if(isActive()&&!runtime.speechBlocked&&!runtime.restartingRecognition){runtime.speechRestarts=(runtime.speechRestarts||0)+1;if(runtime.speechRestarts>8){runtime.speechBlocked=true;setMeetingStatus('Live transcription stopped after repeated service errors. Audio recording continues.');return;}runtime.restartingRecognition=true;setTimeout(function(){runtime.restartingRecognition=false;if(isActive()&&!runtime.speechBlocked)startRecognition()},Math.min(8000,1000*runtime.speechRestarts));}
       };
       r.start();
     }catch(e){addEvent('system','Live transcription could not start: '+clean(e.message||e)+'. Audio recording continues.',currentView(),{source:'browser'})}
@@ -85182,11 +85197,12 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
   function releaseAudioUrl(){if(runtime.audioUrl){try{URL.revokeObjectURL(runtime.audioUrl)}catch(e){}runtime.audioUrl=''}}
 
   async function startMeeting(){
-    if(activeOrPaused())return;
+    if(activeOrPaused()||runtime.starting||runtime.wrapBusy)return;
     var p=settings(),sh=shadowRoot();
     if(!p.consent){setMeetingStatus('Confirm the recording notice first.');return}
     if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){setMeetingStatus('This browser cannot record microphone audio. Use current Chrome/Edge on HTTPS or localhost.');return}
     try{
+      runtime.starting=true;runtime.speechBlocked=false;runtime.speechRestarts=0;
       releaseAudioUrl();runtime.audioBlob=null;runtime.chunks=[];
       var stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});runtime.stream=stream;
       var mime=recorderMime(),rec=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);runtime.recorder=rec;
@@ -85200,14 +85216,15 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
       runtime.lastViewKey='';persistNow();
       rec.start(1000);startRecognition();
       clearInterval(runtime.pageTimer);runtime.pageTimer=setInterval(pageWatcher,700);pageWatcher();
-      clearInterval(runtime.clockTimer);runtime.clockTimer=setInterval(refreshUi,500);
+      clearInterval(runtime.clockTimer);runtime.clockTimer=setInterval(refreshUi,1000);
       addEvent('system','Meeting recording started.',v,{source:'system'});
       setMeetingStatus('Recording · live page tracking is active.');
       setTimeout(function(){var s=shadowRoot(),input=s&&s.querySelector('#crown-question');if(input)input.focus()},250);
     }catch(e){
       if(runtime.stream){runtime.stream.getTracks().forEach(function(t){try{t.stop()}catch(_){}});runtime.stream=null}
+      if(runtime.session&&runtime.session.status==='recording'){runtime.session.status='interrupted';runtime.session.endedAt=iso();persistNow();}
       setMeetingStatus('Could not start microphone: '+clean(e.message||e));
-    }
+    }finally{runtime.starting=false;}
   }
 
   function pauseResume(){
@@ -85287,7 +85304,7 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
     if(runtime.analysisRunning||!isActive()||!runtime.session||!settings().autoNotes||!connected())return;
     ensureArrays();var start=runtime.session.analysisCursor||0,end=runtime.session.transcript.length;if(end<=start)return;
     var batch=runtime.session.transcript.slice(start,Math.min(end,start+10));if(!batch.length)return;
-    runtime.analysisRunning=true;renderLivePanel();
+    runtime.analysisRunning=true;refreshUi();
     try{
       var existing=(runtime.session.notes||[]).slice(-20).map(function(n){return n.type+': '+n.text}).join('\n');
       var body=batch.map(function(x,i){return 'SEGMENT '+i+' | '+fmtDuration(x.offset)+' | '+x.page+(x.section?' > '+x.section:'')+' | '+x.text}).join('\n');
@@ -85403,8 +85420,13 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
   }
   function ensureLivePanel(){
     var h=shadowHost(),sh=h&&h.shadowRoot;if(!h||!sh)return;addShadowCss(sh);var body=sh.querySelector('.body'),thread=sh.querySelector('.thread'),panel=sh.querySelector('.cpa-live-meeting');
-    if(!activeOrPaused()){if(panel)panel.remove();h.dataset.crownMeeting='';return}
-    h.dataset.crownMeeting=isPaused()?'paused':'active';var temp=document.createElement('div');temp.innerHTML=livePanelMarkup();var fresh=temp.firstElementChild;
+    if(!activeOrPaused()){if(panel)panel.remove();if(h.dataset.crownMeeting)h.dataset.crownMeeting='';return}
+    var state=isPaused()?'paused':'active';if(h.dataset.crownMeeting!==state)h.dataset.crownMeeting=state;
+    var list=runtime.session.events||[],last=list[list.length-1];
+    var signature=JSON.stringify([runtime.session.id,state,runtime.lastViewKey,list.length,last&&last.id,runtime.interim,runtime.analysisRunning]);
+    if(panel&&panel.__cpaSignature===signature){var clock=panel.querySelector('.cpa-live-time'),time=fmtDuration(msSince(runtime.session.startedAt));if(clock&&clock.textContent!==time)clock.textContent=time;return;}
+    var temp=document.createElement('div');temp.innerHTML=livePanelMarkup();var fresh=temp.firstElementChild;
+    if(fresh)fresh.__cpaSignature=signature;
     if(panel&&fresh)panel.replaceWith(fresh);else if(fresh&&body&&thread)body.insertBefore(fresh,thread)
   }
 
@@ -85423,10 +85445,14 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
       '<div class="cpa-meeting-status">'+esc(runtime.lastStatus||(!recognitionCtor()?'Live speech transcript unavailable in this browser; audio recording still works.':connected()?'Ready for live AI notes.':'Claude is not connected; CROWN can still record, transcribe, track pages, and capture obvious update requests locally.'))+'</div></div>';
   }
   function ensureMeetingSettings(){
-    var sh=shadowRoot();if(!sh)return;addShadowCss(sh);var project=sh.querySelector('.cpa-project');if(!project||project.hidden)return;var old=project.querySelector('.cpa-meeting-settings'),tmp=document.createElement('div');tmp.innerHTML=meetingSettingsMarkup();var fresh=tmp.firstElementChild;if(old&&fresh)old.replaceWith(fresh);else if(fresh)project.appendChild(fresh)
+    var sh=shadowRoot();if(!sh)return;addShadowCss(sh);var project=sh.querySelector('.cpa-project');if(!project||project.hidden)return;
+    var old=project.querySelector('.cpa-meeting-settings'),s=runtime.session,p=settings();
+    var signature=JSON.stringify([s&&s.id,s&&s.status,p.consent,p.autoNotes,s&&s.transcript&&s.transcript.length,s&&s.visited&&s.visited.length,s&&currentMeetingChanges(s).length,runtime.lastStatus,!!runtime.audioBlob,connected()]);
+    if(old&&old.__cpaSignature===signature){var clock=old.querySelector('.cpa-meeting-meta strong'),time=s?fmtDuration(new Date(s.endedAt||Date.now())-new Date(s.startedAt)):'00:00';if(clock&&clock.textContent!==time)clock.textContent=time;return;}
+    var tmp=document.createElement('div');tmp.innerHTML=meetingSettingsMarkup();var fresh=tmp.firstElementChild;if(fresh)fresh.__cpaSignature=signature;if(old&&fresh)old.replaceWith(fresh);else if(fresh)project.appendChild(fresh)
   }
 
-  function refreshUi(){ensureLivePanel();ensureMeetingSettings();var h=shadowHost();if(h)h.dataset.crownMeeting=isActive()?'active':isPaused()?'paused':''}
+  function refreshUi(){ensureLivePanel();ensureMeetingSettings();var h=shadowHost(),state=isActive()?'active':isPaused()?'paused':'';if(h&&h.dataset.crownMeeting!==state)h.dataset.crownMeeting=state;}
 
   function openControls(){
     var sh=shadowRoot();if(!sh)return;var btn=sh.querySelector('.crown-toggle');if(btn){btn.click();setTimeout(ensureMeetingSettings,40)}
@@ -85465,7 +85491,8 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
 
   loadInterruptedSession();
   [0,80,220,600,1200,2500,5000].forEach(function(ms){setTimeout(boot,ms)});
-  setInterval(function(){boot();if(activeOrPaused())refreshUi()},1000);
+  document.addEventListener('connect:crown-ready',boot);
+  document.addEventListener('DOMContentLoaded',boot,{once:true});
   window.addEventListener('beforeunload',function(){persistNow()});
 
   window.CROWN_MEETING_V811={
@@ -85485,9 +85512,11 @@ html[data-connect-ui="777"] #rp-overlay .c663-modal input{background:var(--ui-in
   };
 
   function enforceBuild(){try{
-    window.CONNECT_BUILD_AUTHORITY=BUILD;window.CONNECT_BUILD_DISPLAY=DISPLAY;window.CONNECT_BUILD=BUILD;window.TCP_BUILD_VERSION=BUILD;document.documentElement.setAttribute('data-connect-authoritative',BUILD);document.documentElement.setAttribute('data-connect-release',BUILD);document.documentElement.setAttribute('data-connect-build',BUILD);document.documentElement.setAttribute('data-tcp-build',BUILD);document.title='Connect v811 — Alex Morgan Demo Sales Portal';
-    document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))b.textContent='Sales Portal · Build V811'});
+    window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-release");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();
+    document.querySelectorAll('.rp-build-badge,.rp2-build,.rp2-side-build,.cux695-build-badge,.cux700-build-badge').forEach(function(b){if(/build/i.test(b.textContent||''))window.CONNECT_SET_BUILD_BADGE(b)});
   }catch(e){}}
-  window.CONNECT_ENFORCE_BUILD=enforceBuild;enforceBuild();[30,150,500,1200,3000,7000,12000].forEach(function(ms){setTimeout(enforceBuild,ms)});
+  window.CONNECT_ENFORCE_BUILD=window.CONNECT_SYNC_RELEASE;enforceBuild();[30,150,500,1200,3000,7000,12000].forEach(function(ms){setTimeout(enforceBuild,ms)});
 })();
 </script>
+</body>
+</html>
