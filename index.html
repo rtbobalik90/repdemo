@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v825">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v826">
 <head>
 <style id="connect-v824-my-day-style">
 /* V823: balance the original compact My Day layout with the calendar palette.
@@ -983,11 +983,11 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 </style>
 <!-- Connect v622: dashboard explainability layer + readable coaching metric provenance; retains v620 integrity and v621 readability -->
 <!-- v617 second sweep: removed unused globals/theme tokens after v616 cleanup; preserved v614 durable autosave + v615 full-state safety. -->
-<title>Connect v825 — CROWN & MAX</title>
+<title>Connect v826 — CROWN & MAX</title>
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v825',display:'V825',title:'Connect v825 — CROWN & MAX'});
+  var release=Object.freeze({version:'v826',display:'V826',title:'Connect v826 — CROWN & MAX'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -79677,7 +79677,7 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
   var PREF = 'tcp.crownbot.v788.Alex.preferences', SESSION = 'tcp.crownbot.v788.Alex.session';
   function storage(name) { try { return window[name]; } catch (_) { return null; } }
   var localStore = storage('localStorage'), sessionStore = storage('sessionStorage');
-  var defaults = { size:164, dock:'right', position:null, bubbleSide:'auto', bubbleSize:null, bubbleOffsetY:0, hidden:false, quiet:false, snoozeUntil:0 };
+  var defaults = { size:164, dock:'right', position:null, bubbleSide:'auto', bubblePaired:true, bubblePosition:null, bubbleSize:null, bubbleOffsetY:0, hidden:false, quiet:false, snoozeUntil:0 };
   function read(store, key, fallback) { try { return JSON.parse(store.getItem(key)) || fallback; } catch (_) { return fallback; } }
   function write(store, key, value) { try { store.setItem(key, JSON.stringify(value)); } catch (_) {} }
   var pref = Object.assign({}, defaults, read(localStore, PREF, {}));
@@ -79687,15 +79687,18 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
   else pref.bubbleSize={width:clamp(pref.bubbleSize.width,280,680),height:clamp(pref.bubbleSize.height,240,800)};
   pref.bubbleOffsetY=clamp(Number(pref.bubbleOffsetY)||0,-800,800);
   if(pref.position&&(!Number.isFinite(pref.position.x)||!Number.isFinite(pref.position.y)))pref.position=null;
+  pref.bubblePaired=pref.bubblePaired!==false;
+  if(pref.bubblePosition&&(!Number.isFinite(pref.bubblePosition.x)||!Number.isFinite(pref.bubblePosition.y)))pref.bubblePosition=null;
   var saved = read(sessionStore, SESSION, {}), history = Array.isArray(saved.history) ? saved.history.slice(-40) : [], queue = Array.isArray(saved.queue) ? saved.queue.slice(-20) : [];
   var seenEvents = Array.isArray(saved.seenEvents) ? saved.seenEvents.slice(-100) : [], activityService = null;
   var context = saved.context || {}, welcomed = !!saved.welcomed, mode = '', previousMode = '', currentNotice = null, busy = false, actionBusy = false;
-  var botSizer,bubbleSizer,resizing=null;
+  var bubbleSizer,resizing=null,panelDragging=null;
   var host, shadow, mascot, speech, body, thread, notice, settings, composer, input, status, pending, crown, unread, subtitle, live, contextBar, overlay, overlayObserver;
   var actions = new Map(), actionSeq = 0, layoutFrame = 0, greetTimer = 0, reactionTimer = 0, snoozeTimer = 0, itemTimer = 0, dragging = null, ignoreClick = false, active = false, currentBot = null;
   var icons = {
     crown:'<path d="m3 7 4 4 5-7 5 7 4-4-2 12H5L3 7Z"/><path d="M7 16h10"/>',
     resize:'<path d="M4 10V4h6M4 4l6 6m10 4v6h-6m6 0-6-6"/>',
+    link:'<path d="m10 13 4-4M8 15l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 3 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/>',
     swap:'<path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"/>',
     cap:'<path d="M5 14V9a7 7 0 0 1 14 0v5M3 14h17c3 0 3 4 0 4H3v-4ZM12 3v6"/>',
     close:'<path d="m6 6 12 12M18 6 6 18"/>', send:'<path d="m5 12 7-7 7 7M12 5v15"/>',
@@ -79719,7 +79722,7 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
   function setStatus(text) { status.textContent = text || ''; status.hidden = !text; announce(text); scheduleLayout(); }
   function viewport() { var v = window.visualViewport; return { x:v ? v.offsetLeft : 0, y:v ? v.offsetTop : 0, w:v ? v.width : innerWidth, h:v ? v.height : innerHeight }; }
   function scheduleLayout() { if (!layoutFrame) layoutFrame = requestAnimationFrame(function () { layoutFrame = 0; layout(); }); }
-  function placeBot(x, y, size) { currentBot = { x:x, y:y, w:size, h:size }; mascot.style.left = x + 'px'; mascot.style.top = y + 'px'; mascot.style.width = size + 'px'; mascot.style.height = size + 'px'; if(botSizer){botSizer.style.left=(x+4)+'px';botSizer.style.top=(y+4)+'px';botSizer.hidden=!!pref.hidden;} }
+  function placeBot(x, y, size) { currentBot = { x:x, y:y, w:size, h:size }; mascot.style.left = x + 'px'; mascot.style.top = y + 'px'; mascot.style.width = size + 'px'; mascot.style.height = size + 'px'; }
   function layout() {
     if (!host || !active) return;
     var v = viewport(), pad = 12, gap = 24, size = Math.min(pref.size, Math.max(72, v.w - 84), Math.max(68, v.h - 90));
@@ -79736,7 +79739,12 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
     speech.dataset.userSized=String(!!custom);speech.style.width=width+'px';speech.style.height=custom?cap+'px':'';speech.style.maxHeight=cap+'px';
     var measured=speech.getBoundingClientRect().height||cap;
     var result=computeLayout({viewport:{x:v.x,y:v.y,width:v.w,height:v.h},bot:{x:x,y:y,width:size,height:size},bubble:{width:width,height:measured,offsetY:pref.bubbleOffsetY},dock:pref.dock,bubbleSide:pref.bubbleSide});
-    placeBot(result.bot.x,result.bot.y,result.bot.width);
+    if(pref.bubblePaired)placeBot(result.bot.x,result.bot.y,result.bot.width);
+    else {
+      var free=pref.bubblePosition||{x:result.bubble.x,y:result.bubble.y};
+      result.bubble={x:clamp(free.x,v.x+pad,v.x+v.w-width-pad),y:clamp(free.y,v.y+pad,v.y+v.h-measured-pad),width:width,height:measured,side:'detached',tail:0};
+      result.maxHeight=cap;
+    }
     speech.style.maxHeight=Math.min(result.maxHeight,cap)+'px';if(custom)speech.style.height=result.bubble.height+'px';
     speech.dataset.side=result.bubble.side;speech.style.left=Math.round(result.bubble.x)+'px';speech.style.top=Math.round(result.bubble.y)+'px';speech.style.setProperty('--tail',result.bubble.tail+'px');
     var corner=result.bubble.side==='left'?'sw':'se';
@@ -79809,8 +79817,9 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
     var events = [['briefing','Daily brief'],['loyalty','Loyalty issue'],['email','Email'],['call','Call'],['order','Order'],['quote','Quote'],['production','Production'],['next','Next action']];
     var html = '<div class="setting-row companion-choice"><span class="setting-label">Your companion</span><div class="segments" role="group" aria-label="Choose your companion">'+[['crown','CROWN'],['max','MAX']].map(function(x){return '<button type="button" data-cmd="character" data-value="'+x[0]+'" aria-label="Choose '+x[1]+' Bot" aria-pressed="'+(window.ConnectCompanion.get()===x[0])+'">'+x[1]+'</button>';}).join('')+'</div></div><p class="setting-note">Your choice is saved on this browser.</p><p class="setting-title">Try a demo moment</p><div class="event-grid">' + events.map(function (x) { return '<button type="button" class="event-button" data-event="' + x[0] + '">' + icon(x[0]) + '<span>' + x[1] + '</span></button>'; }).join('') + '</div>';
     html += '<div class="setting-row"><span class="setting-label">Bot size</span><div class="segments" aria-label="Bot size">' + [[128,'Small'],[164,'Medium'],[280,'Large']].map(function (x) { return '<button type="button" data-cmd="size" data-value="' + x[0] + '" aria-pressed="' + (pref.size === x[0]) + '">' + x[1] + '</button>'; }).join('') + '</div></div>';
-    html += '<div class="setting-range"><label class="sr-only" for="companion-size">Bot size, 128 to 360 pixels</label><input id="companion-size" data-bot-size type="range" min="128" max="360" step="1" value="'+pref.size+'"><output data-size-value for="companion-size">'+pref.size+' px</output></div><p class="setting-note size-help">Drag the small arrow handle beside the bot to resize him.</p>';
-    html += '<div class="setting-row"><span class="setting-label">Text box side</span><div class="segments" role="group" aria-label="Text box side">'+['auto','left','right'].map(function(x){return '<button type="button" data-cmd="bubble-side" data-value="'+x+'" aria-pressed="'+(pref.bubbleSide===x)+'">'+x[0].toUpperCase()+x.slice(1)+'</button>';}).join('')+'</div></div><p class="setting-note size-help">Use the arrow in the text box header to swap sides. On small screens, it fits above or below.</p><button type="button" class="text-button layout-reset" data-cmd="reset-layout">Reset size and placement</button>';
+    html += '<div class="setting-range"><label class="sr-only" for="companion-size">Bot size, 128 to 360 pixels</label><input id="companion-size" data-bot-size type="range" min="128" max="360" step="1" value="'+pref.size+'"><output data-size-value for="companion-size">'+pref.size+' px</output></div><p class="setting-note size-help">Choose a size here. Drag the bot itself to move him.</p>';
+    html += '<div class="setting-row"><span class="setting-label">Chat connection<span class="setting-note" data-pair-note></span></span><button type="button" class="bubble-pair" data-cmd="bubble-pair">'+icon('link')+'<span>Unpair</span></button></div>';
+    html += '<div class="setting-row"><span class="setting-label">Text box side</span><div class="segments" role="group" aria-label="Text box side">'+['auto','left','right'].map(function(x){return '<button type="button" data-cmd="bubble-side" data-value="'+x+'" aria-pressed="'+(pref.bubbleSide===x)+'">'+x[0].toUpperCase()+x.slice(1)+'</button>';}).join('')+'</div></div><p class="setting-note size-help" data-side-note></p><button type="button" class="text-button layout-reset" data-cmd="reset-layout">Reset size and placement</button>';
     html += '<div class="setting-row"><span class="setting-label">Home corner<span class="setting-note">You can also drag him.</span></span><div class="segments" aria-label="Home corner">' + ['left','right'].map(function (x) { return '<button type="button" data-cmd="dock" data-value="' + x + '" aria-pressed="' + (pref.dock === x && !pref.position) + '">' + x[0].toUpperCase() + x.slice(1) + '</button>'; }).join('') + '</div></div>';
     html += '<div class="setting-row"><span class="setting-label">Quiet mode<span class="setting-note">Updates wait until you ask.</span></span><button type="button" class="switch" data-cmd="quiet" aria-label="Quiet mode" aria-pressed="' + !!pref.quiet + '"></button></div>';
     html += '<div class="setting-row"><span class="setting-label">' + (pref.snoozeUntil > Date.now() ? 'Notifications snoozed' : 'Pause notifications') + '<span class="setting-note">' + (pref.snoozeUntil > Date.now() ? 'Resume whenever you are ready.' : 'Take 15 minutes of focus time.') + '</span></span><button type="button" class="chip" data-cmd="' + (pref.snoozeUntil > Date.now() ? 'resume' : 'snooze') + '">' + (pref.snoozeUntil > Date.now() ? 'Resume' : 'Snooze') + '</button></div>';
@@ -79831,7 +79840,7 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
     const badge=crown.querySelector('svg');if(badge&&badge.dataset.character!==window.ConnectCompanion.get()){badge.outerHTML=icon(window.ConnectCompanion.get()==='max'?'cap':'crown');crown.querySelector('svg').dataset.character=window.ConnectCompanion.get();}
     shadow.querySelector('[data-cmd="close"]').setAttribute('aria-label','Close '+botName()+' bubble');
     shadow.querySelector('label[for="crown-question"]').textContent='Ask '+botName();
-    botSizer.hidden=!!pref.hidden;refreshSizeControls();
+    refreshSizeControls();updatePairControls();
     updateCounts(); scheduleLayout(); if(window.CrownMotion)window.CrownMotion.emit('ui',{mode:mode,busy:busy,quiet:quiet(),hidden:pref.hidden});
     if(mode==='settings' && focusCommand) { var nextFocus=Array.from(settings.querySelectorAll('button[data-cmd]')).find(function(b){return b.dataset.cmd===focusCommand && b.dataset.value===focusValue;});if(nextFocus)nextFocus.focus({preventScroll:true}); }
   }
@@ -79897,9 +79906,10 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
     else if (command === 'snooze-item') snoozeItem();
     else if (command === 'resume') { pref.snoozeUntil = 0; savePrefs(); scheduleSnooze(); render(); }
     else if (command === 'character') { var choice=window.ConnectCompanion.set(button.dataset.value);if(!choice.ok)setStatus('Choose CROWN or MAX.');else if(!choice.persisted)setStatus('Character changed for this session. Browser storage could not save your choice.'); }
+    else if(command==='bubble-pair')togglePair();
     else if(command==='bubble-side')setBubbleSide(button.dataset.value);
     else if(command==='bubble-swap')setBubbleSide(button.dataset.value);
-    else if(command==='reset-layout'){pref.size=164;pref.dock='right';pref.position=null;pref.bubbleSide='auto';pref.bubbleSize=null;pref.bubbleOffsetY=0;savePrefs();render();announce('Size and placement reset.');}
+    else if(command==='reset-layout'){pref.size=164;pref.dock='right';pref.position=null;pref.bubbleSide='auto';pref.bubblePaired=true;pref.bubblePosition=null;pref.bubbleSize=null;pref.bubbleOffsetY=0;savePrefs();render();announce('Size and placement reset.');}
     else if (command === 'size') { pref.size = Number(button.dataset.value); savePrefs(); render(); }
     else if (command === 'dock') { pref.dock = button.dataset.value; pref.position = null; savePrefs(); render(); }
     else if (command === 'reset-settings') { pref = Object.assign({},defaults); window.ConnectCompanion.set('crown'); savePrefs(); scheduleSnooze(); render(); setStatus('Companion settings reset.'); }
@@ -79912,63 +79922,114 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
     var range=shadow.querySelector('[data-bot-size]'),out=shadow.querySelector('[data-size-value]');
     if(range)range.value=pref.size;if(out)out.textContent=pref.size+' px';
     shadow.querySelectorAll('[data-cmd="size"]').forEach(function(b){b.setAttribute('aria-pressed',String(Number(b.dataset.value)===pref.size));});
-    botSizer.setAttribute('aria-label','Resize '+botName()+', '+pref.size+' pixels. Drag up and left to enlarge, or use arrow keys.');
   }
   function setBubbleSide(side){
+    if(!pref.bubblePaired)return;
     pref.bubbleSide=side;pref.bubbleOffsetY=0;savePrefs();
     if(mode==='settings')render();else scheduleLayout();
     announce('Text box set to the '+side+' side. It will fit above or below on smaller screens.');
   }
+  function updatePairControls(){
+    if(!speech)return;
+    var paired=pref.bubblePaired;
+    speech.dataset.paired=String(paired);
+    shadow.querySelectorAll('[data-cmd="bubble-pair"]').forEach(function(b){
+      b.querySelector('span').textContent=paired?'Unpair':'Pair';
+      b.title=paired?'Unpair the text box to move it independently':'Pair the text box with '+botName();
+      b.setAttribute('aria-label',b.title);
+    });
+    shadow.querySelector('[data-cmd="bubble-swap"]').hidden=!paired;
+    shadow.querySelector('[data-drag-hint]').hidden=paired;
+    shadow.querySelectorAll('[data-cmd="bubble-side"]').forEach(function(b){b.disabled=!paired;});
+    var note=shadow.querySelector('[data-pair-note]');
+    if(note)note.textContent=paired?'The text box follows the bot.':'Drag the text box by its header. The bot moves separately.';
+    var side=shadow.querySelector('[data-side-note]');
+    if(side)side.textContent=paired?'Use Left / Right to swap sides. On small screens, the box fits above or below.':'Pair the text box to use Left / Right placement.';
+    var head=speech.querySelector('.head');head.tabIndex=paired?-1:0;
+    head.title=paired?'':'Drag to move the text box. Arrow keys also work.';
+    head.setAttribute('aria-label',paired?botName()+' header':'Move text box: drag this header or use arrow keys. Hold Shift for larger steps.');
+  }
+  function togglePair(){
+    // Freeze both visible positions before separating them; pairing must not move the bot.
+    layout();
+    if(currentBot)pref.position={x:currentBot.x,y:currentBot.y};
+    if(pref.bubblePaired){var r=speech.getBoundingClientRect();pref.bubblePosition={x:r.left,y:r.top};}
+    pref.bubblePaired=!pref.bubblePaired;pref.bubbleOffsetY=0;
+    savePrefs();updatePairControls();layout();
+    announce(pref.bubblePaired?'Paired. The text box follows the bot.':'Unpaired. Drag the text box by its header; move the bot separately.');
+  }
+  function bindPanelDrag(){
+    var head=speech.querySelector('.head');
+    function saveVisiblePosition(){var rect=speech.getBoundingClientRect();pref.bubblePosition={x:rect.left,y:rect.top};savePrefs();}
+    function finish(e,cancel){
+      var move=panelDragging;if(!move||(e&&e.pointerId!==move.id))return;
+      panelDragging=null;delete speech.dataset.dragging;
+      if(cancel){pref.bubblePosition=move.saved;scheduleLayout();}
+      else if(move.moved){saveVisiblePosition();announce('Text box position saved.');}
+      if(head.hasPointerCapture&&head.hasPointerCapture(move.id))head.releasePointerCapture(move.id);
+      if(cancel)announce('Move canceled.');
+    }
+    head.addEventListener('pointerdown',function(e){
+      if(pref.bubblePaired||e.button!==0||panelDragging||dragging||resizing||e.target.closest('button,input,textarea,select,a'))return;
+      var r=speech.getBoundingClientRect();
+      panelDragging={id:e.pointerId,x:e.clientX,y:e.clientY,left:r.left,top:r.top,moved:false,saved:pref.bubblePosition&&Object.assign({},pref.bubblePosition)};
+      e.preventDefault();e.stopPropagation();head.focus({preventScroll:true});head.setPointerCapture(e.pointerId);
+    });
+    head.addEventListener('pointermove',function(e){
+      var move=panelDragging;if(!move||e.pointerId!==move.id)return;
+      var dx=e.clientX-move.x,dy=e.clientY-move.y;if(Math.abs(dx)+Math.abs(dy)>5)move.moved=true;
+      if(!move.moved)return;e.preventDefault();speech.dataset.dragging='true';
+      pref.bubblePosition={x:move.left+dx,y:move.top+dy};layout();
+    });
+    head.addEventListener('pointerup',function(e){finish(e,false);});
+    head.addEventListener('pointercancel',function(e){finish(e,true);});
+    head.addEventListener('lostpointercapture',function(e){if(panelDragging)finish(e,true);});
+    head.addEventListener('keydown',function(e){
+      if(e.target!==head)return;
+      if(e.key==='Escape'&&panelDragging){e.preventDefault();e.stopPropagation();finish(null,true);return;}
+      if(pref.bubblePaired||!/^Arrow(Left|Right|Up|Down)$/.test(e.key))return;
+      e.preventDefault();e.stopPropagation();var r=speech.getBoundingClientRect(),step=e.shiftKey?40:10;
+      pref.bubblePosition={x:r.left+(e.key==='ArrowRight'?step:e.key==='ArrowLeft'?-step:0),y:r.top+(e.key==='ArrowDown'?step:e.key==='ArrowUp'?-step:0)};
+      layout();saveVisiblePosition();announce('Text box moved.');
+    });
+    window.addEventListener('blur',function(){if(panelDragging)finish(null,true);});
+  }
   function bindSizing(){
     function begin(e){
-      if(e.button!==0||resizing||dragging||!currentBot)return;
-      var kind=this===botSizer?'bot':'bubble',r=speech.getBoundingClientRect();
-      resizing={id:e.pointerId,handle:this,kind:kind,x:e.clientX,y:e.clientY,bot:Object.assign({},currentBot),
-        width:r.width,height:r.height,top:r.top,side:speech.dataset.side,corner:this.dataset.corner||'se',
-        saved:{size:pref.size,position:pref.position&&Object.assign({},pref.position),bubbleSize:pref.bubbleSize&&Object.assign({},pref.bubbleSize),bubbleOffsetY:pref.bubbleOffsetY}};
+      if(e.button!==0||resizing||dragging||panelDragging||!currentBot)return;
+      var r=speech.getBoundingClientRect();
+      resizing={id:e.pointerId,handle:this,kind:'bubble',x:e.clientX,y:e.clientY,bot:Object.assign({},currentBot),
+        width:r.width,height:r.height,top:r.top,corner:this.dataset.corner||'se',
+        saved:{bubbleSize:pref.bubbleSize&&Object.assign({},pref.bubbleSize),bubbleOffsetY:pref.bubbleOffsetY}};
       e.preventDefault();e.stopPropagation();this.focus({preventScroll:true});this.setPointerCapture(e.pointerId);
-      host.dataset.resizing=kind;
+      host.dataset.resizing='bubble';
     }
     function move(e){
-      var r=resizing;if(!r||r.handle!==this||r.id!==e.pointerId)return;e.preventDefault();
+      var r=resizing;if(!r||r.id!==e.pointerId)return;e.preventDefault();
       var dx=e.clientX-r.x,dy=e.clientY-r.y,v=viewport();
-      if(r.kind==='bot'){
-        var maximum=Math.min(360,Math.max(128,v.w-24),Math.max(128,v.h-90));
-        pref.size=Math.round(clamp(r.bot.w-(dx+dy)/2,128,maximum));
-        pref.position={x:r.bot.x+r.bot.w-pref.size,y:r.bot.y+r.bot.h-pref.size};
-      }else{
-        pref.bubbleSize={width:Math.round(clamp(r.width+(r.corner==='sw'?-dx:dx),Math.min(280,v.w-24),Math.min(680,v.w-24))),
-          height:Math.round(clamp(r.height+dy,Math.min(240,v.h-24),Math.min(800,v.h-24)))};
-        // Keep the top edge steady while a lower corner is dragged.
-        pref.bubbleOffsetY=r.top+pref.bubbleSize.height/2-r.bot.y-r.bot.h/2;
-      }
-      refreshSizeControls();layout();
+      pref.bubbleSize={width:Math.round(clamp(r.width+(r.corner==='sw'?-dx:dx),Math.min(280,v.w-24),Math.min(680,v.w-24))),
+        height:Math.round(clamp(r.height+dy,Math.min(240,v.h-24),Math.min(800,v.h-24)))};
+      if(pref.bubblePaired)pref.bubbleOffsetY=r.top+pref.bubbleSize.height/2-r.bot.y-r.bot.h/2;
+      layout();
     }
     function finish(e,cancel){
       var r=resizing;if(!r||(e&&r.id!==e.pointerId))return;
       resizing=null;delete host.dataset.resizing;
       if(cancel)Object.assign(pref,r.saved);else savePrefs();
       if(r.handle.hasPointerCapture&&r.handle.hasPointerCapture(r.id))r.handle.releasePointerCapture(r.id);
-      refreshSizeControls();scheduleLayout();
-      announce(cancel?'Resize canceled.':r.kind==='bot'?'Bot size saved: '+pref.size+' pixels.':'Text box size saved.');
+      scheduleLayout();announce(cancel?'Resize canceled.':'Text box size saved.');
     }
-    [botSizer,bubbleSizer].forEach(function(handle){
-      handle.addEventListener('pointerdown',begin);handle.addEventListener('pointermove',move);
-      handle.addEventListener('pointerup',function(e){finish(e,false);});
-      handle.addEventListener('pointercancel',function(e){finish(e,true);});
-      handle.addEventListener('lostpointercapture',function(e){if(resizing)finish(e,true);});
-      handle.addEventListener('keydown',function(e){
-        if(e.key==='Escape'&&resizing){e.preventDefault();e.stopPropagation();finish(null,true);return;}
-        if(!/^Arrow(Left|Right|Up|Down)$/.test(e.key))return;
-        e.preventDefault();e.stopPropagation();var step=e.shiftKey?24:8;
-        if(handle===botSizer){pref.size=clamp(pref.size+((e.key==='ArrowUp'||e.key==='ArrowRight')?step:-step),128,360);}
-        else{var rect=speech.getBoundingClientRect(),s={width:rect.width,height:rect.height};
-          if(e.key==='ArrowLeft'||e.key==='ArrowRight')s.width=clamp(s.width+(e.key==='ArrowRight'?step:-step),280,680);
-          else s.height=clamp(s.height+(e.key==='ArrowDown'?step:-step),240,800);
-          pref.bubbleSize=s;
-        }
-        savePrefs();refreshSizeControls();scheduleLayout();announce(handle===botSizer?'Bot size: '+pref.size+' pixels.':'Text box resized.');
-      });
+    bubbleSizer.addEventListener('pointerdown',begin);bubbleSizer.addEventListener('pointermove',move);
+    bubbleSizer.addEventListener('pointerup',function(e){finish(e,false);});
+    bubbleSizer.addEventListener('pointercancel',function(e){finish(e,true);});
+    bubbleSizer.addEventListener('lostpointercapture',function(e){if(resizing)finish(e,true);});
+    bubbleSizer.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&resizing){e.preventDefault();e.stopPropagation();finish(null,true);return;}
+      if(!/^Arrow(Left|Right|Up|Down)$/.test(e.key))return;
+      e.preventDefault();e.stopPropagation();var step=e.shiftKey?24:8,rect=speech.getBoundingClientRect(),s={width:rect.width,height:rect.height};
+      if(e.key==='ArrowLeft'||e.key==='ArrowRight')s.width=clamp(s.width+(e.key==='ArrowRight'?step:-step),280,680);
+      else s.height=clamp(s.height+(e.key==='ArrowDown'?step:-step),240,800);
+      pref.bubbleSize=s;savePrefs();scheduleLayout();announce('Text box resized.');
     });
     shadow.addEventListener('input',function(e){if(e.target.matches('[data-bot-size]')){pref.size=clamp(Number(e.target.value),128,360);refreshSizeControls();scheduleLayout();}});
     shadow.addEventListener('change',function(e){if(e.target.matches('[data-bot-size]')){savePrefs();announce('Bot size saved: '+pref.size+' pixels.');}});
@@ -79976,7 +80037,7 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
   }
 
   function bind() {
-    bindSizing();
+    bindSizing();bindPanelDrag();
     shadow.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
       if (b === mascot) { if (ignoreClick) { ignoreClick = false; return; } if (mode === 'chat') closePanel(); else openChat(); return; }
@@ -79989,7 +80050,7 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
     composer.addEventListener('submit', function (e) { e.preventDefault(); var q = input.value; if (!q.trim() || busy) return; input.value = ''; input.style.height = 'auto'; ask(q); });
     input.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); composer.requestSubmit(); } });
     shadow.addEventListener('keydown', function (e) { if(e.key === 'Tab') e.stopPropagation(); if (e.key === 'Escape' && mode) { e.preventDefault(); e.stopPropagation(); closePanel(); } });
-    mascot.addEventListener('pointerdown', function (e) { if (e.button !== 0 || !currentBot || resizing) return; dragging = { id:e.pointerId, x:e.clientX, y:e.clientY, bx:currentBot.x, by:currentBot.y, moved:false }; ignoreClick = false; mascot.setPointerCapture(e.pointerId); });
+    mascot.addEventListener('pointerdown', function (e) { if (e.button !== 0 || !currentBot || resizing || panelDragging) return; dragging = { id:e.pointerId, x:e.clientX, y:e.clientY, bx:currentBot.x, by:currentBot.y, moved:false }; ignoreClick = false; mascot.setPointerCapture(e.pointerId); });
     mascot.addEventListener('pointermove', function (e) { if (!dragging || dragging.id !== e.pointerId) return; var dx = e.clientX - dragging.x, dy = e.clientY - dragging.y; if (Math.abs(dx) + Math.abs(dy) > 5) dragging.moved = true; if (!dragging.moved) return; mascot.dataset.dragging = 'true'; pref.position = { x:dragging.bx + dx, y:dragging.by + dy }; layout(); });
     function endDrag(e) { if (!dragging || dragging.id !== e.pointerId) return; ignoreClick = dragging.moved; if (dragging.moved && currentBot) { pref.position = { x:currentBot.x, y:currentBot.y }; savePrefs(); } dragging = null; mascot.dataset.dragging = 'false';setTimeout(function(){ignoreClick=false;},0); }
     mascot.addEventListener('pointerup', endDrag); mascot.addEventListener('pointercancel', endDrag);
@@ -80009,11 +80070,11 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
   function mount() {
     if (host || !document.body) return;
     host = document.createElement('div'); host.id = 'crown-bot-v789'; host.style.cssText = 'position:fixed!important;inset:0!important;pointer-events:none!important;z-index:2147483620!important;display:none!important;'; shadow = host.attachShadow({ mode:'open' });
-    var style = document.createElement('style'); style.textContent = window.CROWN_BOT_CSS || (document.getElementById('connect-v789-crown-bot-css') || {}).textContent || ''; style.textContent += "/* Companion layout controls stay inside the companion shadow root. */\n.resize-bot{position:fixed;z-index:4;display:grid;place-items:center;width:36px;height:36px;padding:7px;border:1px solid var(--line);border-radius:12px;background:var(--glass);color:var(--blue);box-shadow:0 2px 8px rgba(25,65,120,.12);pointer-events:auto;touch-action:none;cursor:nwse-resize;}\n.resize-bot svg{width:20px;height:20px}.resize-bot:hover{background:var(--field)}\n.panel-sizebar{display:flex;align-items:center;justify-content:flex-end;flex:none;height:32px;border-top:1px solid var(--line);background:var(--soft);padding:0 5px 0 12px;color:var(--muted);font-size:10px;gap:8px;}\n.resize-bubble{display:grid;place-items:center;flex:none;width:36px;height:30px;padding:5px;border-radius:8px;background:transparent;color:var(--blue);cursor:nwse-resize;touch-action:none;}\n.resize-bubble:hover{background:var(--field)}\n.speech[data-side=\"left\"] .panel-sizebar{flex-direction:row-reverse;padding:0 12px 0 5px;}\n.resize-bubble[data-corner=\"sw\"]{cursor:nesw-resize}.resize-bubble[data-corner=\"sw\"] svg{transform:scaleX(-1)}\n.speech[data-user-sized=\"true\"] .glass{height:100%;max-height:100%;}\n.speech[data-user-sized=\"true\"] .body{flex:1 1 auto;}\n.speech[data-user-sized=\"true\"] .thread,.speech[data-user-sized=\"true\"] .settings,.speech[data-user-sized=\"true\"] .notice-content{max-height:none;flex:1 1 auto;min-height:0;}\n.bubble-swap{font-size:11px;font-weight:650;display:flex;align-items:center;gap:4px;padding:5px 7px;min-height:32px;flex:none;background:var(--soft);border:1px solid var(--line);border-radius:9px;color:var(--blue);}\n.bubble-swap svg{width:16px;height:16px}.bubble-swap:hover{background:var(--field)}\n.setting-range{display:flex;align-items:center;gap:9px;padding:0 0 10px;}.setting-range input{flex:1;min-width:0;width:100%;accent-color:var(--blue);height:28px;}.setting-range output{font-size:11px;min-width:43px;text-align:right;color:var(--muted);}\n.size-help{margin:0 0 10px;line-height:1.45;}.layout-reset{margin:4px 0 12px;}\n:host([data-resizing]){user-select:none;}\n"; shadow.appendChild(style);
-    var wrapper = el('div'); wrapper.innerHTML = '<button type="button" class="mascot" aria-label="Talk to Crown Bot" aria-expanded="false" title="Click to talk, or drag to move Crown Bot"><img alt="" draggable="false"><span class="unread" hidden></span></button><section class="speech" aria-label="Crown Bot companion" hidden><div class="glass"><header class="head"><div class="identity"><span class="presence" aria-hidden="true"></span><div><h2>Crown Bot</h2><span class="subtitle">Demo companion</span></div></div><button type="button" class="bubble-swap" data-cmd="bubble-swap" data-value="left" aria-label="Move text box to the left">' + icon('swap') + '<span>Left</span></button><button type="button" class="icon-btn" data-cmd="close" aria-label="Close Crown Bot bubble" title="Close bubble">' + icon('close') + '</button></header><div class="body"><div class="thread" role="log" aria-label="Conversation" aria-live="off"></div><div class="notice-content" hidden></div><div class="settings" hidden></div></div><div class="action-status" hidden></div><button type="button" class="queue-button" data-cmd="next-notice" hidden></button><form class="composer"><div class="compose-row"><label class="sr-only" for="crown-question">Ask Crown Bot</label><textarea id="crown-question" rows="1" maxlength="4000" placeholder="What can I help you move forward?" autocomplete="off"></textarea><button type="submit" class="send" aria-label="Send question">' + icon('send') + '</button></div><div class="composer-hint"><span>Demo records · review before using</span><span>Enter to ask</span></div></form><div class="panel-sizebar"><span>Drag corner to resize</span><button type="button" class="resize-bubble" data-corner="se" aria-label="Resize text box. Drag corner, or use arrow keys." title="Drag to resize text box · arrow keys also work">' + icon('resize') + '</button></div></div></section><button type="button" class="resize-bot" aria-label="Resize bot" title="Drag up and left to enlarge the bot · arrow keys also work">' + icon('resize') + '</button><button type="button" class="crown-toggle" data-cmd="settings" aria-label="Crown Bot controls and demo events" aria-expanded="false" title="Crown Bot controls">' + icon('crown') + '<span class="crown-dot" hidden></span></button><div class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>';
+    var style = document.createElement('style'); style.textContent = window.CROWN_BOT_CSS || (document.getElementById('connect-v789-crown-bot-css') || {}).textContent || ''; style.textContent += "/* Companion layout controls stay inside the companion shadow root. */\n.panel-sizebar{display:flex;align-items:center;justify-content:flex-end;flex:none;height:32px;border-top:1px solid var(--line);background:var(--soft);padding:0 5px 0 12px;color:var(--muted);font-size:10px;gap:8px;}\n.resize-bubble{display:grid;place-items:center;flex:none;width:36px;height:30px;padding:5px;border-radius:8px;background:transparent;color:var(--blue);cursor:nwse-resize;touch-action:none;}\n.resize-bubble:hover{background:var(--field)}\n.speech[data-side=\"left\"] .panel-sizebar{flex-direction:row-reverse;padding:0 12px 0 5px;}\n.resize-bubble[data-corner=\"sw\"]{cursor:nesw-resize}.resize-bubble[data-corner=\"sw\"] svg{transform:scaleX(-1)}\n.speech[data-user-sized=\"true\"] .glass{height:100%;max-height:100%;}\n.speech[data-user-sized=\"true\"] .body{flex:1 1 auto;}\n.speech[data-user-sized=\"true\"] .thread,.speech[data-user-sized=\"true\"] .settings,.speech[data-user-sized=\"true\"] .notice-content{max-height:none;flex:1 1 auto;min-height:0;}\n.bubble-swap{font-size:11px;font-weight:650;display:flex;align-items:center;gap:4px;padding:5px 7px;min-height:32px;flex:none;background:var(--soft);border:1px solid var(--line);border-radius:9px;color:var(--blue);}\n.bubble-swap svg{width:16px;height:16px}.bubble-swap:hover{background:var(--field)}\n.setting-range{display:flex;align-items:center;gap:9px;padding:0 0 10px;}.setting-range input{flex:1;min-width:0;width:100%;accent-color:var(--blue);height:28px;}.setting-range output{font-size:11px;min-width:43px;text-align:right;color:var(--muted);}\n.size-help{margin:0 0 10px;line-height:1.45;}.layout-reset{margin:4px 0 12px;}\n:host([data-resizing]){user-select:none;}\n.companion-tools{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 15px 10px;flex:none;}\n.bubble-pair{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:32px;padding:5px 9px;border:1px solid var(--line);border-radius:9px;background:var(--soft);color:var(--blue);font-size:11px;font-weight:650;}\n.bubble-pair svg{width:16px;height:16px;}.bubble-pair:hover{background:var(--field);}\n.drag-hint{color:var(--muted);font-size:11px;}\n.speech[data-paired=\"false\"]::after{display:none;}\n.speech[data-paired=\"false\"] .head{cursor:grab;touch-action:none;user-select:none;}\n.speech[data-dragging=\"true\"] .head{cursor:grabbing;}\n.head:focus-visible{outline:3px solid #4f8cf6;outline-offset:-4px;border-radius:18px 18px 8px 8px;}\n.segments button:disabled{cursor:default;}\n.speech[data-paired=\"false\"] .subtitle{font-size:10.5px;}\n"; shadow.appendChild(style);
+    var wrapper = el('div'); wrapper.innerHTML = '<button type="button" class="mascot" aria-label="Talk to Crown Bot" aria-expanded="false" title="Click to talk, or drag to move Crown Bot"><img alt="" draggable="false"><span class="unread" hidden></span></button><section class="speech" aria-label="Crown Bot companion" hidden><div class="glass"><header class="head"><div class="identity"><span class="presence" aria-hidden="true"></span><div><h2>Crown Bot</h2><span class="subtitle">Demo companion</span></div></div><button type="button" class="icon-btn" data-cmd="close" aria-label="Close Crown Bot bubble" title="Close bubble">' + icon('close') + '</button></header><div class="companion-tools"><button type="button" class="bubble-pair" data-cmd="bubble-pair">' + icon('link') + '<span>Unpair</span></button><button type="button" class="bubble-swap" data-cmd="bubble-swap" data-value="left" aria-label="Move text box to the left">' + icon('swap') + '<span>Left</span></button><span class="drag-hint" data-drag-hint hidden>Drag header to move</span></div><div class="body"><div class="thread" role="log" aria-label="Conversation" aria-live="off"></div><div class="notice-content" hidden></div><div class="settings" hidden></div></div><div class="action-status" hidden></div><button type="button" class="queue-button" data-cmd="next-notice" hidden></button><form class="composer"><div class="compose-row"><label class="sr-only" for="crown-question">Ask Crown Bot</label><textarea id="crown-question" rows="1" maxlength="4000" placeholder="What can I help you move forward?" autocomplete="off"></textarea><button type="submit" class="send" aria-label="Send question">' + icon('send') + '</button></div><div class="composer-hint"><span>Demo records · review before using</span><span>Enter to ask</span></div></form><div class="panel-sizebar"><span>Drag corner to resize</span><button type="button" class="resize-bubble" data-corner="se" aria-label="Resize text box. Drag corner, or use arrow keys." title="Drag to resize text box · arrow keys also work">' + icon('resize') + '</button></div></div></section><button type="button" class="crown-toggle" data-cmd="settings" aria-label="Crown Bot controls and demo events" aria-expanded="false" title="Crown Bot controls">' + icon('crown') + '<span class="crown-dot" hidden></span></button><div class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>';
     while (wrapper.firstChild) shadow.appendChild(wrapper.firstChild); document.body.appendChild(host);
     mascot = shadow.querySelector('.mascot'); mascot.querySelector('img').src = window.ConnectCompanion.fallback() || window.CROWN_BOT_ASSET || ''; speech = shadow.querySelector('.speech'); body = shadow.querySelector('.body'); thread = shadow.querySelector('.thread'); notice = shadow.querySelector('.notice-content'); settings = shadow.querySelector('.settings'); composer = shadow.querySelector('.composer'); input = shadow.querySelector('#crown-question'); status = shadow.querySelector('.action-status'); pending = shadow.querySelector('.queue-button'); crown = shadow.querySelector('.crown-toggle'); unread = shadow.querySelector('.unread'); subtitle = shadow.querySelector('.subtitle'); live = shadow.querySelector('[role="status"]');
-    botSizer=shadow.querySelector('.resize-bot');bubbleSizer=shadow.querySelector('.resize-bubble');
+    bubbleSizer=shadow.querySelector('.resize-bubble');
     contextBar=el('div','context-bar'); contextBar.hidden=true; speech.querySelector('.head').after(contextBar);
     if(engine()&&engine().restoreContext){engine().restoreContext(context);context=engine().context();}
     host.setAttribute('data-connect-persistent','crown');
