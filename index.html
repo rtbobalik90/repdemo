@@ -1,6 +1,294 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v821">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v822">
 <head>
+<style id="connect-v822-my-day-style">
+/* V822: match the approved calendar in the other two My Day columns.
+   The first cascade layer gives these scoped declarations precedence over
+   legacy important rules without changing their markup or event handlers. */
+@layer connect-day822;
+@layer connect-day822 {
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) {
+    --day822-bg:#fff; --day822-soft:#f4f8fb; --day822-ink:#16364c;
+    --day822-muted:#52687a; --day822-line:#d5e2eb;
+    --day822-blue:#006e9a; --day822-tint:#eaf5fb; --day822-selected:#d9effb;
+    --ui-surface:var(--day822-bg); --ui-soft:var(--day822-soft);
+    --ui-inset:var(--day822-bg); --ui-text:var(--day822-ink);
+    --ui-secondary:var(--day822-muted); --ui-muted:var(--day822-muted);
+    --ui-line:var(--day822-line); --ui-line-soft:var(--day822-line);
+    --ui-blue:var(--day822-blue); --ui-blue-soft:var(--day822-tint);
+    --ui-blue-line:var(--day822-line);
+    font:400 15px/1.5 'Segoe UI',Arial,sans-serif!important;
+    color:var(--day822-ink)!important;
+    min-width:0!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay :is(.h817-actions-col,.h817-resources-col) {
+    --day822-bg:#172a3a; --day822-soft:#1e3548; --day822-ink:#edf5fc;
+    --day822-muted:#b7cad9; --day822-line:#425b70;
+    --day822-blue:#7cd8ff; --day822-tint:#213e52; --day822-selected:#254c66;
+  }
+  #rp-overlay .h817-actions-col {container:day822actions / inline-size!important; padding:0!important;}
+  #rp-overlay .h817-resources-col {container:day822resources / inline-size!important; gap:12px!important;}
+  #rp-overlay .h817-actions-col,
+  #rp-overlay .h817-resources-col > :is(.hub779,.h789-book) {
+    border:1px solid var(--day822-line)!important; border-radius:15px!important;
+    background:var(--day822-bg)!important; box-shadow:0 8px 22px rgba(43,73,98,.06)!important;
+  }
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) :is(button,input,select) {
+    font-family:'Segoe UI',Arial,sans-serif!important; box-sizing:border-box!important;
+  }
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) :is(button,input,select,[tabindex]):focus-visible {
+    outline:3px solid var(--day822-blue)!important; outline-offset:-3px!important;
+  }
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) .h789-section-head {
+    display:flex!important; flex-wrap:wrap!important; gap:8px 12px!important;
+    align-items:center!important; padding:16px!important; border-bottom:0!important;
+    flex:0 0 auto!important;
+  }
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) .h789-section-head h2,
+  #rp-overlay .h817-resources-col .hub779-pane-head h2 {
+    font:750 20px/1.35 'Segoe UI',Arial,sans-serif!important;
+    color:var(--day822-ink)!important; margin:0!important; letter-spacing:0!important;
+  }
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) .h789-text,
+  #rp-overlay .h817-resources-col :is(.hub779-view-all,.hub784-calendar-row>button,.hub784-learning-foot button) {
+    display:inline-flex!important; align-items:center!important; justify-content:center!important;
+    min-height:40px!important; padding:8px 10px!important; border:1px solid var(--day822-line)!important;
+    border-radius:9px!important; background:var(--day822-bg)!important; color:var(--day822-blue)!important;
+    font:600 14px/1.4 'Segoe UI',Arial,sans-serif!important;
+    box-shadow:none!important; white-space:normal!important; text-align:center!important;
+  }
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) .h789-primary,
+  #rp-overlay .h817-resources-col .hub784-faq form>button {
+    display:inline-flex!important; align-items:center!important; justify-content:center!important;
+    min-height:40px!important; padding:8px 12px!important; border:1px solid #006e9a!important;
+    border-radius:9px!important; background:#006e9a!important; color:#fff!important;
+    font:600 14px/1.4 'Segoe UI',Arial,sans-serif!important;
+    white-space:normal!important; box-shadow:0 2px 4px #15364c12!important; text-align:center!important;
+  }
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) .h789-primary:hover,
+  #rp-overlay .h817-resources-col .hub784-faq form>button:hover {background:#00577c!important; border-color:#00577c!important;}
+  #rp-overlay :is(.h817-actions-col,.h817-resources-col) .h789-text:hover,
+  #rp-overlay .h817-resources-col :is(.hub779-view-all,.hub784-calendar-row>button,.hub784-learning-foot button):hover {
+    background:var(--day822-tint)!important; border-color:var(--day822-blue)!important;
+  }
+  #rp-overlay .h817-actions-col .h789-tabs,
+  #rp-overlay .h817-resources-col .hub779-tabs {
+    display:grid!important; gap:3px!important; min-width:0!important; flex:0 0 auto!important;
+    padding:3px!important; border:1px solid var(--day822-line)!important; border-radius:11px!important;
+    background:var(--day822-soft)!important; overflow:visible!important;
+  }
+  #rp-overlay .h817-actions-col .h789-tabs {grid-template-columns:repeat(3,minmax(0,1fr))!important; margin:0 16px 12px!important;}
+  #rp-overlay .h817-resources-col .hub779-tabs {grid-template-columns:repeat(2,minmax(0,1fr))!important; margin:0!important;}
+  #rp-overlay .h817-actions-col .h789-tabs>button,
+  #rp-overlay .h817-resources-col .hub779-tabs>button {
+    display:flex!important; align-items:center!important; justify-content:center!important; gap:6px!important;
+    flex-wrap:wrap!important; min-height:40px!important; min-width:0!important; padding:8px 7px!important;
+    border:1px solid transparent!important; border-radius:8px!important;
+    background:transparent!important; color:var(--day822-ink)!important; box-shadow:none!important;
+    font:600 14px/1.35 'Segoe UI',Arial,sans-serif!important; white-space:normal!important;
+    text-align:center!important; transform:none!important; overflow-wrap:anywhere!important;
+  }
+  #rp-overlay .h817-actions-col .h789-tabs>button[aria-selected="true"],
+  #rp-overlay .h817-resources-col .hub779-tabs>button[aria-selected="true"] {
+    background:var(--day822-bg)!important; border-color:var(--day822-line)!important;
+    color:var(--day822-blue)!important; box-shadow:0 1px 4px #15364c12!important;
+  }
+  #rp-overlay .h817-actions-col .h789-tabs>button:hover,
+  #rp-overlay .h817-resources-col .hub779-tabs>button:hover {background:var(--day822-tint)!important;}
+  #rp-overlay .h817-actions-col .h789-tabs>button>span,
+  #rp-overlay .h817-resources-col .hub779-unread {
+    min-width:21px!important; height:21px!important; padding:0 5px!important;
+    border-radius:12px!important; font:700 12px/21px 'Segoe UI',Arial,sans-serif!important;
+    background:var(--day822-selected)!important; color:var(--day822-blue)!important;
+  }
+  #rp-overlay .h817-actions-col .h789-action-list {
+    flex:1 1 0!important; min-height:0!important; padding:0 12px 12px 16px!important;
+    overflow-y:auto!important; overflow-x:hidden!important; scrollbar-gutter:stable!important;
+    overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:var(--day822-line) transparent;
+  }
+  #rp-overlay .h817-actions-col .h789-task {
+    display:grid!important; grid-template-columns:28px minmax(0,1fr)!important;
+    gap:10px!important; padding:14px!important; margin:0 0 10px!important;
+    border:1px solid var(--day822-line)!important; border-radius:11px!important;
+    background:var(--day822-soft)!important; box-shadow:none!important;
+  }
+  #rp-overlay .h817-actions-col .h789-rank {
+    display:grid!important; place-items:center!important; width:28px!important; height:28px!important;
+    padding:0!important; border:1px solid var(--day822-line)!important; border-radius:8px!important;
+    background:var(--day822-bg)!important; color:var(--day822-blue)!important; font:700 14px/1 'Segoe UI',Arial,sans-serif!important;
+  }
+  #rp-overlay .h817-actions-col .h789-task-copy {min-width:0!important; overflow-wrap:anywhere!important;}
+  #rp-overlay .h817-actions-col .h789-task h3 {font:700 16px/1.45 'Segoe UI',Arial,sans-serif!important; color:var(--day822-ink)!important;}
+  #rp-overlay .h817-actions-col .h789-issue {margin-top:5px!important; font:600 14px/1.5 'Segoe UI',Arial,sans-serif!important; color:var(--day822-ink)!important;}
+  #rp-overlay .h817-actions-col .h789-task-facts {gap:6px 10px!important; margin-top:9px!important; font-size:13px!important; line-height:1.5!important;}
+  #rp-overlay .h817-actions-col .h789-loyalty {padding:3px 7px!important; border-radius:6px!important;}
+  #rp-overlay .h817-actions-col .h789-why {margin-top:10px!important; font:400 14px/1.55 'Segoe UI',Arial,sans-serif!important; color:var(--day822-muted)!important;}
+  #rp-overlay .h817-actions-col .h789-why strong {color:var(--day822-ink)!important;}
+  #rp-overlay .h817-actions-col .h789-contact {margin-top:7px!important; font-size:13px!important; line-height:1.5!important; color:var(--day822-muted)!important;}
+  #rp-overlay .h817-actions-col .h789-task-actions {
+    grid-column:2!important; display:flex!important; flex-direction:row!important;
+    flex-wrap:wrap!important; gap:8px!important; align-items:center!important; padding-top:4px!important;
+  }
+  #rp-overlay .h817-actions-col .h789-task-actions>button {max-width:100%!important;}
+  #rp-overlay .h817-actions-col .h789-queue-foot,
+  #rp-overlay .h817-resources-col .hub779-pager {
+    min-height:40px!important; padding:8px 14px!important; gap:8px!important; flex-wrap:wrap!important;
+    border-top:1px solid var(--day822-line)!important; background:var(--day822-soft)!important;
+    color:var(--day822-muted)!important; font:400 12px/1.5 'Segoe UI',Arial,sans-serif!important;
+  }
+  #rp-overlay .h817-actions-col .h789-queue-foot .h789-text {border:0!important; background:transparent!important; padding:4px 0!important; min-height:32px!important;}
+  #rp-overlay .h817-resources-col>.hub779 {padding:0!important; display:flex!important; flex-direction:column!important;}
+  #rp-overlay .h817-resources-col .hub784-tabbar {
+    display:grid!important; grid-template-columns:minmax(0,1fr) 40px!important; gap:8px!important;
+    align-items:start!important; padding:14px 14px 0!important; background:var(--day822-bg)!important;
+    border:0!important; flex:0 0 auto!important;
+  }
+  #rp-overlay .h817-resources-col .hub784-customize {
+    display:inline-flex!important; align-items:center!important; justify-content:center!important; gap:6px!important;
+    min-width:40px!important; min-height:40px!important; padding:8px!important; border:1px solid var(--day822-line)!important;
+    border-radius:9px!important; background:var(--day822-bg)!important; color:var(--day822-blue)!important;
+    font:600 13px/1.4 'Segoe UI',Arial,sans-serif!important; box-shadow:none!important;
+  }
+  #rp-overlay .h817-resources-col .hub784-customize span {display:none!important;}
+  #rp-overlay .h817-resources-col .hub784-customize svg {width:20px!important; height:20px!important;}
+  #rp-overlay .h817-resources-col .hub784-customize:hover {background:var(--day822-tint)!important;}
+  #rp-overlay .h817-resources-col .hub779-pane-head {
+    padding:14px!important; gap:10px!important; align-items:flex-start!important; flex-wrap:wrap!important;
+  }
+  #rp-overlay .h817-resources-col .hub779-pane-head>div {min-width:0!important;}
+  #rp-overlay .h817-resources-col .hub779-pane-head p {
+    font:400 13px/1.5 'Segoe UI',Arial,sans-serif!important; color:var(--day822-muted)!important; margin-top:5px!important;
+  }
+  #rp-overlay .h817-resources-col .hub779-body {
+    padding:0 10px 12px 14px!important; overflow:auto!important; min-height:0!important;
+    scrollbar-gutter:stable!important; scrollbar-width:thin; scrollbar-color:var(--day822-line) transparent;
+  }
+  #rp-overlay .h817-resources-col :is(.hub779-data-note,.hub789-inline-note,.hub790-leader-context p) {
+    font:400 12px/1.5 'Segoe UI',Arial,sans-serif!important; color:var(--day822-muted)!important; white-space:normal!important;
+  }
+  #rp-overlay .h817-resources-col :is(.hub779-message,.hub779-production-row,.hub784-pulse-row,.hub784-top-row,.hub784-resource-card,.hub784-calendar-row,.hub784-learning-row) {
+    padding:12px!important; border:1px solid var(--day822-line)!important; border-radius:10px!important;
+    background:var(--day822-soft)!important; box-shadow:none!important; min-width:0!important;
+  }
+  #rp-overlay .h817-resources-col :is(.hub779-message,.hub779-production-row) {margin-bottom:8px!important;}
+  #rp-overlay .h817-resources-col :is(.hub779-message,.hub779-production-row,.hub784-resource-card):hover {
+    background:var(--day822-tint)!important; border-color:var(--day822-blue)!important; filter:none!important;
+  }
+  #rp-overlay .h817-resources-col .hub779-message {align-items:flex-start!important; gap:10px!important;}
+  #rp-overlay .h817-resources-col .hub779-message.is-unread {border-left:3px solid var(--day822-blue)!important;}
+  #rp-overlay .h817-resources-col :is(.hub779-message-copy>strong,.hub779-production-name strong,.hub784-pulse-main strong,.hub784-top-row strong,.hub784-resource-card strong,.hub784-cal-main strong,.hub784-learning-top strong) {
+    font:700 15px/1.45 'Segoe UI',Arial,sans-serif!important; color:var(--day822-ink)!important;
+    white-space:normal!important; overflow:visible!important; overflow-wrap:anywhere!important;
+  }
+  #rp-overlay .h817-resources-col :is(.hub779-excerpt,.hub784-pulse-main span,.hub784-top-row>div>span,.hub784-resource-card small,.hub784-cal-main p,.hub784-learning-foot span) {
+    font:400 13px/1.5 'Segoe UI',Arial,sans-serif!important; color:var(--day822-muted)!important;
+  }
+  #rp-overlay .h817-resources-col .hub779-item-meta {flex-wrap:wrap!important; gap:5px 8px!important;}
+  #rp-overlay .h817-resources-col .hub779-item-meta time {font-size:12px!important; line-height:1.4!important;}
+  #rp-overlay .h817-resources-col .hub779-tag {font-size:11px!important; line-height:1.4!important; padding:3px 6px!important; white-space:normal!important;}
+  #rp-overlay .h817-resources-col .hub789-ack {font-size:13px!important; line-height:1.5!important; margin-top:8px!important;}
+  #rp-overlay .h817-resources-col .hub779-production-group {font-size:12px!important; line-height:1.5!important; padding:7px 9px!important; margin:10px 0 8px!important; letter-spacing:.04em!important;}
+  #rp-overlay .h817-resources-col .hub779-production-row {grid-template-columns:28px minmax(0,1fr) auto!important; gap:8px!important;}
+  #rp-overlay .h817-resources-col .hub779-days {text-align:right!important;}
+  #rp-overlay .h817-resources-col .hub779-days b {font-size:18px!important; line-height:1.3!important;}
+  #rp-overlay .h817-resources-col .hub779-days small {font-size:12px!important;}
+  #rp-overlay .h817-resources-col .hub779-production-status {grid-column:2/-1!important; font-size:12px!important; line-height:1.5!important; white-space:normal!important;}
+  #rp-overlay .h817-resources-col :is(.hub784-pulse-list,.hub784-top-list,.hub784-calendar-list,.hub784-learning-list) {gap:8px!important;}
+  #rp-overlay .h817-resources-col :is(.hub784-pulse-row,.hub784-top-row) {grid-template-columns:28px minmax(0,1fr)!important; gap:8px!important;}
+  #rp-overlay .h817-resources-col :is(.hub784-trend,.hub784-top-row>b) {grid-column:2!important; font-size:13px!important; line-height:1.4!important;}
+  #rp-overlay .h817-resources-col :is(.hub784-pulse-rank,.hub784-top-rank) {width:28px!important; height:28px!important; margin:0!important; font:700 13px/28px 'Segoe UI',Arial,sans-serif!important; text-align:center!important;}
+  #rp-overlay .h817-resources-col .hub784-resource-grid {grid-template-columns:minmax(0,1fr)!important; gap:8px!important;}
+  #rp-overlay .h817-resources-col .hub784-resource-card {grid-template-columns:34px minmax(0,1fr)!important; gap:8px 10px!important;}
+  #rp-overlay .h817-resources-col .hub784-resource-card em {grid-column:2!important; font-size:13px!important; line-height:1.4!important;}
+  #rp-overlay .h817-resources-col .hub784-category {font-size:13px!important; flex-wrap:wrap!important; min-width:0!important; max-width:100%!important;}
+  #rp-overlay .h817-resources-col :is(.hub784-category select,.hub784-faq input) {
+    min-height:40px!important; min-width:0!important; max-width:100%!important;
+    border:1px solid var(--day822-line)!important; border-radius:9px!important;
+    background:var(--day822-bg)!important; color:var(--day822-ink)!important; font-size:14px!important; line-height:1.4!important;
+  }
+  #rp-overlay .h817-resources-col .hub790-leader-controls {flex-wrap:wrap!important; gap:8px!important; max-width:100%!important;}
+  #rp-overlay .h817-resources-col .hub779-leaders :is(th,td) {
+    padding:9px 6px!important; height:auto!important; font-size:13px!important; line-height:1.5!important;
+    white-space:normal!important; overflow-wrap:anywhere!important;
+  }
+  #rp-overlay .h817-resources-col .hub779-leaders :is(th,td):last-child {width:94px!important; white-space:nowrap!important;}
+  #rp-overlay .h817-resources-col .hub779-leaders th:first-child,
+  #rp-overlay .h817-resources-col .hub779-leaders td:first-child {width:36px!important;}
+  #rp-overlay .h817-resources-col .hub779-rank {width:24px!important; height:24px!important;}
+  #rp-overlay .h817-resources-col .hub779-you {font-size:11px!important;}
+  #rp-overlay .h817-resources-col .hub784-calendar-row {grid-template-columns:minmax(0,1fr) auto!important; align-items:start!important;}
+  #rp-overlay .h817-resources-col .hub784-cal-date {grid-column:1/-1!important; flex-direction:row!important; flex-wrap:wrap!important; gap:6px 12px!important;}
+  #rp-overlay .h817-resources-col .hub784-cal-date strong {font-size:15px!important;}
+  #rp-overlay .h817-resources-col .hub784-cal-date span {font-size:13px!important;}
+  #rp-overlay .h817-resources-col :is(.hub784-cal-main>div,.hub784-learning-top>div) {flex-wrap:wrap!important; gap:6px!important;}
+  #rp-overlay .h817-resources-col :is(.hub784-learning-top,.hub784-learning-foot) {flex-wrap:wrap!important;}
+  #rp-overlay .h817-resources-col .hub784-learning-top>b {font-size:14px!important;}
+  #rp-overlay .h817-resources-col .hub784-learning-bar {height:8px!important; background:var(--day822-line)!important;}
+  #rp-overlay .h817-resources-col .hub784-learning-bar i {background:var(--day822-blue)!important;}
+  #rp-overlay .h817-resources-col .hub784-faq label {font-size:14px!important; line-height:1.5!important;}
+  #rp-overlay .h817-resources-col .hub784-faq form {grid-template-columns:minmax(0,1fr) auto!important;}
+  #rp-overlay .h817-resources-col .hub784-faq-chips button {font-size:13px!important; line-height:1.4!important; min-height:40px!important; border-radius:9px!important; text-align:left!important;}
+  #rp-overlay .h817-resources-col .hub784-faq-answer {padding:14px!important; background:var(--day822-tint)!important; border-color:var(--day822-line)!important;}
+  #rp-overlay .h817-resources-col .hub784-faq-answer strong {font-size:14px!important; line-height:1.5!important; text-transform:none!important; letter-spacing:0!important;}
+  #rp-overlay .h817-resources-col .hub784-faq-answer p {font-size:14px!important; line-height:1.55!important;}
+  #rp-overlay .h817-resources-col>.h789-book {padding:14px 16px!important;}
+  #rp-overlay .h817-resources-col .h789-book>.h789-section-head {padding:0!important; margin-bottom:6px!important; flex-wrap:nowrap!important;}
+  #rp-overlay .h817-resources-col .h789-cycle {font-size:13px!important; line-height:1.5!important; margin:0 0 10px!important;}
+  #rp-overlay .h817-resources-col .h789-book-count {gap:12px!important; font-size:15px!important; line-height:1.4!important; margin-bottom:10px!important;}
+  #rp-overlay .h817-resources-col .h789-book-count b {font-size:28px!important; font-variant-numeric:tabular-nums!important;}
+  #rp-overlay .h817-resources-col .h789-meter {height:9px!important; min-height:9px!important; border-radius:9px!important; background:var(--day822-line)!important;}
+  #rp-overlay .h817-resources-col .h789-meter>span {background:var(--day822-blue)!important;}
+  #rp-overlay .h817-resources-col .h789-book-note {font-size:13px!important; line-height:1.5!important; gap:4px 10px!important; margin-top:8px!important;}
+  #rp-overlay .h817-resources-col .h789-book-actions {flex-wrap:wrap!important; justify-content:flex-start!important; gap:8px!important; margin-top:12px!important;}
+
+  /* These breakpoints follow the resizable columns, not the browser width. */
+  @container day822actions (min-width:660px) {
+    #rp-overlay .h817-actions-col .h789-task {grid-template-columns:28px minmax(0,1fr) 158px!important;}
+    #rp-overlay .h817-actions-col .h789-task-actions {grid-column:3!important; flex-direction:column!important; align-items:stretch!important; padding-top:0!important;}
+  }
+  @container day822actions (max-width:340px) {
+    #rp-overlay .h817-actions-col .h789-section-head {padding:12px!important;}
+    #rp-overlay .h817-actions-col .h789-tabs {margin:0 10px 10px!important;}
+    #rp-overlay .h817-actions-col .h789-tabs>button {font-size:13px!important; padding:8px 3px!important; gap:4px!important;}
+    #rp-overlay .h817-actions-col .h789-action-list {padding:0 6px 10px 10px!important;}
+    #rp-overlay .h817-actions-col .h789-task {padding:10px!important; gap:8px!important;}
+    #rp-overlay .h817-actions-col .h789-task-copy {grid-column:1/-1!important;}
+    #rp-overlay .h817-actions-col .h789-task-actions {grid-column:1/-1!important;}
+  }
+  @container day822resources (min-width:560px) {
+    #rp-overlay .h817-resources-col .hub779-tabs {grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+    #rp-overlay .h817-resources-col .hub784-tabbar {grid-template-columns:minmax(0,1fr) auto!important;}
+    #rp-overlay .h817-resources-col .hub784-customize span {display:inline!important;}
+    #rp-overlay .h817-resources-col .hub784-resource-grid {grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+    #rp-overlay .h817-resources-col .hub779-production-row {grid-template-columns:28px minmax(0,1fr) 85px 112px!important;}
+    #rp-overlay .h817-resources-col .hub779-production-status {grid-column:auto!important;}
+    #rp-overlay .h817-resources-col :is(.hub784-pulse-row,.hub784-top-row) {grid-template-columns:28px minmax(0,1fr) auto!important;}
+    #rp-overlay .h817-resources-col :is(.hub784-trend,.hub784-top-row>b) {grid-column:auto!important;}
+  }
+  @container day822resources (max-width:310px) {
+    #rp-overlay .h817-resources-col .hub784-tabbar {padding:10px 10px 0!important; gap:6px!important;}
+    #rp-overlay .h817-resources-col .hub779-tabs>button {font-size:13px!important; padding:7px 3px!important;}
+    #rp-overlay .h817-resources-col .hub779-pane-head {padding:12px 10px!important;}
+    #rp-overlay .h817-resources-col .hub779-body {padding:0 6px 10px 10px!important;}
+    #rp-overlay .h817-resources-col .hub779-message {display:grid!important; grid-template-columns:34px minmax(0,1fr)!important;}
+    #rp-overlay .h817-resources-col .hub779-message-copy {grid-column:1/-1!important; grid-row:2!important;}
+    #rp-overlay .h817-resources-col .hub779-read-mark {grid-column:2!important; grid-row:1!important; justify-self:end!important;}
+    #rp-overlay .h817-resources-col .hub779-production-row {grid-template-columns:28px minmax(0,1fr)!important;}
+    #rp-overlay .h817-resources-col .hub779-days {grid-column:2!important; text-align:left!important;}
+    #rp-overlay .h817-resources-col .hub784-calendar-row {grid-template-columns:minmax(0,1fr)!important;}
+    #rp-overlay .h817-resources-col .hub784-calendar-row>button {justify-self:start!important;}
+    #rp-overlay .h817-resources-col .hub784-faq form {grid-template-columns:minmax(0,1fr)!important;}
+    #rp-overlay .h817-resources-col .h789-book-actions>button {width:100%!important;}
+  }
+  @media(max-width:980px),(max-height:619px) {
+    #rp-overlay .h817-actions-col {height:680px!important; min-height:430px!important; max-height:none!important; flex:none!important;}
+    #rp-overlay .h817-resources-col {height:auto!important; min-height:0!important; overflow:visible!important; grid-template-rows:auto auto!important;}
+    #rp-overlay .h817-resources-col>.hub779 {height:580px!important; min-height:0!important; max-height:none!important;}
+    #rp-overlay .h817-actions-col .h789-action-list {max-height:none!important;}
+  }
+}
+
+</style>
 <style id="connect-v793-layer-order">@layer connect-call793;</style>
 <script id="connect-srep-standalone-prelude">
 (function(){
@@ -581,11 +869,11 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 </style>
 <!-- Connect v622: dashboard explainability layer + readable coaching metric provenance; retains v620 integrity and v621 readability -->
 <!-- v617 second sweep: removed unused globals/theme tokens after v616 cleanup; preserved v614 durable autosave + v615 full-state safety. -->
-<title>Connect v821 — Adaptive My Calendar</title>
+<title>Connect v822 — My Day</title>
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v821',display:'V821',title:'Connect v821 — Adaptive My Calendar'});
+  var release=Object.freeze({version:'v822',display:'V822',title:'Connect v822 — My Day'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
