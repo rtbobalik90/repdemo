@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v828">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v829">
 <head>
 <style id="connect-v824-my-day-style">
 /* V823: balance the original compact My Day layout with the calendar palette.
@@ -987,7 +987,7 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v828',display:'V828',title:'Connect v828 — Shop Together'});
+  var release=Object.freeze({version:'v829',display:'V829',title:'Connect v829 — Shop Together Access'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -87571,11 +87571,19 @@ function ShopClient828(root,role,send,css){
  }
  function close(){if(!runtime)return;const rt=runtime,packet=envelope('end');if(preview&&preview.contentWindow)reply(preview.contentWindow,packet);rt.windows.forEach(w=>reply(w,packet));if(rt.channel){rt.channel.postMessage(packet);rt.channel.close();}clearInterval(rt.timer);URL.revokeObjectURL(rt.url);runtime=null;if(repClient){repClient.destroy();repClient=null;}if(preview){preview.remove();preview=null;}if(dialog&&dialog.open)dialog.close();W.refresh();if(rt.previousFocus&&rt.previousFocus.isConnected)rt.previousFocus.focus({preventScroll:true});else{const b=document.querySelector('[data-shop828-open]');if(b)b.focus({preventScroll:true});}}
  window.addEventListener('pagehide',close);
- const inner=W.inner;W.inner=function(){return inner.apply(this,arguments).replace('<div class="sw799-actions">','<div class="sw799-actions"><button type="button" class="sw799-btn primary" data-shop828-open onclick="SHOP_TOGETHER_V828.open()">Shop Together ↗</button>');};
+ const inner=W.inner;
+ W.inner=function(){var html=inner.apply(this,arguments);var entry='<div class="shop828-entry"><button type="button" class="shop828-launch" data-shop828-open onclick="SHOP_TOGETHER_V828.open()" aria-label="Open Shop Together for this customer">Shop Together <span aria-hidden="true">↗</span></button><span>Build a quote with this customer and open their shopping view.</span></div>';return html.replace('</header><nav class="sw799-tabs sw800-tabs"','</header>'+entry+'<nav class="sw799-tabs sw800-tabs"');};
  const orders=W.orders;W.orders=function(d){d=d||W.ctx();const rows=orders.apply(this,arguments);S.snapshot().orders.filter(o=>o.shopOrder828&&o.company===d.company).forEach(o=>{if(!rows.some(x=>x.id===o.id||x.orderNumber===o.orderNumber))rows.push({id:o.id,orderNumber:o.orderNumber,date:o.orderDate,status:o.status,total:o.total,products:o.lineItems,raw:o});});return rows.sort((a,b)=>T(b.date).localeCompare(T(a.date)));};
  window.SHOP_TOGETHER_V828={open,close,snapshot:publicSnapshot,dispatch:apply,customerHtml,diagnostics:()=>({open:!!runtime,company:runtime&&runtime.company,revision:runtime&&validSession()?local().revision:null,localOnly:true}),client:ShopClient828};
 })();
 
 </script>
+<style id="connect-v829-shop-entry-style">
+#rp-overlay .sw799.sw800 .shop828-entry{display:flex;align-items:center;gap:9px 14px;flex-wrap:wrap;padding:10px 14px;background:#eaf5fa;border-bottom:1px solid #cbdfea;color:#36546a;font-size:12px;line-height:1.4}
+#rp-overlay .sw799.sw800 .shop828-entry .shop828-launch{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:7px 14px;border:1px solid #00759d;border-radius:8px;background:#00759d;color:#fff;font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer}
+#rp-overlay .sw799.sw800 .shop828-entry .shop828-launch:hover{background:#005c80;border-color:#005c80}
+#rp-overlay .sw799.sw800 .shop828-entry .shop828-launch:focus-visible{outline:3px solid #007fae;outline-offset:3px}
+@media(max-width:900px){#rp-overlay .sw799.sw800 .shop828-entry{align-items:stretch}#rp-overlay .sw799.sw800 .shop828-entry .shop828-launch{flex:1 1 100%}}
+</style>
 </body>
 </html>
