@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v829">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v830">
 <head>
 <style id="connect-v824-my-day-style">
 /* V823: balance the original compact My Day layout with the calendar palette.
@@ -987,7 +987,7 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v829',display:'V829',title:'Connect v829 — Shop Together Access'});
+  var release=Object.freeze({version:'v830',display:'V830',title:'Connect v830 — Floating Call Colors'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -87584,6 +87584,47 @@ function ShopClient828(root,role,send,css){
 #rp-overlay .sw799.sw800 .shop828-entry .shop828-launch:hover{background:#005c80;border-color:#005c80}
 #rp-overlay .sw799.sw800 .shop828-entry .shop828-launch:focus-visible{outline:3px solid #007fae;outline-offset:3px}
 @media(max-width:900px){#rp-overlay .sw799.sw800 .shop828-entry{align-items:stretch}#rp-overlay .sw799.sw800 .shop828-entry .shop828-launch{flex:1 1 100%}}
+</style>
+<style id="connect-v830-floating-call-color-fix">
+/* The floating call console sits under the portal's light-theme rules. Keep
+   its entire color system scoped so inherited dark text cannot disappear. */
+#rp-overlay #fc1-host .fc1-console{background:#f4f8fb!important;color:#16384d!important;border:1px solid #bfd7e6!important;box-shadow:0 20px 55px rgba(15,48,71,.25)!important;backdrop-filter:none!important}
+#rp-overlay #fc1-host .fc1-head{background:linear-gradient(115deg,#e3f3fb,#f8fbfd)!important;border-bottom:1px solid #cbdfea!important}
+#rp-overlay #fc1-host .fc1-kick{color:#006f99!important;font-size:10px!important}
+#rp-overlay #fc1-host .fc1-company{color:#12384e!important}
+#rp-overlay #fc1-host .fc1-contact{color:#46677c!important;font-size:12px!important}
+#rp-overlay #fc1-host .fc1-phone{background:#d7edf9!important;border-color:#b8dbea!important;color:#006e98!important}
+#rp-overlay #fc1-host .fc1-icon-btn{background:#fff!important;border:1px solid #c5dbe8!important;color:#17425c!important}
+#rp-overlay #fc1-host .fc1-icon-btn:hover{background:#e1f3fb!important;color:#005f85!important}
+#rp-overlay #fc1-host .fc1-mini-bar{background:#fff!important;border-bottom:1px solid #d5e5ed!important}
+#rp-overlay #fc1-host .fc1-reason{color:#46677c!important;font-size:11px!important}
+#rp-overlay #fc1-host .fc1-live{background:#e7f6ee!important;border-color:#b8dec8!important;color:#146443!important;font-size:10px!important}
+#rp-overlay #fc1-host .fc1-live.paused{background:#fff5df!important;border-color:#e9d29d!important;color:#785317!important}
+#rp-overlay #fc1-host .fc1-timer{background:#e6f5fc!important;border-color:#c4e0ed!important}
+#rp-overlay #fc1-host .fc1-timer span{color:#46677c!important;font-size:9px!important}
+#rp-overlay #fc1-host .fc1-timer strong{color:#006e98!important}
+#rp-overlay #fc1-host .fc1-body{background:#f4f8fb!important}
+#rp-overlay #fc1-host .fc1-section{background:#fff!important;border:1px solid #d2e2eb!important}
+#rp-overlay #fc1-host .fc1-section.cl2-floating{background:#fff!important;border-color:#d2e2eb!important}
+#rp-overlay #fc1-host .fc1-section-title{color:#12384e!important;font-size:15px!important}
+#rp-overlay #fc1-host .fc1-section-copy{color:#4c687a!important;font-size:11px!important}
+#rp-overlay #fc1-host .fc1-field label,#rp-overlay #fc1-host .fc1-section label{color:#385b70!important;font-size:11px!important}
+#rp-overlay #fc1-host .fc1-field input,#rp-overlay #fc1-host .fc1-field select,#rp-overlay #fc1-host .fc1-field textarea,#rp-overlay #fc1-host .fc1-section select,#rp-overlay #fc1-host .fc1-section textarea{background:#fff!important;border:1px solid #b9d3e2!important;color:#183e55!important;font-size:13px!important;color-scheme:light!important}
+#rp-overlay #fc1-host .fc1-field input::placeholder,#rp-overlay #fc1-host .fc1-field textarea::placeholder{color:#5d7483!important;opacity:1!important}
+#rp-overlay #fc1-host .fc1-check,#rp-overlay #fc1-host .cl2-floating{color:#36596e!important}
+#rp-overlay #fc1-host .fc1-btn{background:#fff!important;border:1px solid #c1d7e4!important;color:#17425c!important;font-size:12px!important}
+#rp-overlay #fc1-host .fc1-btn:hover{background:#e6f5fc!important;color:#005f85!important}
+#rp-overlay #fc1-host .fc1-btn.primary{background:#00759d!important;border-color:#00759d!important;color:#fff!important;box-shadow:none!important}
+#rp-overlay #fc1-host .fc1-btn.primary:hover{background:#005f85!important}
+#rp-overlay #fc1-host .fc1-btn.purple,#rp-overlay #fc1-host .fc1-btn.warn{background:#fff!important;color:#17425c!important}
+#rp-overlay #fc1-host .fc1-footer{background:#eaf3f8!important;border-top:1px solid #cbdfea!important}
+#rp-overlay #fc1-host .fc1-footer-copy,#rp-overlay #fc1-host .fc1-drag-hint{color:#47677b!important;font-size:10px!important}
+#rp-overlay #fc1-host .fc1-footer-copy strong{color:#16384d!important}
+#rp-overlay #fc1-host .fc1-success{background:#eaf7f0!important;border-color:#b8dec8!important}
+#rp-overlay #fc1-host .fc1-success strong{color:#146443!important}
+#rp-overlay #fc1-host .fc1-success p{color:#355e4a!important;font-size:11px!important}
+#rp-overlay #fc1-host .fc1-drag-hint{background:#eaf3f8!important}
+#rp-overlay #fc1-host :is(button,input,select,textarea):focus-visible{outline:3px solid #007fae!important;outline-offset:2px!important}
 </style>
 </body>
 </html>
