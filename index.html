@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v831">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v832">
 <head>
 <style id="connect-v824-my-day-style">
 /* V823: balance the original compact My Day layout with the calendar palette.
@@ -343,7 +343,13 @@
  #rp-overlay .h789-home .h824-summary-book .h789-book-actions {display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:4px 9px!important;flex-wrap:wrap!important;margin-top:6px!important;}
  #rp-overlay .h789-home .h824-summary-book .h789-primary {min-height:30px!important;padding:5px 8px!important;font-size:12px!important;}
  #rp-overlay .h789-home .h824-summary-book .h789-text {min-height:30px!important;padding:4px 0!important;font-size:12px!important;}
- #rp-overlay .h789-home .h817-resources-col {grid-template-rows:minmax(0,1fr)!important;gap:0!important;}
+ /* With My Customer Set in the summary strip, the hub is the sole middle-column panel. */
+ #rp-overlay .h789-home .h817-resources-col {display:flex!important;flex-direction:column!important;gap:0!important;}
+ #rp-overlay .h789-home .h817-resources-col>.hub779 {flex:1 1 0%!important;height:100%!important;min-height:0!important;max-height:none!important;}
+ @media (max-width:980px),(max-height:619px) {
+  #rp-overlay .h789-home .h817-resources-col {height:auto!important;}
+  #rp-overlay .h789-home .h817-resources-col>.hub779 {flex:none!important;height:580px!important;}
+ }
  @media (min-width:981px) and (max-width:1300px) {
   #rp-overlay .h789-home .h789-kpis {grid-template-columns:minmax(0,1fr) minmax(0,1.65fr) repeat(3,minmax(0,.95fr))!important;gap:8px!important;}
   #rp-overlay .h789-home .h789-kpi {grid-template-columns:minmax(0,1fr)!important;padding:10px!important;gap:6px!important;}
@@ -987,7 +993,7 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v831',display:'V831',title:'Connect v831 — Guided Shop Together'});
+  var release=Object.freeze({version:'v832',display:'V832',title:'Connect v832 — Equal My Day Columns'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
