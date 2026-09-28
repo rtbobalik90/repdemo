@@ -29,12 +29,114 @@ This is a CSS pass; the workflows and three equal columns are intact. The new st
 
 Connect_V833_My_Day_Workbench.html
 HTML
+User attachment
+i am confused what i am looking at that changed?
+Robert, you’re right. In your screenshot, V833 changed mostly the pale backgrounds, borders, and first action card. The middle and calendar still looked almost the same. I overstated how noticeable that pass would be.
+
+I made a stronger V834: Next Best Actions now has a dark teal header, the information hub has a teal top edge and a clearly filled active tab, and the calendar has a separate, quieter frame.
+
+The three columns and controls remain in place. I checked the file structure, but I still cannot render it in a browser here, so I’m relying on your screenshot for the visual check.
+
+
+Connect_V834_My_Day_Elevation.html
+HTML
 
 
 
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v833">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v834">
 <head>
+<style id="connect-v834-my-day-elevation">
+/* Stronger workbench hierarchy. Keep layout and controls from V833. */
+@layer connect-day834, connect-day833, connect-day823;
+@layer connect-day834 {
+  #rp-overlay #rp2-page .h789-home .h789-kpis {
+    background:#d9e5e8!important; border-color:#c4d7dd!important;
+    padding:7px!important; gap:7px!important;
+  }
+  #rp-overlay #rp2-page .h789-home :is(.h789-kpi,.h824-summary-book) {
+    border-color:#cbdde2!important;
+    box-shadow:0 2px 8px rgba(24,62,77,.08)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col {
+    background:#e0eff0!important; border-color:#8bbec5!important;
+    box-shadow:0 14px 30px rgba(18,77,88,.14)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head {
+    min-height:60px!important; padding:13px 16px!important;
+    border-bottom:0!important; border-radius:15px 15px 0 0!important;
+    background:#16495b!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head h2,
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head .h789-text {
+    color:#fff!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head .h789-text:hover {
+    background:#286579!important; border-color:#74adba!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head .h789-help {
+    background:#d9f1f3!important; border-color:#d9f1f3!important; color:#16495b!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h827-queue-switcher {
+    margin-top:14px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task {
+    border-left-width:4px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col>.hub779 {
+    border-color:#b9d3d8!important; border-top:4px solid #258897!important;
+    box-shadow:0 9px 24px rgba(31,76,87,.09)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub784-tabbar {
+    padding:12px 14px 11px!important; background:#edf5f5!important;
+    border-bottom-color:#cbdfe2!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-tabs>button[aria-selected="true"] {
+    background:#087b89!important; border-color:#087b89!important; color:#fff!important;
+    box-shadow:0 2px 5px rgba(8,93,106,.18)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-pane-head {
+    padding-top:19px!important; padding-bottom:12px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-pane-head h2 {
+    font-size:18px!important; color:#173e4e!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-message {
+    padding:15px 10px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-calendar-col {
+    border-color:#c1d3dd!important; border-top:4px solid #829eae!important;
+    box-shadow:0 7px 21px rgba(34,66,77,.07)!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h789-kpis {
+    background:#263f4d!important; border-color:#496775!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home :is(.h789-kpi,.h824-summary-book) {
+    background:#1a3040!important; border-color:#496775!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col {
+    background:#1c3943!important; border-color:#4b8993!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head {
+    background:#103b4a!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col>.hub779 {
+    border-color:#416978!important; border-top-color:#49adb9!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub784-tabbar {
+    background:#1e3846!important; border-bottom-color:#405d6c!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-tabs>button[aria-selected="true"] {
+    background:#216e7a!important; border-color:#60b3bd!important; color:#fff!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-pane-head h2 {
+    color:#e7f4f8!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-calendar-col {
+    border-color:#486776!important; border-top-color:#8ab5c7!important;
+  }
+}
+</style>
 <style id="connect-v833-my-day-workbench">
 /* My Day direction 2: a focused workbench with distinct visual roles.
    This early layer also overrides the older layered important declarations. */
@@ -1192,7 +1294,7 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v833',display:'V833',title:'Connect v833 — My Day Workbench'});
+  var release=Object.freeze({version:'v834',display:'V834',title:'Connect v834 — My Day Elevation'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
