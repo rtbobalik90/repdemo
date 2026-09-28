@@ -1,6 +1,205 @@
+
+User attachment
+
+Connect_V832_Equal_My_Day_Columns(1).html
+HTML
+alright, lets work on this together...ascetically. this is the stuff i want, but it all kind of...blends together...you know what i mean....lets work through some elevations and then we can work through how to implement them.
+Robert, yes. The page has the right pieces, but nearly every piece uses the same white card, pale border, and blue accent. Your eye has little help deciding where to start.
+
+I’d try three visual elevations while keeping the five metrics and three equal-width columns:
+
+Direction	What changes	Feel
+1. Quiet structure	A warmer page background, stronger headings, more space between major areas, and softer borders inside each area	Clean and calm
+2. Workbench	The action column gets a subtle tinted surface and a clear priority marker; updates become a lighter editorial feed; the calendar stays mostly white	Focused and practical
+3. Command center	A darker header or metric band, stronger contrast between zones, and more prominent status colors	Bolder and more energetic
+I recommend direction 2. It gives “Next Best Actions” the most attention without making the whole page louder. Within that direction, I’d make these specific changes:
+
+Treat the five top metrics as one coordinated summary band. Right now they compete equally.
+Give each action a clear first line: what happened, why it matters, what to do. The repeated Summit Ridge cards currently look too similar at a glance.
+Let the message board fit its content instead of leaving a tall white expanse beneath four updates. Equal column widths can stay.
+Give the calendar its own quieter treatment and move Crown Bot so he does not cover the schedule.
+Increase the small secondary text slightly. Several dates and explanations are hard to scan at this screen size.
+I explored visual concepts with Higgsfield and Magnific for the hierarchy, surfaces, and spacing. I would use those as direction, then make the changes in the actual Connect code. Does the focused workbench direction feel right, or do you want this to look calmer or bolder?
+
+sure lets try 2
+Robert, I applied direction 2 to My Day. The action queue now has a distinct work surface and a warmer highlight for the first priority. The metrics read as one summary row, while updates and the calendar have quieter treatments. I also added dark theme styling.
+
+This is a CSS pass; the workflows and three equal columns are intact. The new styles passed a structural check, but I couldn’t render the HTML in a browser here, so the next useful step is your visual review of the file.
+
+
+Connect_V833_My_Day_Workbench.html
+HTML
+
+
+
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v832">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v833">
 <head>
+<style id="connect-v833-my-day-workbench">
+/* My Day direction 2: a focused workbench with distinct visual roles.
+   This early layer also overrides the older layered important declarations. */
+@layer connect-day833, connect-day823;
+@layer connect-day833 {
+  html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home {
+    --day833-ink:#17374b; --day833-muted:#50687a;
+    --day833-line:#d1dfe5; --day833-teal:#087b88;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home {
+    --day833-ink:#edf5fa; --day833-muted:#bfd0dd;
+    --day833-line:#496272; --day833-teal:#77d7df;
+  }
+  html[data-connect-ui="777"] #rp-overlay #rp2-page:has(.h789-home) {
+    background:#edf2f3!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page:has(.h789-home) {
+    background:#132431!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h789-kpis {
+    padding:6px!important; gap:6px!important; border:1px solid #d6e1e5!important;
+    border-radius:18px!important; background:#e4ecef!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h789-kpis {
+    border-color:#425b6b!important; background:#213747!important;
+  }
+  #rp-overlay #rp2-page .h789-home :is(.h789-kpi,.h824-summary-book) {
+    border-color:#d7e3e7!important; border-radius:12px!important;
+    box-shadow:0 2px 7px rgba(24,58,73,.045)!important;
+  }
+  #rp-overlay #rp2-page .h789-home :is(.h789-kpi-copy strong,.h789-book-count b) {
+    color:var(--day833-ink)!important;
+  }
+  #rp-overlay #rp2-page .h789-home :is(.h789-kpi-copy small,.h789-cycle,.h789-book-note) {
+    color:var(--day833-muted)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col {
+    border:1px solid #a9cbd0!important; border-radius:16px!important;
+    background:#e9f3f3!important;
+    box-shadow:0 12px 27px rgba(15,71,78,.11)!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col {
+    border-color:#367b84!important; background:#1c3943!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head {
+    padding:15px 15px 11px!important; border-bottom:1px solid #cce1e2!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head h2 {
+    color:var(--day833-ink)!important; font-size:18px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h827-queue-switcher {
+    margin:12px 13px 11px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-action-list {
+    padding:0 10px 12px 13px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task {
+    padding:13px 12px!important; margin-bottom:9px!important;
+    border:1px solid #d2e2e5!important; border-left:3px solid #97bfc5!important;
+    border-radius:10px!important; background:#fff!important;
+    box-shadow:0 2px 6px rgba(19,69,79,.04)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task:first-child {
+    border-color:#e7d8b8!important; border-left-color:#bf832b!important;
+    background:#fffdf8!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task h3 {
+    font-size:15px!important; line-height:1.35!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-issue {
+    color:#2a5160!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-why,
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-contact {
+    color:#4d6775!important; font-size:12.5px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-queue-foot {
+    background:#e1eeee!important; border-top-color:#c9dfe1!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col>.hub779 {
+    border:1px solid #d3dfe2!important; border-radius:16px!important;
+    background:#fff!important; box-shadow:0 6px 20px rgba(34,66,77,.055)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub784-tabbar {
+    padding:14px 14px 8px!important; border-bottom:1px solid #e2e9eb!important;
+    background:#f7faf9!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-tabs {
+    background:#edf2f3!important; border-color:#d4e0e2!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-pane-head {
+    padding:15px 17px 10px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-body {
+    padding:0 14px 18px 17px!important;
+    background:linear-gradient(#fff 0%,#fff 55%,#fbfcfc 100%)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-message {
+    min-height:86px!important; padding:13px 9px!important;
+    border-bottom:1px solid #dfe8eb!important; background:#fff!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-message:nth-child(even) {
+    background:#f8fbfa!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-message-copy>strong {
+    color:var(--day833-ink)!important; font-size:14px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-excerpt {
+    color:var(--day833-muted)!important; font-size:12.5px!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-calendar-col {
+    border:1px solid #d2e0e6!important; border-radius:16px!important;
+    background:#f8fbfc!important;
+    box-shadow:0 5px 18px rgba(34,66,77,.045)!important;
+  }
+  #rp-overlay #rp2-page .h789-home .h817-resize::before {
+    background:#c7d9df!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home :is(.h789-kpi,.h824-summary-book) {
+    border-color:#3c5868!important; background:#1a3040!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head {
+    border-bottom-color:#3d6870!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task,
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task:first-child {
+    border-color:#405d68!important; border-left-color:#75b6be!important;
+    background:#223d49!important; box-shadow:none!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task:first-child {
+    border-left-color:#dfb46c!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col :is(.h789-issue,.h789-why,.h789-contact) {
+    color:#c7d9df!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-queue-foot {
+    border-top-color:#3b6570!important; background:#203c47!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col>.hub779 {
+    border-color:#405a68!important; background:#172b3a!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub784-tabbar {
+    border-bottom-color:#405a68!important; background:#1b3240!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-tabs {
+    border-color:#496270!important; background:#233c4a!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-body {
+    background:#172b3a!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-message,
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-message:nth-child(even) {
+    border-bottom-color:#3b5362!important; background:#172b3a!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-message:nth-child(even) {
+    background:#1b3341!important;
+  }
+  html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-calendar-col {
+    border-color:#405a68!important; background:#172b3a!important;
+  }
+  @media(max-width:980px),(max-height:619px) {
+    #rp-overlay #rp2-page .h789-home .h789-kpis {padding:5px!important;}
+  }
+}
+</style>
 <style id="connect-v824-my-day-style">
 /* V823: balance the original compact My Day layout with the calendar palette.
    The first cascade layer gives these scoped declarations precedence over
@@ -993,7 +1192,7 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v832',display:'V832',title:'Connect v832 — Equal My Day Columns'});
+  var release=Object.freeze({version:'v833',display:'V833',title:'Connect v833 — My Day Workbench'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
