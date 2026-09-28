@@ -1,63 +1,52 @@
 
-User attachment
+okay, dream with me for a second. the SREPS will be living in this program, the shouldn
+I’m with you, Robert. If SREPs live in Connect all day, the screen needs to feel comfortable and help them stay oriented. Your message cut off at “they shouldn…” What were you about to say?
 
-Connect_V832_Equal_My_Day_Columns(1).html
-HTML
-alright, lets work on this together...ascetically. this is the stuff i want, but it all kind of...blends together...you know what i mean....lets work through some elevations and then we can work through how to implement them.
-Robert, yes. The page has the right pieces, but nearly every piece uses the same white card, pale border, and blue accent. Your eye has little help deciding where to start.
+they shouldnt have to leave to do anything for their job. (for the most part), with the MyDay page and what the program is, what are some ways we can elevate is to they could almost essentially live on the page. remember we are dreaming
+Robert, I think My Day could become the place where an SREP starts, completes, and follows through on nearly every piece of work. They could open a customer, handle the task, and return to their queue without losing their place.
 
-I’d try three visual elevations while keeping the five metrics and three equal-width columns:
+The key is to keep the resting screen calm. The tools appear when the rep needs them. There’s precedent for pieces of this: sales consoles use persistent workspace tabs and utilities, while newer sales workspaces bring prioritized tasks into a guided execution flow. 
 
-Direction	What changes	Feel
-1. Quiet structure	A warmer page background, stronger headings, more space between major areas, and softer borders inside each area	Clean and calm
-2. Workbench	The action column gets a subtle tinted surface and a clear priority marker; updates become a lighter editorial feed; the calendar stays mostly white	Focused and practical
-3. Command center	A darker header or metric band, stronger contrast between zones, and more prominent status colors	Bolder and more energetic
-I recommend direction 2. It gives “Next Best Actions” the most attention without making the whole page louder. Within that direction, I’d make these specific changes:
+What I’d dream for Connect
+1. A persistent “working on” bar. When Alex opens Summit Ridge, a slim bar stays visible: customer, contact, local time, current task, call status, and a button to resume. He can check the calendar or another queue and come straight back to the same work.
 
-Treat the five top metrics as one coordinated summary band. Right now they compete equally.
-Give each action a clear first line: what happened, why it matters, what to do. The repeated Summit Ridge cards currently look too similar at a glance.
-Let the message board fit its content instead of leaving a tall white expanse beneath four updates. Equal column widths can stay.
-Give the calendar its own quieter treatment and move Crown Bot so he does not cover the schedule.
-Increase the small secondary text slightly. Several dates and explanations are hard to scan at this screen size.
-I explored visual concepts with Higgsfield and Magnific for the hierarchy, surfaces, and spacing. I would use those as direction, then make the changes in the actual Connect code. Does the focused workbench direction feel right, or do you want this to look calmer or bolder?
+2. Tasks that open into a complete workspace. Clicking “Review art correction” would open the artwork, order, customer history, notes, and next actions together. The rep could resolve it, notify the customer, and log the outcome from that workspace. The task then leaves the priority list or moves to its next owner.
 
-sure lets try 2
-Robert, I applied direction 2 to My Day. The action queue now has a distinct work surface and a warmer highlight for the first priority. The metrics read as one summary row, while updates and the calendar have quieter treatments. I also added dark theme styling.
+3. One communication center. Calls, email, incoming messages, and follow-ups would share the customer context. After a call, Connect could present the notes, a draft recap email, and a follow-up date in one sequence. The rep reviews and sends; Connect records what actually happened.
 
-This is a CSS pass; the workflows and three equal columns are intact. The new styles passed a structural check, but I couldn’t render the HTML in a browser here, so the next useful step is your visual review of the file.
+4. A live customer desk. A customer search or incoming call would bring up a focused view with recent orders, open issues, quotes, artwork, loyalty status, buying signals, and the best next question. The rep could build a quote or start Shop Together there without returning to a separate starting point.
 
+5. A calendar that participates in the day. It would show the next commitment, protect scheduled follow-up time, and surface preparation shortly before a meeting. When a customer promises to decide Friday, the follow-up could be created while the rep is still in that conversation.
 
-Connect_V833_My_Day_Workbench.html
-HTML
-User attachment
-i am confused what i am looking at that changed?
-Robert, you’re right. In your screenshot, V833 changed mostly the pale backgrounds, borders, and first action card. The middle and calendar still looked almost the same. I overstated how noticeable that pass would be.
+6. A real exception inbox. Art errors, deadline risks, missing information, stalled quotes, and loyalty customer issues would appear as cases with an owner and a clear resolution path. “Needs attention” should tell the rep exactly what is blocking progress.
 
-I made a stronger V834: Next Best Actions now has a dark teal header, the information hub has a teal top edge and a clearly filled active tab, and the calendar has a separate, quieter frame.
+7. CROWN Bot as a quiet assistant. It could answer “What am I missing on this order?”, assemble a customer brief, draft a response, or explain why an action is ranked first. It should show the source of its answer and leave decisions, promises, and sending with the rep.
 
-The three columns and controls remain in place. I checked the file structure, but I still cannot render it in a browser here, so I’m relying on your screenshot for the visual check.
+8. A day that changes shape. In the morning, My Day emphasizes the call plan and scheduled commitments. During a call, it becomes a customer workspace. Near the end of the day, it surfaces unlogged calls, unsent recaps, unresolved blockers, and tomorrow’s preparation.
+
+The design move I’d make is this: keep the current three columns as the home view, then let any item open a focused work area over the middle and right columns. The priority queue remains visible on the left, and a small row of open customer tabs lets reps switch work without losing drafts or scroll position. That would make My Day feel like a place to work, while preserving the overview you’ve built.
+
+My first major build would be the persistent customer workspace. Once the rep can open an action, do the work, and return to the queue without losing context, the email, calendar, quote, order, and AI pieces have a natural home. Live email, calling, inventory, and order updates would each need real connections before we present them as live capabilities.
+
+okay, lets build it out, i saved the old file just incase we need to go backwards
 
 
-Connect_V834_My_Day_Elevation.html
-HTML
-User attachment
-before it loads in this text appears...
-Robert, I found it. The published index.html has 45 lines of our conversation before <!DOCTYPE html>. The browser displays that text until Connect loads.
+Magnific: {"content":[{"type":"text","text":"User is currently focused on creation `TdQYj8XVNR`.\n- Tool: text-to-image\n- Kind: image\n- Model: Auto\n- URL: https://pikaso.cdnpk.net/private/production/5577921632/render.png?token=exp=1790812800~hmac=807ad2dbf5ba7f723101d8b331e17fa7e2acb718d5c00e7b90878131443b99b5\n- Open in app: https://www.magnific.com/app/creation/TdQYj8XVNR?utm_source=mcp&utm_medium=ai_connector"}]}
+your building the html rigt
+Yes—the actual HTML app is built. The Magnific image was a visual reference.
 
-I removed those lines in a local commit and verified that the rest of V834 is unchanged. 
-Here is the corrected index.html
-.
+In My Day, selecting a priority now opens a customer workspace while the priority queue stays visible. It includes customer tabs and search, related tasks, orders, quotes, activity, call prep, and a locally saved scratchpad. Your V834 file remains available as the fallback.
 
-The live site is not fixed yet. Automatic approval review rejected the push because it would publish to a public GitHub repository that it could not verify as authorized. Do you approve pushing this one change to rtbobalik90/repdemo?
+The JavaScript and customer workflow passed smoke checks. I couldn’t complete a visual browser check here. This new file has not been pushed to the live GitHub page.
 
 
-index.html
+Connect_V835_My_Day_Work_Desk.html
 HTML
 
 
 
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v834">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v835">
 <head>
 <style id="connect-v834-my-day-elevation">
 /* Stronger workbench hierarchy. Keep layout and controls from V833. */
@@ -87957,5 +87946,141 @@ function ShopClient828(root,role,send,css){
 #rp-overlay #fc1-host .fc1-drag-hint{background:#eaf3f8!important}
 #rp-overlay #fc1-host :is(button,input,select,textarea):focus-visible{outline:3px solid #007fae!important;outline-offset:2px!important}
 </style>
+<style id="connect-v835-work-desk-style">
+/* V835: My Day customer work desk. The left queue remains in place. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h789-fold:has(.desk835-bar){grid-template-rows:auto auto auto minmax(0,1fr) auto!important}
+#rp-overlay #rp2-page .h789-home .desk835-bar,
+#rp-overlay #rp2-page .h789-home .desk835-panel{box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;color:#18394a}
+#rp-overlay #rp2-page .h789-home .desk835-bar * ,#rp-overlay #rp2-page .h789-home .desk835-panel *{box-sizing:border-box}
+#rp-overlay #rp2-page .h789-home .desk835-bar{position:relative;z-index:26;display:flex;align-items:center;gap:12px;min-height:56px;margin:0 0 11px;padding:7px 11px 7px 15px;border:1px solid #b8d4d9;border-radius:14px;background:#fff;box-shadow:0 5px 16px #194b5911}
+#rp-overlay #rp2-page .desk835-brand{display:flex;align-items:center;gap:9px;flex:none;padding-right:13px;border-right:1px solid #d7e4e8;white-space:nowrap}
+#rp-overlay #rp2-page .desk835-brand-mark{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#0d6979;color:#fff;font-weight:800;font-size:17px}
+#rp-overlay #rp2-page .desk835-brand strong{font-size:14px;letter-spacing:-.02em}
+#rp-overlay #rp2-page .desk835-tabs{display:flex;gap:6px;align-items:center;flex:1;min-width:0;overflow:auto;scrollbar-width:thin}
+#rp-overlay #rp2-page .desk835-tab{display:flex;align-items:center;min-width:0;max-width:200px;border:1px solid #d4e3e6;border-radius:9px;background:#f4f8f8;white-space:nowrap}
+#rp-overlay #rp2-page .desk835-tab.is-active{border-color:#167c89;background:#e2f2f3;box-shadow:inset 0 -2px #16818d}
+#rp-overlay #rp2-page .desk835-tab>button{min-width:0;border:0;background:transparent;color:#24495b;cursor:pointer}
+#rp-overlay #rp2-page .desk835-tab>button:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:8px 4px 8px 10px;font-size:12px;font-weight:650}
+#rp-overlay #rp2-page .desk835-tab.is-active>button:first-child{color:#075c6a}
+#rp-overlay #rp2-page .desk835-tab>button:last-child{flex:none;padding:6px 8px;color:#55717c;font-size:16px;line-height:1}
+#rp-overlay #rp2-page .desk835-empty-tabs{font-size:12px;color:#617684;white-space:nowrap}
+#rp-overlay #rp2-page .desk835-search{position:relative;flex:0 1 245px;min-width:155px}
+#rp-overlay #rp2-page .desk835-search input{width:100%;height:37px;border:1px solid #bed3dc;border-radius:9px;background:#f9fcfc;padding:8px 10px;color:#17394b;font-size:12px}
+#rp-overlay #rp2-page .desk835-suggestions{position:absolute;top:42px;right:0;width:max(100%,290px);max-width:min(410px,85vw);max-height:268px;overflow:auto;z-index:35;background:#fff;border:1px solid #aecdd4;border-radius:11px;box-shadow:0 14px 32px #153e5050;padding:5px}
+#rp-overlay #rp2-page .desk835-suggestions[hidden]{display:none!important}
+#rp-overlay #rp2-page .desk835-suggestions button{display:block;width:100%;border:0;border-radius:7px;background:transparent;padding:9px 10px;text-align:left;color:#18394a;font-size:12px;cursor:pointer}
+#rp-overlay #rp2-page .desk835-suggestions button:hover,#rp-overlay #rp2-page .desk835-suggestions button:focus-visible{background:#e7f4f5}
+#rp-overlay #rp2-page .desk835-suggestions small{display:block;color:#617684;margin-top:2px}
+#rp-overlay #rp2-page .desk835-close{flex:none;border:1px solid #cbdde1;border-radius:8px;background:#fff;color:#385e6c;font-weight:650;font-size:12px;min-height:37px;padding:7px 10px;cursor:pointer}
+#rp-overlay #rp2-page .desk835-close:hover{background:#e9f5f5}
+#rp-overlay #rp2-page .h789-home.desk835-open .h817-grid>.h817-resources-col,
+#rp-overlay #rp2-page .h789-home.desk835-open .h817-grid>.h817-calendar-col,
+#rp-overlay #rp2-page .h789-home.desk835-open .h817-grid>[data-h817-divider="2"]{display:none!important}
+#rp-overlay #rp2-page .h789-home.desk835-open .h817-grid>.desk835-panel{grid-column:3/6;grid-row:1;min-width:0;min-height:0;height:100%;overflow:hidden;display:flex;flex-direction:column;border:1px solid #bdd6da;border-top:4px solid #14808d;border-radius:15px;background:#f7faf9;box-shadow:0 10px 27px #224f5d18}
+#rp-overlay #rp2-page .desk835-hero{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:17px 20px 15px;background:#16495b;color:#fff}
+#rp-overlay #rp2-page .desk835-eyebrow{display:block;font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:750;color:#a8dce2;margin-bottom:5px}
+#rp-overlay #rp2-page .desk835-hero h2{margin:0;font-size:21px;line-height:1.2;color:#fff}
+#rp-overlay #rp2-page .desk835-hero p{margin:6px 0 0;color:#d7e9eb;font-size:12px}
+#rp-overlay #rp2-page .desk835-hero-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+#rp-overlay #rp2-page .desk835-hero-actions button{border:1px solid #78aeb8;border-radius:8px;background:#236a7b;color:#fff;padding:8px 10px;font-size:12px;font-weight:650;cursor:pointer;white-space:nowrap}
+#rp-overlay #rp2-page .desk835-hero-actions button:hover{background:#347f8e}
+#rp-overlay #rp2-page .desk835-body{flex:1;min-height:0;overflow:auto;padding:16px 18px 20px;overscroll-behavior:contain}
+#rp-overlay #rp2-page .desk835-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+#rp-overlay #rp2-page .desk835-stat{min-width:0;padding:10px 12px;border:1px solid #d8e5e6;border-radius:10px;background:#fff}
+#rp-overlay #rp2-page .desk835-stat small{display:block;color:#637b86;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+#rp-overlay #rp2-page .desk835-stat strong{display:block;margin-top:4px;color:#174559;font-size:16px;line-height:1.25;overflow-wrap:anywhere}
+#rp-overlay #rp2-page .desk835-content{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,1fr);gap:13px;align-items:start}
+#rp-overlay #rp2-page .desk835-stack{display:grid;gap:13px;min-width:0}
+#rp-overlay #rp2-page .desk835-card{min-width:0;border:1px solid #d5e3e4;border-radius:12px;background:#fff;box-shadow:0 2px 8px #204b5709;overflow:hidden}
+#rp-overlay #rp2-page .desk835-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-bottom:1px solid #e2ebeb;background:#f2f7f7}
+#rp-overlay #rp2-page .desk835-card h3{margin:0;color:#173d4d;font-size:14px}
+#rp-overlay #rp2-page .desk835-card-head small{color:#617984;font-size:11px}
+#rp-overlay #rp2-page .desk835-card-body{padding:11px 14px}
+#rp-overlay #rp2-page .desk835-item{padding:10px 0;border-bottom:1px solid #e6eeee}
+#rp-overlay #rp2-page .desk835-item:first-child{padding-top:2px}
+#rp-overlay #rp2-page .desk835-item:last-child{border:0;padding-bottom:2px}
+#rp-overlay #rp2-page .desk835-item.is-selected{margin:0 -9px;padding:9px;border-left:3px solid #c68d37;background:#fff9ed;border-radius:6px}
+#rp-overlay #rp2-page .desk835-item-top{display:flex;align-items:start;justify-content:space-between;gap:8px}
+#rp-overlay #rp2-page .desk835-item strong{font-size:12.5px;line-height:1.35;color:#1d4051}
+#rp-overlay #rp2-page .desk835-tag{flex:none;font-size:10px;font-weight:750;padding:3px 6px;border-radius:5px;background:#e5f1f3;color:#0c6877}
+#rp-overlay #rp2-page .desk835-tag.urgent{background:#fff1d8;color:#98600e}
+#rp-overlay #rp2-page .desk835-item p{margin:5px 0 7px;color:#536d79;font-size:11.5px;line-height:1.45}
+#rp-overlay #rp2-page .desk835-meta{color:#677c86;font-size:10.5px}
+#rp-overlay #rp2-page .desk835-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+#rp-overlay #rp2-page .desk835-actions button{border:1px solid #bbd6dc;border-radius:7px;background:#fff;color:#076277;padding:7px 9px;font-size:11px;font-weight:700;cursor:pointer}
+#rp-overlay #rp2-page .desk835-actions button.primary{background:#087b89;border-color:#087b89;color:#fff}
+#rp-overlay #rp2-page .desk835-actions button:hover{filter:brightness(.94)}
+#rp-overlay #rp2-page .desk835-facts{display:grid;grid-template-columns:100px minmax(0,1fr);gap:7px 8px;margin:0;font-size:11.5px}
+#rp-overlay #rp2-page .desk835-facts dt{color:#667c86}.desk835-facts dd{margin:0;color:#213f4e;overflow-wrap:anywhere}
+#rp-overlay #rp2-page .desk835-facts a{color:#006e87;text-decoration:underline}
+#rp-overlay #rp2-page .desk835-note{display:block;width:100%;min-height:108px;resize:vertical;border:1px solid #bfdae0;border-radius:8px;padding:10px;background:#fafdfe;color:#213f4e;font:12px/1.5 'Segoe UI',Arial,sans-serif}
+#rp-overlay #rp2-page .desk835-note-hint{margin:7px 0 0;color:#637b86;font-size:10.5px;line-height:1.4}
+#rp-overlay #rp2-page .desk835-empty{margin:0;color:#667b85;font-size:12px;line-height:1.5}
+#rp-overlay #rp2-page .desk835-activity{position:relative;padding-left:13px;border-left:2px solid #c4dfe1;margin:2px 0 12px}
+#rp-overlay #rp2-page .desk835-activity:last-child{margin-bottom:0}
+#rp-overlay #rp2-page .desk835-activity strong{display:block;font-size:11.5px;color:#244859}
+#rp-overlay #rp2-page .desk835-activity p{margin:4px 0;color:#58717b;font-size:11px;line-height:1.4}
+#rp-overlay #rp2-page .desk835-activity small{color:#72858e;font-size:10px}
+#rp-overlay #rp2-page .desk835-panel :is(button,input,textarea):focus-visible,#rp-overlay #rp2-page .desk835-bar :is(button,input):focus-visible{outline:3px solid #0789a0;outline-offset:2px}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .desk835-bar,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-card,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-stat,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-tab,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-suggestions{background:#1b3342;color:#edf5f8;border-color:#436575}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home.desk835-open .h817-grid>.desk835-panel{background:#142b39;border-color:#41818b}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-card-head,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-tab.is-active{background:#244653;border-color:#467983}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-stat strong,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-card h3,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-item strong,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-facts dd,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-activity strong,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-tab>button,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-suggestions button{color:#edf5f8}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-item.is-selected{background:#3d372b}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-search input,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-note,html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-close{background:#203b49;color:#edf5f8;border-color:#486b7a}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-item{border-bottom-color:#405967}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page :is(.desk835-item p,.desk835-meta,.desk835-stat small,.desk835-facts dt,.desk835-card-head small,.desk835-note-hint,.desk835-activity p,.desk835-activity small,.desk835-empty,.desk835-empty-tabs,.desk835-suggestions small){color:#b9cbd2}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-actions button{background:#244653;border-color:#5a8290;color:#e4f3f5}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .desk835-actions button.primary{background:#087b89;border-color:#58adba;color:#fff}
+@media(max-width:1200px){#rp-overlay #rp2-page .desk835-content{grid-template-columns:1fr}#rp-overlay #rp2-page .desk835-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:980px),(max-height:619px){#rp-overlay #rp2-page .h789-home.desk835-open .h817-grid>.desk835-panel{display:flex!important;order:2;height:auto!important;min-height:540px;max-height:85dvh}#rp-overlay #rp2-page .h789-home.desk835-open .h817-grid>.h817-actions-col{order:1;min-height:350px!important}#rp-overlay #rp2-page .h789-home .desk835-bar{flex-wrap:wrap}#rp-overlay #rp2-page .desk835-tabs{order:3;flex:1 1 100%}#rp-overlay #rp2-page .desk835-content{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){#rp-overlay #rp2-page .desk835-brand{border:0}#rp-overlay #rp2-page .desk835-search{flex:1 1 100%;order:2}#rp-overlay #rp2-page .desk835-close{margin-left:auto}#rp-overlay #rp2-page .desk835-hero{display:block}#rp-overlay #rp2-page .desk835-hero-actions{justify-content:flex-start;margin-top:12px}#rp-overlay #rp2-page .desk835-content{grid-template-columns:1fr}#rp-overlay #rp2-page .desk835-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<script id="connect-v835-work-desk-script">
+(function(){'use strict';
+ if(!window.CONNECT_STANDALONE_SREP||window.CONNECT_STANDALONE_REP!=='Alex Morgan')return;
+ var KEY='tcp.connect.myDay.workDesk.v835.Alex', state={tabs:[],active:'',selectedTask:{},notes:{}}, mounted=null, subscribed=false, scheduled=false;
+ function svc(){return window.CONNECT_DEMO_V789}
+ function available(){return !!(svc()&&svc().active()&&window._rp2&&window._rp2.page==='home')}
+ function e(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+ function arr(v){return Array.isArray(v)?v:[]}
+ function txt(v){return String(v==null?'':v).trim()}
+ function money(v){return '$'+Math.round(Number(v)||0).toLocaleString('en-US')}
+ function date(v){if(!v)return '';var d=new Date(v.length===10?v+'T12:00:00':v);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}
+ function read(){try{var v=JSON.parse(localStorage.getItem(KEY)||'{}');state.tabs=arr(v.tabs).filter(function(x){return typeof x==='string'}).slice(-5);state.active=txt(v.active);state.selectedTask=v.selectedTask&&typeof v.selectedTask==='object'?v.selectedTask:{};state.notes=v.notes&&typeof v.notes==='object'?v.notes:{}}catch(_){}}
+ function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(_){}}
+ function accounts(){return available()?arr(svc().snapshot().accounts):[]}
+ function account(name){return svc()&&svc().getAccount(name)}
+ function nameOf(t){return txt(t.company||t.customer)}
+ function same(x,y){return txt(x).toLowerCase()===txt(y).toLowerCase()}
+ function relevant(list,name){return arr(list).filter(function(x){return same(nameOf(x),name)})}
+ function button(label,action,value,primary){return '<button type="button" data-desk835="'+action+'" data-value="'+e(value||'')+'"'+(primary?' class="primary"':'')+'>'+e(label)+'</button>'}
+ function tabs(){return state.tabs.length?state.tabs.map(function(n){return '<span class="desk835-tab'+(same(n,state.active)?' is-active':'')+'"><button type="button" data-desk835="tab" data-value="'+e(n)+'" aria-label="Open '+e(n)+'" aria-current="'+(same(n,state.active)?'page':'false')+'">'+e(n)+'</button><button type="button" data-desk835="remove" data-value="'+e(n)+'" aria-label="Close '+e(n)+' tab">×</button></span>'}).join(''):'<span class="desk835-empty-tabs">Choose a priority or find a customer to begin.</span>'}
+ function bar(){return '<div class="desk835-brand"><span class="desk835-brand-mark" aria-hidden="true">C</span><strong>Work Desk</strong></div><div class="desk835-tabs" aria-label="Open customers">'+tabs()+'</div><div class="desk835-search"><input type="search" data-desk835-search aria-label="Find a customer" placeholder="Find a customer…" autocomplete="off"><div class="desk835-suggestions" role="listbox" hidden></div></div>'+(state.active?'<button type="button" class="desk835-close" data-desk835="hide">Close view</button>':'')}
+ function stat(label,value){return '<div class="desk835-stat"><small>'+e(label)+'</small><strong>'+e(value)+'</strong></div>'}
+ function card(title,caption,body){return '<section class="desk835-card"><div class="desk835-card-head"><h3>'+e(title)+'</h3>'+(caption?'<small>'+e(caption)+'</small>':'')+'</div><div class="desk835-card-body">'+body+'</div></section>'}
+ function empty(msg){return '<p class="desk835-empty">'+e(msg)+'</p>'}
+ function taskRows(rows){if(!rows.length)return empty('No open work is recorded for this customer.');return rows.slice(0,12).map(function(t){var selected=state.selectedTask[state.active]===t.id,record=t.kind==='quote'?svc().getQuote(t.recordId):t.kind==='order'?svc().getOrder(t.recordId):null,ref=record&&(record.orderNum||record.quoteNumber)||'';return '<div class="desk835-item'+(selected?' is-selected':'')+'"><div class="desk835-item-top"><strong>'+e(t.label||t.title||'Work item')+'</strong><span class="desk835-tag'+(t.loyalty?' urgent':'')+'">'+e(t.loyalty?'Loyalty':t.queue||'Open')+'</span></div><p>'+e(t.why||t.detail||'Review the next step.')+'</p><div class="desk835-meta">'+e(t.contact||'')+(ref?' · '+e(ref):'')+(t.dueAt?' · Due '+e(date(t.dueAt)):'')+'</div><div class="desk835-actions">'+button('Work item','task',t.id,true)+(record?button((t.kind==='quote'?'Quote':'Order')+' details','record',t.id):'')+'</div></div>'}).join('')}
+ function recordRows(rows,kind){if(!rows.length)return empty('No '+kind.toLowerCase()+' are recorded for this customer.');return rows.slice(0,6).map(function(r){var ref=r.orderNum||r.quoteNumber||r.number||r.id,sub=r.status||r.stage||r.nextStep||'Recorded';return '<div class="desk835-item"><div class="desk835-item-top"><strong>'+e(ref)+'</strong><span class="desk835-tag">'+e(money(r.total||r.amount||r.value))+'</span></div><p>'+e(sub)+'</p><div class="desk835-actions">'+button('Open '+kind.slice(0,-1).toLowerCase(),'open-'+kind.slice(0,-1).toLowerCase(),r.id||ref)+'</div></div>'}).join('')}
+ function activityRows(a,s){var activity=arr(a.activities).map(function(x){return {title:x.subject||x.title||x.type||x.outcome||'Activity',detail:x.note||x.detail||x.description||'',at:x.date||x.createdAt||x.at||x.timestamp}}),touches=arr(s.touches).filter(function(x){return x.state==='active'&&(x.accountId===a.id||same(x.company,a.name))}).map(function(x){return{title:x.outcome||'Customer update',detail:x.note||'',at:x.date||x.createdAt}});var list=activity.concat(touches).sort(function(x,y){return String(y.at||'').localeCompare(String(x.at||''))}).slice(0,5);return list.length?list.map(function(x){return '<div class="desk835-activity"><strong>'+e(x.title)+'</strong>'+(x.detail?'<p>'+e(x.detail)+'</p>':'')+'<small>'+e(date(x.at))+'</small></div>'}).join(''):empty('No activity is recorded yet. Completed work and logged outcomes will appear here.')}
+ function facts(a){var p=a.profile||{},c=arr(a.contacts).find(function(x){return x.isPrimary})||arr(a.contacts)[0]||{};return '<dl class="desk835-facts"><dt>Primary contact</dt><dd>'+e(c.name||'Not recorded')+'</dd><dt>Role</dt><dd>'+e(c.title||'Not recorded')+'</dd><dt>Phone</dt><dd>'+e(c.phone||p.phone||'Not recorded')+'</dd><dt>Email</dt><dd>'+e(c.email||p.email||'Not recorded')+'</dd><dt>Location</dt><dd>'+e([p.city,p.state].filter(Boolean).join(', ')||'Not recorded')+'</dd><dt>Customer ID</dt><dd>'+e(p.customerNumber||'Not recorded')+'</dd></dl>'}
+ function panel(){var a=account(state.active);if(!a)return '';var s=svc().snapshot(),p=a.profile||{},tasks=relevant(s.tasks,state.active).filter(function(t){return t.state==='open'}),orders=arr(s.orders).filter(function(o){return same(o.customer||o.company,state.active)}),quotes=relevant(s.quotes,state.active),note=String(state.notes[state.active]||'');return '<header class="desk835-hero"><div><span class="desk835-eyebrow">Customer workspace · local demo</span><h2>'+e(a.name)+'</h2><p>'+e([p.industry,p.tier?'Tier '+p.tier:'',p.status].filter(Boolean).join(' · '))+'</p></div><div class="desk835-hero-actions">'+button('Prepare call','call',a.name)+button('Log outcome','outcome',a.name)+button('Full profile','profile',a.name)+'</div></header><div class="desk835-body"><div class="desk835-summary">'+stat('Open work',String(tasks.length))+stat('Orders',String(orders.length))+stat('Quotes',String(quotes.length))+stat('Cycle status',a.cycleWorked?'Worked':'Still due')+'</div><div class="desk835-content"><div class="desk835-stack">'+card('Next steps',tasks.length+' open',taskRows(tasks))+card('Orders',orders.length+' recorded',recordRows(orders,'Orders'))+card('Quotes',quotes.length+' recorded',recordRows(quotes,'Quotes'))+'</div><div class="desk835-stack">'+card('Customer at a glance','Recorded profile',facts(a))+card('Recent activity','Recorded history',activityRows(a,s))+card('My scratchpad','Private to this browser','<textarea class="desk835-note" data-desk835-note maxlength="5000" aria-label="Scratchpad for '+e(a.name)+'" placeholder="Keep your working thoughts here…">'+e(note)+'</textarea><p class="desk835-note-hint">Autosaved locally on this device. This is not a CRM note or a sent message.</p>')+'</div></div></div>'}
+ function render(){var home=document.querySelector('#rp-overlay #rp2-page .h789-home');if(!home||!available())return;var barEl=home.querySelector('.desk835-bar');if(!barEl){barEl=document.createElement('section');barEl.className='desk835-bar';barEl.setAttribute('aria-label','Work Desk customer tabs and search');home.querySelector('.h817-grid').before(barEl)}barEl.innerHTML=bar();var grid=home.querySelector('.h817-grid'),old=grid.querySelector('.desk835-panel'),scroll=old&&old.querySelector('.desk835-body')&&old.querySelector('.desk835-body').scrollTop;if(state.active&&account(state.active)){home.classList.add('desk835-open');if(!old){old=document.createElement('section');old.className='desk835-panel';old.setAttribute('aria-label','Customer workspace');grid.appendChild(old)}old.innerHTML=panel();if(scroll)old.querySelector('.desk835-body').scrollTop=scroll}else{state.active='';home.classList.remove('desk835-open');if(old)old.remove()}mounted=home}
+ function open(name,task){var a=account(name);if(!a)return false;name=a.name;state.tabs=state.tabs.filter(function(n){return !same(n,name)});state.tabs.push(name);state.tabs=state.tabs.slice(-5);state.active=name;if(task)state.selectedTask[name]=task;save();render();return true}
+ function hide(){state.active='';save();render()}
+ function remove(name){state.tabs=state.tabs.filter(function(n){return !same(n,name)});if(same(state.active,name))state.active=state.tabs[state.tabs.length-1]||'';save();render()}
+ function suggestions(input){var box=input.nextElementSibling,q=txt(input.value).toLowerCase();if(!q){box.hidden=true;box.innerHTML='';return}var found=accounts().filter(function(a){return a.name.toLowerCase().includes(q)||(a.profile&&String(a.profile.customerNumber||'').toLowerCase().includes(q))}).slice(0,8);box.innerHTML=found.length?found.map(function(a){return '<button type="button" role="option" data-desk835="search-open" data-value="'+e(a.name)+'">'+e(a.name)+'<small>'+e((a.profile&&a.profile.industry)||'Customer')+'</small></button>'}).join(''):'<p class="desk835-empty" style="padding:9px">No matching customer</p>';box.hidden=false}
+ function workflow(action,value){var w=window.CONNECT_WORKFLOW_V789;if(!w)return;if(action==='task')w.openTask(value);else if(action==='record'){var t=svc().getTask(value);if(t)(t.kind==='quote'?w.openQuote(t.recordId):w.openOrder(t.recordId))}else if(action==='open-order')w.openOrder(value);else if(action==='open-quote')w.openQuote(value);else if(action==='call')w.openCall(value);else if(action==='outcome')w.openOutcome(value);else if(action==='profile'){if(window._ps60OpenBusiness)window._ps60OpenBusiness('customers',encodeURIComponent(value));else if(window._cw4OpenCompany){window._rp2Go('customers');window._cw4OpenCompany(encodeURIComponent(value))}}}
+ document.addEventListener('click',function(ev){var b=ev.target.closest&&ev.target.closest('[data-desk835]');if(!b||!b.closest('.h789-home'))return;ev.preventDefault();ev.stopPropagation();var a=b.dataset.desk835,v=b.dataset.value;if(a==='tab'||a==='search-open'){open(v);if(a==='search-open'){var input=document.querySelector('.desk835-search input');if(input)input.value=''}}else if(a==='remove')remove(v);else if(a==='hide')hide();else workflow(a,v)});
+ document.addEventListener('click',function(ev){var b=ev.target.closest&&ev.target.closest('.h789-home [data-h789="task"],.h789-home [data-h789="record"],.h789-home [data-h789="next-customer"]');if(!b||!available())return;var t=b.dataset.task&&svc().getTask(b.dataset.task),a=t&&t.company;if(b.dataset.h789==='next-customer'){var next=svc().listCalls&&svc().listCalls()[0];a=next&&next.name}if(!a)return;ev.preventDefault();ev.stopImmediatePropagation();open(a,t&&t.id)},true);
+ document.addEventListener('input',function(ev){if(ev.target.matches&&ev.target.matches('.desk835-search input'))suggestions(ev.target);else if(ev.target.matches&&ev.target.matches('.desk835-note')){state.notes[state.active]=ev.target.value;save()}});
+ document.addEventListener('keydown',function(ev){if(!ev.target.matches||!ev.target.matches('.desk835-search input'))return;if(ev.key==='Escape'){ev.target.nextElementSibling.hidden=true;ev.target.value=''}if(ev.key==='Enter'){var first=ev.target.nextElementSibling.querySelector('button');if(first){ev.preventDefault();open(first.dataset.value);ev.target.value=''}}});
+ document.addEventListener('click',function(ev){if(!ev.target.closest||!ev.target.closest('.desk835-search')){var box=document.querySelector('.desk835-suggestions');if(box)box.hidden=true}});
+ function mount(){scheduled=false;if(!available())return;var home=document.querySelector('#rp-overlay #rp2-page .h789-home');if(!home)return;if(mounted!==home||!home.querySelector('.desk835-bar'))render();if(!subscribed&&svc().subscribe){svc().subscribe(function(){if(available()&&document.querySelector('.desk835-panel'))render()});subscribed=true}}
+ function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(mount)}
+ read();new MutationObserver(schedule).observe(document.documentElement,{childList:true,subtree:true});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule,{once:true});else schedule();
+ window.CONNECT_WORK_DESK_V835={open:open,hide:hide,state:function(){return {tabs:state.tabs.slice(),active:state.active}}};
+})();
+</script>
 </body>
 </html>
