@@ -1,42 +1,13 @@
 
 Loading older messages…
-okay lets build it out now
-Working for 5h 35m 42s
-I’ll build the My Day changes in the HTML: the five action tabs, the task workspace, bot opening records into that workspace, and the pop-out controls. I’ll check the current file first so the changes fit the working version.
-
-
-
-The current My Day is driven by a shared demo service, so completed work can update the lists consistently. I’m tracing the call, order, email, and bot hooks now before connecting them to the new middle workspace.
-
-
-
-Response: The five tabs are now wired to the shared demo data. I’m connecting the existing task forms to an inline workspace so reps can complete work from My Day, then I’ll add the panel movement and pop-out behavior.
-The five tabs are now wired to the shared demo data. I’m connecting the existing task forms to an inline workspace so reps can complete work from My Day, then I’ll add the panel movement and pop-out behavior.
-
-
-okay keep going
-Robert, I kept going and made a V838 polish pass. The active item now stays highlighted, the issue filters keep focus while you use them, the tabs support arrow keys, and closing a workspace returns focus to My Day. I also updated the instructions.
-
-Open the updated index.html
- · 
-Read the updated guide
-
-The code checks passed and the changes are committed locally. I haven’t pushed them to GitHub. I still couldn’t visually check the transitions because the browser blocked the local file preview.
-
-
-index.html
-HTML
-
-README.txt
-Document
 User attachment
 there is nothing different with this....
-Working for 2h 25m 45s
+Working for 2h 37m
 You’re right, Robert. The last pass mostly changed behavior and barely changed the screen. I’ll check the screenshot and the file you’re opening, then fix the visible My Day layout.
 
 
 
-Response: screenshot shows the cause: you’re viewing rtbobalik90.github.io/repdemo/, and that page still shows Build V834 with the old Priority/Work queues controls. V838 is only in the local project, so the website never received it. I should have connected those dots before handing you the file. I’m checking the deployment path now.
+Response: The screenshot shows the cause: you’re viewing rtbobalik90.github.io/repdemo/, and that page still shows Build V834 with the old Priority/Work queues controls. V838 is only in the local project, so the website never received it. I should have connected those dots before handing you the file. I’m checking the deployment path now.
 The screenshot shows the cause: you’re viewing rtbobalik90.github.io/repdemo/, and that page still shows Build V834 with the old Priority/Work queues controls. V838 is only in the local project, so the website never received it. I should have connected those dots before handing you the file. I’m checking the deployment path now.
 
 
@@ -87,11 +58,25 @@ V839 changes the tab display only. I have not changed the call flow yet; the nex
 
 Connect-MyDay-V839.html
 HTML
+okay, lets build out the call section now please and then we can move to other areas
+Robert, the call section is built into My Day’s middle panel in V840. Prepare call now opens the existing customer preparation tools. Start Call moves into notes and the Purchased, Artwork, Orders, Events, Inventory, and Quote Builder tools. Complete Call uses the existing outcome and follow-up flow.
+
+The call stays in the middle panel or its pop-out. Closing it pauses the timer and keeps the draft so the rep can reopen that customer. I checked the stage handoffs and draft behavior with code tests; I have not visually verified this version in your browser.
+
+Download Connect My Day Call Workspace V840
+ · 
+GitHub replacement ZIP
+
+The ZIP contains the root index.html. The live GitHub page will show V840 after that file is replaced there.
+
+
+Connect-MyDay-Call-Workspace-V840.html
+HTML
 
 
 
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v839">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v840">
 <head>
 <style id="connect-v837-my-day-css">
 @layer connect-work-v837, connect-day834, connect-day833, connect-day823;
@@ -1435,7 +1420,7 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v839',display:'V839',title:'Connect v839 — My Day Workspace'});
+  var release=Object.freeze({version:'v840',display:'V840',title:'Connect v840 — My Day Call Workspace'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -37853,7 +37838,7 @@ window._rp2NotificationsDraw=function(){if(typeof Chart!=='function'||window._rp
   var right='<aside class="cl1-panel cl1-context-panel"><div class="cl1-panel-head"><div><div class="cl1-kick">CUSTOMER CONTEXT</div><div class="cl1-panel-title">What matters during the call</div><div class="cl1-panel-copy">Only recorded customer evidence is shown.</div></div><button class="cl1-mini primary" onclick="_call532OpenCustomer()">Full profile</button></div><div class="cl1-panel-body cl1-scroll">'+contextHtml(g,ctx)+'</div></aside>';
   return'<div class="cl1-shell">'+hero+'<div class="cl1-main">'+queuePanel+active+right+'</div></div>'
  }
- function rerender(){if(_rp2.page==='call'){var page=document.getElementById('rp2-page');if(page)page.innerHTML=window._rp2CallV1();draw()}else if(typeof window._call534Render==='function'){window._call534Render()}}
+ function rerender(){if(_rp2.page==='call'){var page=document.getElementById('rp2-page');if(page)page.innerHTML=window._rp2CallV1();draw()}else if(window.CONNECT_INLINE_CALL_V840&&window.CONNECT_INLINE_CALL_V840.active()){window.CONNECT_INLINE_CALL_V840.refresh()}else if(typeof window._call534Render==='function'){window._call534Render()}}
  function draw(){stopTimer();if(window._call532.stage==='active'&&!window._call532.paused){window._call532TimerHandle=setInterval(function(){var e=document.getElementById('cl1-timer');if(e)e.textContent=duration(currentSeconds())},1000)}}
  function stopTimer(){if(window._call532TimerHandle){clearInterval(window._call532TimerHandle);window._call532TimerHandle=null}}
  function installNav(){
@@ -59513,8 +59498,9 @@ function queue(d){if(typeof window._call662DetailQueueHtml==='function'){try{var
  if(q.mode==='extra'){return'<section class="c649-queue c653-extra"><div class="c649-queue-head"><div><strong>Extra calls</strong><span> · today’s required list is complete</span><div class="c652-qmeta"><span>'+q.todayCompleted+' completed today</span><span>·</span><span>Finish this 5-account bonus batch before loading another.</span></div></div><div class="c652-queue-actions"><button class="c649-btn ghost" onclick="_call652ViewWholeList()">View Whole List</button><span class="c649-chip green">Ahead of requirement</span></div></div><div class="c649-qgrid">'+show.map(function(x,i){return'<div class="c649-q '+(norm(x.customer)===norm(d.company)?'on':'')+'" onclick="_call653Select(\''+encodeURIComponent(x.customer)+'\')"><i>+'+(i+1)+'</i><div><strong>'+esc(x.customer)+'</strong><span>'+esc(x.reason||x.copy||'Extra account update')+'</span></div></div>'}).join('')+'</div></section>'}
  return'<section class="c649-queue c653-complete"><div class="c653-required-complete"><div class="c653-complete-mark">✓</div><div><strong>'+(q.dailyTarget?'Today’s required calls are complete':'No required calls are due today')+'</strong><span>'+(q.dailyTarget?(q.todayCompleted+' completed against a '+q.dailyTarget+'-account daily requirement.'):'You can still work ahead in the current cycle if you want.')+'</span></div><div class="c652-queue-actions"><button class="c649-btn ghost" onclick="_call652ViewWholeList()">View Whole List</button>'+(q.extraPool.length?'<button class="c649-btn primary" onclick="_call652QueueLoadMore()">Load 5 More +</button>':'<span class="c649-chip green">Cycle list complete</span>')+'</div></div></section>'}
 function render(){try{var d=data(),draft=ensureDraft(d),st=stage();if(st==='prep')return renderPrep796(d,draft);var main=st==='prep'?prep(d,draft):st==='call'?callStage(d,draft):st==='complete'?completeStage(d,draft):doneStage(d);var selling=st==='call'&&window.TCP_SELLING_V799&&TCP_SELLING_V799.active(),work=selling?TCP_SELLING_V799:null;return'<div class="c649 c794 c795 '+(selling?'c799-shell ':'')+(st==='prep'?'c794-prep':'')+'">'+hero(d,st)+'<div class="c649-layout'+(selling?' c799-layout':'')+'"'+(selling?work.layoutStyle():'')+'>'+(selling?work.callPanel(main)+work.dividerHtml()+work.renderSidebar():main+carryHtml798(d))+'</div>'+queue(d)+contactModal(d)+fullQueueModal(d)+'</div>'}catch(e){console.error('[v652 phased call]',e);return'<div class="c649"><section class="c649-card"><div class="c649-body"><h2>Call Workspace could not render</h2><p>'+esc(e&&e.message||String(e))+'</p></div></section></div>'}}
-function rerender(top){if(!(window._rp2&&_rp2.page==='call'&&isPhased()))return;var main=document.querySelector('#rp-overlay .rp2-main'),scroll=main?main.scrollTop:0,page=document.getElementById('rp2-page');if(page)page.innerHTML=render();if(main)requestAnimationFrame(function(){main.scrollTop=top===true?0:scroll});try{if(typeof window._rp2CallDraw==='function')window._rp2CallDraw()}catch(e){}}
+function rerender(top){if(window.CONNECT_INLINE_CALL_V840&&window.CONNECT_INLINE_CALL_V840.active()){window.CONNECT_INLINE_CALL_V840.refresh(top);return}if(!(window._rp2&&_rp2.page==='call'&&isPhased()))return;var main=document.querySelector('#rp-overlay .rp2-main'),scroll=main?main.scrollTop:0,page=document.getElementById('rp2-page');if(page)page.innerHTML=render();if(main)requestAnimationFrame(function(){main.scrollTop=top===true?0:scroll});try{if(typeof window._rp2CallDraw==='function')window._rp2CallDraw()}catch(e){}}
 window._call662Rerender=function(top){return rerender(top)};
+window._call652InlinePrepare=function(company){return loadDirect(company)};
 window._rp2CallV1=function(){if(isPhased())return render();return typeof priorCall==='function'?priorCall.apply(this,arguments):''};
 window._rp2After=function(){if(isPhased()&&window._rp2&&_rp2.page==='call'){setTimeout(function(){try{if(typeof window._rp2CallDraw==='function')window._rp2CallDraw()}catch(e){}},0);return}return typeof priorAfter==='function'?priorAfter.apply(this,arguments):undefined};
 window._call652ToggleMore=function(btn){window._call652More=!window._call652More;var e=document.getElementById('c649-more');if(e)e.classList.toggle('open',!!window._call652More);if(btn)btn.textContent=window._call652More?'Hide extra details':'More details'};
@@ -88146,7 +88132,7 @@ function ShopClient828(root,role,send,css){
  function mount(el,title,context){
    if(!available())return false;
    if(!current||!current.isConnected)returnFocus=document.activeElement;
-   if(current&&current!==el){saveDraft(current);current.remove();}
+   if(current&&current!==el){if(current.hasAttribute('data-h840-call')&&window.CONNECT_INLINE_CALL_V840)window.CONNECT_INLINE_CALL_V840.suspend();saveDraft(current);current.remove();}
    current=el;mode='dock';subject=context||{};
    el.classList.remove('h837-floating','h837-minimized');
    ['left','top','width','height','bottom'].forEach(function(p){el.style[p]='';});
@@ -88154,7 +88140,7 @@ function ShopClient828(root,role,send,css){
    if(!reduced())el.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:260,easing:'ease-out'});
    return true;
  }
- function close(el){if(el&&el!==current||!current)return;saveDraft(current);current=null;mode='dock';subject={};moveLayout(false);syncSelection();}
+ function close(el){if(el&&el!==current||!current)return;if(current.hasAttribute('data-h840-call')&&window.CONNECT_INLINE_CALL_V840)window.CONNECT_INLINE_CALL_V840.suspend();saveDraft(current);current=null;mode='dock';subject={};moveLayout(false);syncSelection();}
  function closeCurrent(restore){if(!current)return;if(current.hasAttribute('aria-labelledby')&&window.CONNECT_WORKFLOW_V789){window.CONNECT_WORKFLOW_V789.close(restore!==false);return;}var old=current,target=returnFocus&&returnFocus.isConnected?returnFocus:null;close(old);old.remove();returnFocus=null;if(restore!==false){if(!target){var h=root();target=h&&h.querySelector('.h837-tabs [aria-selected="true"]');}if(target&&target.focus)target.focus({preventScroll:true});}}
  function float(){
    if(!current||mode!=='dock')return;
@@ -88189,7 +88175,7 @@ function ShopClient828(root,role,send,css){
    body+=card('Quotes','',quotes.map(function(q){return '<button type="button" class="h837-line" data-h837="quote" data-id="'+esc(q.id)+'"><strong>'+esc(q.quoteNumber)+'</strong><span>'+esc(q.status||'Open')+'</span></button>';}).join('')||'<p>No quotes in this demo.</p>');
    return custom(a.name,body,{company:a.name,kind:'customer'});
  }
- function openCall(name){var flow=window.CONNECT_WORKFLOW_V789;if(!flow||!available())return false;var result=flow.openOutcome(name);if(result&&result.ok&&current){var body=current.querySelector('.wf789-dialog-body');if(body){body.insertAdjacentHTML('afterbegin','<div class="h837-call-intro"><strong>Today’s call · '+esc(name)+'</strong><p>Review the customer and record the actual conversation. Open the full call workspace for deeper preparation.</p><button type="button" class="wf789-btn" data-h837="full-call" data-company="'+esc(name)+'">Full call workspace →</button></div>');}subject={company:name,kind:'call'};syncSelection();}return !!(result&&result.ok);}
+ function openCall(name){return !!(window.CONNECT_INLINE_CALL_V840&&window.CONNECT_INLINE_CALL_V840.open(name));}
  function mail(r,id){var api=emailApi();return api&&api.getThread&&api.getThread(r||'Alex Morgan',id);}
  function openEmail(id){
    var t=mail('Alex Morgan',id);if(!t)return false;var api=emailApi();if(api&&api.markRead)api.markRead('Alex Morgan',id);
@@ -88219,6 +88205,64 @@ function ShopClient828(root,role,send,css){
  window.CONNECT_HOME_WORK_V837={available:available,mount:mount,close:close,openCall:openCall,openCustomer:openCustomer,openEmail:openEmail,openInbox:openInbox,fullEmail:fullEmail,context:context,syncSelection:syncSelection,diagnostics:function(){return {mode:mode,active:!!(current&&current.isConnected),kind:subject.kind||''};}};
 })();
 
+</script>
+<style id="connect-v840-inline-call-css">
+/* The existing call stages run inside the My Day work slot. */
+@layer connect-work-v837 {
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h837-workspace .h840-call .wf789-dialog-body {padding:0!important;overflow:auto!important;}
+#rp-overlay .h840-call #h840-call-body {min-width:0;padding:14px 16px 24px;}
+#rp-overlay .h840-call .p796,#rp-overlay .h840-call .c649 {width:100%!important;max-width:100%!important;margin:0!important;min-width:0!important;}
+#rp-overlay .h840-call .p796 .p796-layout {grid-template-columns:minmax(0,1fr)!important;}
+#rp-overlay .h840-call .p796 .p796-contact,#rp-overlay .h840-call .p796 .p796-records,#rp-overlay .h840-call .p796 .p796-plan {grid-column:1!important;grid-row:auto!important;min-width:0!important;}
+#rp-overlay .h840-call .c799-corner,#rp-overlay .h840-call .c649-queue,#rp-overlay .h840-call button[onclick="_call652Next()"],#rp-overlay .h840-call button[onclick="_call656BackHub()"] {display:none!important;}
+#rp-overlay .h840-call .sw799 {min-width:0!important;width:100%!important;}
+#rp-overlay .h840-call .sw799 .sw799-body {max-height:none!important;}
+#rp-overlay .h840-call .c649-hero {margin-bottom:12px!important;}
+#rp-overlay .h840-call .p796-tabs {flex-wrap:wrap!important;}
+#rp-overlay .h840-call .p796 :is(button,input,textarea,select):focus-visible,#rp-overlay .h840-call .c649 :is(button,input,textarea,select):focus-visible {outline:3px solid #138cad!important;outline-offset:2px!important;}
+}
+</style>
+<script id="connect-v840-inline-call-js">
+(function(){
+ 'use strict';
+ var el=null,name='',sessions=Object.create(null);
+ function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+ function active(){return !!(el&&el.isConnected&&document.getElementById('h840-call-body')&&window._rp2&&_rp2.page==='home'&&window._call532&&_call532.company===name);}
+ function refresh(top){
+   if(!active())return false;
+   var body=el.querySelector('#h840-call-body'),scroller=el.querySelector('.wf789-dialog-body'),y=scroller.scrollTop;
+   var engine=window.TCP_PHASED_CALL_WORKSPACE_V652;
+   if(!engine||typeof engine.render!=='function')return false;
+   body.innerHTML=engine.render();
+   requestAnimationFrame(function(){if(scroller.isConnected)scroller.scrollTop=top===true?0:y;});
+   if(typeof window._rp2CallDraw==='function')window._rp2CallDraw();
+   return true;
+ }
+ function suspend(){
+   if(!active())return;
+   if(typeof window._call532Draft==='function')window._call532Draft();
+   if(_call532.stage==='active'&&!_call532.paused&&typeof window._call532Pause==='function')window._call532Pause();
+   if(_call532.completed)delete sessions[name];
+   else sessions[name]={stage:window._call652UiStage||'prep',elapsed:_call532.elapsed||0,draft:JSON.parse(JSON.stringify(_call532.draft||{}))};
+ }
+ function open(company){
+   company=String(company||'').trim();var dock=window.CONNECT_HOME_WORK_V837,engine=window.TCP_PHASED_CALL_WORKSPACE_V652;
+   if(!company||!dock||!dock.available()||!engine||typeof window._call652InlinePrepare!=='function')return false;
+   if(active()&&name===company){el.querySelector('.wf789-dialog-body').focus({preventScroll:true});return true;}
+   if(active()){dock.close(el);if(el.isConnected)el.remove();el=null;}
+   window._call652InlinePrepare(company);
+   if(sessions[company]){var saved=sessions[company];_call532.draft=saved.draft;_call532.elapsed=saved.elapsed;_call532.paused=saved.stage==='call';_call532.stage=saved.stage==='call'?'active':'prep';window._call652UiStage=saved.stage;}
+   name=company;
+   el=document.createElement('section');el.className='wf789-dialog h837-inline h840-call';el.setAttribute('data-h840-call','');el.setAttribute('aria-label','Call workspace for '+company);
+   el.innerHTML='<header class="wf789-dialog-head"><div><span class="wf789-eyebrow">MY DAY · CUSTOMER CALL</span><h2>'+esc(company)+'</h2></div><div class="h837-work-controls"><button type="button" class="wf789-btn" data-h837="pop">Pop out</button><button type="button" class="wf789-btn" data-h837="minimize" hidden>Minimize</button><button type="button" class="wf789-btn" data-h837="restore" hidden>Restore</button><button type="button" class="wf789-btn" data-h837="snap" hidden>Snap back</button><button type="button" class="wf789-btn" data-h837="close" aria-label="Close call workspace">×</button></div></header><div class="wf789-dialog-body" tabindex="-1"><div id="h840-call-body"></div></div>';
+   if(!dock.mount(el,company,{company:company,kind:'call'})){el=null;return false;}
+   refresh(true);el.querySelector('.wf789-dialog-body').focus({preventScroll:true});
+   return true;
+ }
+ window.CONNECT_INLINE_CALL_V840={open:open,refresh:refresh,suspend:suspend,active:active,diagnostics:function(){return {open:active(),company:name,stage:window._call652UiStage||'prep',inCall:!!(window._call532&&_call532.stage==='active')}}};
+ var priorGo=window._rp2Go;
+ if(typeof priorGo==='function')window._rp2Go=function(page){if(active())suspend();return priorGo.apply(this,arguments);};
+})();
 </script>
 </body>
 </html>
