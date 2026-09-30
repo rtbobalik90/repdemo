@@ -1,208 +1,3 @@
-
-okay, lets try that but i do want all the features we developed during the call to be present, we might might need to rework them and format that section to have them fit in that spot a little bit better.
-
-Worked for 10m 32s
-
-Opening Higgsfield
-Opening Higgsfield
-I built the first pass of the actual My Day call workspace.
-
-The big change is that the middle call area now reuses the real customer selling workspace we already developed instead of opening the basic call-log form. That means the call area includes the existing:
-
-Overview
-Notes & History
-Purchased
-Artwork
-Orders
-Events
-Inventory
-Quote Builder
-Shop Together
-I also added the compact call layer around it: customer/contact information, loyalty/status, phone number, call purpose, Start Call, Email, Follow-Up, Quote, Shop Together, live call state/timer, conversation starter, promotion context, and the wrap-up/completion section.
-
-The layout uses container-based responsive rules, so as you drag that middle My Day column narrower, the call controls and content should reorganize based on the actual space available instead of just the overall browser size.
-
-One limitation from the visual-design requirement: Higgsfield was used for the concept pass. Magnific is connected but currently has 0 generation credits, so I could not run the Magnific refinement pass.
-
-I also ran a syntax check on the new V839 call-workspace code and confirmed all nine call features are still present in the resulting file.
-
-The thing I want to see next is how this actually feels in that middle column, especially at your normal width and when you squeeze it down. That will tell us what needs to be condensed, moved, or visually reworked rather than guessing.
-
-
-Connect-MyDay-V838_Call_Workspace.html
-HTML
-User attachment
-few things. first one bring this text is back. register that to be fixed and i will give you the rest
-Registered. The raw page text rendering in the browser is a bug and needs to be fixed first.
-
-What I see is the HTML content being displayed as plain text instead of the app rendering normally, which means the last call-workspace build likely introduced a markup/script insertion problem around the new V839 block.
-
-I will not change anything yet. Send me the rest of the issues and I’ll collect them all before I make the next corrected build.
-
-User attachment
-User attachment
-User attachment
-this is super crammed, i think we should still do the prep for the call, and then go into the call but this needs to be much more user friendly. also i hit email and this happened, i think the email should pop up in the order like on google. i popped it out and there is no way to go back in. i tihnk on any popout screen the corner should be able to drag and make bigger. this just needs a eleveation. its to crowrded, a dedesign without losing what its suppoed to be doing
-
-Worked for 6m 58s
-
-Opening Higgsfield
-Opening Higgsfield
-Yes, this needed more than just shrinking things. I rebuilt the call flow around what you're describing.
-
-What changed in V840
-1. Prep is a real separate stage again.
-Opening a customer from My Day now starts at Prep, not with the entire customer workspace shoved into the middle column.
-
-Prep gives the rep:
-
-customer/contact/local-time context
-why Connect selected the customer
-up to three conversation points
-current selling/promotion focus
-purchased-history count
-recent order anchor
-artwork availability
-current quote context
-phone number and call type
-Email / Follow-Up
-one clear Start Call action
-The heavy tools stay out of the way until they're actually needed.
-
-2. Starting the call opens the full working environment.
-Once Start Call is clicked, Prep gets out of the way and the space becomes the active call workspace.
-
-All the work we've already done is still there:
-
-Overview
-Notes & History
-Purchased
-Artwork
-Orders
-Events
-Inventory
-Quote Builder
-Shop Together
-But now the top is just a compact live-call bar with customer, contact, timer, Email, Follow-Up, Quote, Shop Together, and End Call.
-
-I also removed the redundant Shop Together strip from inside the customer workspace because Shop Together already has a proper call-level action.
-
-3. The tabs are no longer trying to become a tiny 4×2 dashboard.
-During the call they're a single horizontal workspace navigation row. If there isn't enough room, the tabs scroll horizontally instead of crushing themselves.
-
-That should make Purchased, Artwork, Orders, etc. feel like actual working screens rather than miniaturized cards.
-
-4. Wrap Up is now its own stage.
-Ending the call takes the rep to:
-
-Prep → Active Call → Wrap Up
-
-Wrap Up gets the breathing room for:
-
-outcome
-conversation/attempt notes
-follow-up email
-schedule follow-up
-complete call
-So the rep isn't trying to record the outcome underneath another giant workspace.
-
-Email behavior
-This was definitely wrong in your screenshot.
-
-The local email composer is now designed to behave much more like Gmail:
-
-opens in the bottom-right
-stays above the call workspace
-no full-screen dark overlay
-does not block the rest of Connect
-is independently resizable
-remains visible whether the call is docked or popped out
-That fixes the stacking problem where Email was opening underneath the call window.
-
-Popouts
-This was another real usability hole.
-
-A popped-out My Day workspace now has:
-
-Minimize | Restore | Dock back | Close
-
-instead of leaving you stranded after Pop Out.
-
-I also applied resizing to all My Day popout workspaces, not just calls. You can drag the lower-right corner to make the popout larger or smaller.
-
-Raw-text issue
-I also checked the generated file itself. The new build begins correctly with the HTML document, doesn't contain the conversation text shown in that broken screen, and the new V840 JavaScript passes syntax validation.
-
-So that issue is included in this corrected build rather than being forgotten.
-
-What I deliberately did not do
-I did not simplify this by throwing functionality away.
-
-The elevation here is mostly about progressive disclosure:
-
-Before the call, show what helps me prepare.
-During the call, give me the selling tools.
-After the call, let me finish the record.
-
-That feels much closer to what this section is supposed to be.
-
-
-Connect-MyDay-V840_Call_Redesign.html
-HTML
-User attachment
-User attachment
-User attachment
-User attachment
-User attachment
-User attachment
-User attachment
-User attachment
-User attachment
-okay, these screens....not great. the UI is awful, the layout and flow. it all does not fit the rest of the page.
-
-Worked for 9m 39s
-
-Opened Higgsfield
-
-Agreed. The screenshots made the problem clearer: the tools themselves are useful, but the active-call area still looks like a different full application embedded inside My Day.
-
-I rebuilt the active-call layout around that.
-
-The biggest changes are that the duplicated “Customer workspace / Lakeshore…” header is gone, the oversized three-step bar is reduced to a small workflow indicator, and the eight competing tabs are reorganized into a cleaner structure:
-
-Overview | Notes | History | Selling | Events
-
-History then exposes Purchased, Orders, Artwork. Selling exposes Inventory, Quote, Shop Together. Nothing is being removed, it is just not all shouting for attention at the same time.
-
-I also added a dedicated Call Guide rail during the live call. It keeps the useful prep information available without mixing it into the work tool:
-
-why you are calling
-conversation prompts
-YTD / last purchase / last contact
-purchase-history count
-reminder to leave with a next step and date
-The actual workspace now gets most of the room.
-
-I also corrected an actual styling bug: the embedded workspace was missing the sw800 class that the newer Overview/customer-workspace styling depends on. That was a major reason Overview and Notes looked so raw in your screenshots.
-
-Other changes in this pass:
-
-search only appears on sections where searching is useful
-Inventory rows are much denser
-Artwork is treated like artwork records instead of giant posters
-Purchased and Orders are tighter history cards
-Quote Builder is visually flatter and more like a working sales tool
-the call layout becomes one column when the middle workspace gets narrow
-the Call Guide can collapse instead of crushing the work area
-popout/resizing and the Gmail-style Email behavior from the previous build remain intact
-This should feel much more like My Day extending into a call, instead of Connect opening another app inside itself.
-
-
-Connect-MyDay-V841_Call_Elevation.html
-HTML
-
-
-
 <!DOCTYPE html>
 <html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v840">
 <head>
@@ -88690,6 +88485,105 @@ html[data-rp-theme="dark"] #rp-overlay .v841-btn.danger{border-color:#765258;bac
 }
 @media(prefers-reduced-motion:reduce){#rp-overlay .h837-call-v841 *{scroll-behavior:auto!important;transition:none!important;}}
 </style>
+<style id="connect-v842-myday-call-workbench-css">
+/* V842 · Use the whole My Day canvas and mirror the calm card language of Next Best Actions. */
+#rp-overlay .v841-shell-head{background:#16495b!important;border-bottom-color:#16495b!important;min-height:64px!important;padding:12px 16px!important;}
+#rp-overlay .v841-shell-head .wf789-eyebrow{color:#bfe0e5!important;font-size:10px!important;font-weight:800!important;letter-spacing:.09em!important;}
+#rp-overlay .v841-shell-head h2{color:#fff!important;font-size:19px!important;margin-top:2px!important;}
+#rp-overlay .v841-shell-head .wf789-btn{background:#fff!important;border-color:#d6e5e9!important;color:#17394d!important;box-shadow:0 4px 12px rgba(4,37,48,.18)!important;}
+#rp-overlay .v841-flow{padding:10px 18px!important;gap:10px!important;background:#f8fbfc!important;}
+#rp-overlay .v841-flow-step{font-size:11.5px!important;}
+#rp-overlay .v841-flow-line{max-width:none!important;background:#c6dce2!important;}
+
+/* Prep fills the available workbench instead of stopping after two shallow cards. */
+#rp-overlay .v842-prep-stage{overflow:hidden!important;}
+#rp-overlay .v842-prep-shell{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;padding:14px;background:#edf4f5;}
+#rp-overlay .v842-prep-main{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.8fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr);gap:12px;flex:1 1 auto;min-height:0;}
+#rp-overlay .v842-prep-card{display:flex;flex-direction:column;min-width:0;min-height:0;border:1px solid #c8dce2;border-radius:14px;background:#fff;box-shadow:0 8px 22px rgba(20,67,82,.07);overflow:hidden;}
+#rp-overlay .v842-prep-card>header{padding:13px 15px 11px;border-bottom:1px solid #dce9ed;background:#f7fafb;}
+#rp-overlay .v842-prep-card>header>span{display:block;color:#087b89;font-size:10px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;}
+#rp-overlay .v842-prep-card>header h3{margin:2px 0 0;color:#17394d;font-size:16px;line-height:1.25;}
+#rp-overlay .v842-card-body{flex:1 1 auto;min-height:0;padding:14px 15px;overflow:auto;}
+#rp-overlay .v842-feature>header{background:#16495b;border-bottom-color:#16495b;}
+#rp-overlay .v842-feature>header>span{color:#bfe0e5;}
+#rp-overlay .v842-feature>header h3{color:#fff;}
+#rp-overlay .v842-why{padding:11px 12px;border-left:4px solid #d88638;border-radius:9px;background:#fff7ee;}
+#rp-overlay .v842-why span,#rp-overlay .v842-context-block span{display:block;margin-bottom:4px;color:#607789;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;}
+#rp-overlay .v842-why strong{color:#17394d;font-size:13px;line-height:1.4;}
+#rp-overlay .v842-talk-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px;}
+#rp-overlay .v842-talk{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;align-items:start;padding:10px;border:1px solid #dce9ed;border-radius:10px;background:#f8fbfc;color:#294d5e;font-size:11.5px;line-height:1.4;}
+#rp-overlay .v842-talk b{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:#e7f5f6;color:#087b89;}
+#rp-overlay .v842-snapshot-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+#rp-overlay .v842-snapshot-grid .v841-fact{padding:11px!important;border-color:#d5e5e9!important;background:#f4f8f9!important;}
+#rp-overlay .v842-snapshot-grid .v841-fact strong{font-size:13px!important;}
+#rp-overlay .v842-contact-line{margin-top:12px;padding-top:12px;border-top:1px solid #dfebef;}
+#rp-overlay .v842-contact-line span{display:block;color:#087b89;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;}
+#rp-overlay .v842-contact-line strong{display:block;margin-top:3px;font-size:13px;color:#17394d;}
+#rp-overlay .v842-rows{display:grid;align-content:start;gap:8px;}
+#rp-overlay .v842-row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;padding:11px 12px;border:1px solid #dce9ed;border-left:4px solid #9bc8cf;border-radius:10px;background:#f9fbfc;}
+#rp-overlay .v842-row span{color:#607789;font-size:11px;font-weight:700;}
+#rp-overlay .v842-row strong{color:#17394d;font-size:12.5px;overflow-wrap:anywhere;}
+#rp-overlay .v842-context-stack{display:grid;align-content:start;gap:9px;}
+#rp-overlay .v842-context-block{padding:11px 12px;border:1px solid #dce9ed;border-radius:10px;background:#f9fbfc;}
+#rp-overlay .v842-context-block p{margin:0;color:#294d5e;font-size:12px;line-height:1.45;}
+#rp-overlay .v842-context-block.accent{border-color:#b7dce1;background:#eaf7f8;}
+#rp-overlay .v842-context-block.accent strong{font-size:12.5px;color:#075d71;}
+#rp-overlay .v842-prep-footer{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;flex:0 0 auto;margin-top:12px;padding:11px 12px;border:1px solid #c8dce2;border-radius:12px;background:#fff;box-shadow:0 7px 18px rgba(20,67,82,.07);}
+#rp-overlay .v842-footer-fields{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(220px,1.2fr);gap:8px;min-width:0;}
+#rp-overlay .v842-footer-actions{display:flex;gap:7px;align-items:center;justify-content:flex-end;}
+#rp-overlay .v842-start{min-width:116px!important;background:#087b89!important;border-color:#087b89!important;}
+
+/* Active call adopts the same strong hierarchy as Next Best Actions. */
+#rp-overlay .v841-callbar{padding:10px 14px!important;background:#fff!important;border-bottom:1px solid #c8dce2!important;box-shadow:0 3px 10px rgba(20,67,82,.04)!important;}
+#rp-overlay .v841-call-copy strong{font-size:13px!important;color:#17394d!important;}
+#rp-overlay .v841-call-copy span{font-size:10.5px!important;color:#607789!important;}
+#rp-overlay .v841-layout{grid-template-columns:292px minmax(0,1fr)!important;gap:12px!important;height:100%!important;min-height:0!important;padding:12px!important;background:#edf4f5!important;}
+#rp-overlay .v842-guide{display:flex!important;flex-direction:column!important;height:100%!important;min-height:0!important;border-radius:14px!important;box-shadow:0 8px 22px rgba(20,67,82,.07)!important;}
+#rp-overlay .v842-guide-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 13px;background:#16495b;color:#fff;border-bottom:1px solid #16495b;}
+#rp-overlay .v842-guide-head span{display:block;color:#bfe0e5;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;}
+#rp-overlay .v842-guide-head strong{display:block;margin-top:2px;font-size:12.5px;line-height:1.3;}
+#rp-overlay .v842-guide-badge{flex:0 0 auto!important;padding:5px 7px!important;border-radius:999px!important;background:#286579!important;color:#eaf8fa!important;text-transform:none!important;letter-spacing:0!important;font-size:9px!important;}
+#rp-overlay .v842-guide .v841-guide-body{flex:1 1 auto!important;min-height:0!important;padding:0 12px 12px!important;background:#fff!important;}
+#rp-overlay .v842-live-notes textarea{width:100%;min-height:105px;padding:9px 10px;border:1px solid #bfd6df;border-radius:9px;resize:vertical;background:#fff;color:#17394d;font:400 11px/1.45 'Segoe UI',Arial,sans-serif;box-sizing:border-box;}
+#rp-overlay .v842-live-notes small{display:block;margin-top:4px;color:#7b8f9c;font-size:9.5px;}
+#rp-overlay .v841-workbench.sw799.sw800{height:100%!important;min-height:0!important;border-radius:14px!important;border-color:#c8dce2!important;box-shadow:0 8px 22px rgba(20,67,82,.07)!important;background:#fff!important;}
+#rp-overlay .v841-nav{padding:9px 10px!important;gap:6px!important;background:#e8f1f3!important;border-bottom-color:#c8dce2!important;}
+#rp-overlay .v841-nav button{min-height:36px!important;padding:7px 12px!important;border:1px solid transparent!important;border-radius:9px!important;color:#315164!important;font-size:11.5px!important;}
+#rp-overlay .v841-nav button.on{border-color:#62aeba!important;background:#fff!important;color:#075d71!important;box-shadow:inset 0 -3px #087b89,0 2px 5px rgba(20,67,82,.05)!important;}
+#rp-overlay .v841-subnav{padding:8px 10px!important;background:#f7fafb!important;border-bottom-color:#d8e6ea!important;}
+#rp-overlay .v841-subnav button{min-height:32px!important;padding:6px 10px!important;border-radius:8px!important;font-size:10.8px!important;}
+#rp-overlay .v841-search{padding:9px 10px!important;background:#fff!important;border-bottom-color:#dfebef!important;}
+#rp-overlay .v841-search input{min-height:38px!important;font-size:12px!important;background:#fbfdfe!important;}
+#rp-overlay .v841-body.sw799-body{height:100%!important;min-height:0!important;padding:14px!important;background:#f8fbfc!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-card{margin-bottom:10px!important;padding:13px 14px!important;border-color:#d6e5e9!important;border-radius:11px!important;background:#fff!important;box-shadow:0 4px 12px rgba(20,67,82,.045)!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-card h4{font-size:13.5px!important;color:#17394d!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-card p{font-size:12px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-filters{padding:11px!important;gap:9px!important;background:#fff!important;border-color:#d6e5e9!important;box-shadow:0 3px 10px rgba(20,67,82,.035)!important;}
+#rp-overlay .h837-call-v841 .v841-workbench input:not([type=checkbox]):not([type=radio]),#rp-overlay .h837-call-v841 .v841-workbench select,#rp-overlay .h837-call-v841 .v841-workbench textarea{min-height:38px!important;font-size:12px!important;background:#fff!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-btn{min-height:35px!important;font-size:11.5px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench article.sw799-card:has(.sw799-product-thumb)>.sw799-row{grid-template-columns:50px minmax(0,1fr) auto!important;gap:12px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-product-thumb{width:48px!important;height:48px!important;flex-basis:48px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-art-image{max-height:150px!important;}
+
+@container call841 (max-width:860px){
+ #rp-overlay .v842-prep-main{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;overflow:auto;}
+ #rp-overlay .v842-prep-card{min-height:180px;}
+ #rp-overlay .v842-prep-footer{grid-template-columns:minmax(0,1fr);}
+ #rp-overlay .v842-footer-actions{justify-content:stretch;}
+ #rp-overlay .v842-footer-actions .v841-btn{flex:1 1 auto;}
+ #rp-overlay .v841-layout{grid-template-columns:minmax(0,1fr)!important;overflow:auto!important;}
+ #rp-overlay .v842-guide{height:auto!important;min-height:0!important;}
+ #rp-overlay .v842-guide .v841-guide-body{max-height:330px!important;}
+ #rp-overlay .v841-workbench.sw799.sw800{height:620px!important;min-height:520px!important;}
+}
+@container call841 (max-width:610px){
+ #rp-overlay .v842-talk-grid,#rp-overlay .v842-snapshot-grid,#rp-overlay .v842-footer-fields{grid-template-columns:minmax(0,1fr);}
+ #rp-overlay .v842-prep-shell{padding:10px;}
+ #rp-overlay .v842-prep-footer{margin-top:9px;}
+}
+html[data-rp-theme="dark"] #rp-overlay .v842-prep-shell,html[data-rp-theme="dark"] #rp-overlay .v841-layout{background:#132b36!important;}
+html[data-rp-theme="dark"] #rp-overlay .v842-prep-card,html[data-rp-theme="dark"] #rp-overlay .v842-prep-footer,html[data-rp-theme="dark"] #rp-overlay .v841-workbench.sw799.sw800,html[data-rp-theme="dark"] #rp-overlay .v842-guide .v841-guide-body{background:#172d3a!important;border-color:#426470!important;}
+</style>
 <script id="connect-v841-myday-call-elevation-js">
 (function(){
  'use strict';
@@ -88716,11 +88610,12 @@ html[data-rp-theme="dark"] #rp-overlay .v841-btn.danger{border-color:#765258;bac
  function duration(n){n=Math.max(0,Math.floor(Number(n)||0));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
  function stepHtml(stage){var idx=stage==='prep'?0:stage==='active'?1:2,names=['Prep','Active Call','Wrap Up'];return '<div class="v841-flow">'+names.map(function(n,i){return '<span class="v841-flow-step'+(i===idx?' on':'')+'"><b>'+(i+1)+'</b>'+n+'</span>'+(i<2?'<i class="v841-flow-line" aria-hidden="true"></i>':'')}).join('')+'</div>'}
  function fact(label,value){return '<div class="v841-fact"><span>'+esc(label)+'</span><strong>'+esc(value||'Not recorded')+'</strong></div>'}
- function guideHtml(d){var p=plan(),m=model(d)||{},first=p[0],talk=p.slice(0,3),last=m.lastOrder,reason=first&&first.text||'Confirm the customer’s current need, timing and next useful step.';return '<details class="v841-guide" open><summary><span>Call Guide</span><small>customer context</small></summary><div class="v841-guide-body">'+
+ function guideHtml(d){var p=plan(),m=model(d)||{},first=p[0],talk=p.slice(0,3),last=m.lastOrder,reason=first&&first.text||'Confirm the customer’s current need, timing and next useful step.',draft=callState().draft||{};return '<aside class="v841-guide v842-guide"><div class="v842-guide-head"><div><span>Live call guide</span><strong>Keep the conversation moving</strong></div><span class="v842-guide-badge">Customer context</span></div><div class="v841-guide-body">'+
   '<section class="v841-guide-section"><span class="v841-guide-kicker">Why today</span><strong>'+esc(reason)+'</strong>'+(first&&first.source?'<p>'+esc(first.source)+'</p>':'')+'</section>'+ 
   '<section class="v841-guide-section"><span class="v841-guide-kicker">Talk about</span><ul class="v841-guide-list">'+(talk.length?talk.map(function(x,i){return '<li><b>'+(i+1)+'</b><span>'+esc(x.text||x)+'</span></li>'}).join(''):'<li><b>1</b><span>Confirm the customer need, timing and next step.</span></li>')+'</ul></section>'+ 
   '<section class="v841-guide-section"><span class="v841-guide-kicker">Account anchors</span><div class="v841-facts">'+fact('YTD sales',m.ytd==null?'Not recorded':('$'+Number(m.ytd).toLocaleString('en-US',{maximumFractionDigits:0})))+fact('Last order',last?((last.orderNumber||last.number||'Order')+' · '+(last.date||'')):'Not recorded')+fact('Last contact',m.lastContact?String(m.lastContact).slice(0,10):'Not recorded')+fact('Purchases',arr(d.products).length+' product record'+(arr(d.products).length===1?'':'s'))+'</div></section>'+ 
-  '<section class="v841-guide-section"><span class="v841-guide-kicker">Leave with</span><strong>One next step, one owner and one date.</strong></section></div></details>'}
+  '<section class="v841-guide-section v842-live-notes"><span class="v841-guide-kicker">Live notes</span><textarea data-v841-live-note placeholder="Capture the useful detail while you talk…">'+esc(draft.liveNote||'')+'</textarea><small>These notes carry into Wrap Up.</small></section>'+ 
+  '<section class="v841-guide-section"><span class="v841-guide-kicker">Leave with</span><strong>One next step, one owner and one date.</strong></section></div></aside>'}
  function groupFor(tab){var keys=Object.keys(groups);for(var i=0;i<keys.length;i++)if(groups[keys[i]].indexOf(tab)>=0)return keys[i];return 'overview'}
  function primaryNav(){var w=W(),s=w.state(),g=groupFor(s.tab);return '<nav class="v841-nav" aria-label="Call workspace sections">'+Object.keys(groups).map(function(k){return '<button type="button" data-v841-group="'+k+'" class="'+(g===k?'on':'')+'">'+labels[k]+'</button>'}).join('')+'</nav>'}
  function subNav(){var w=W(),s=w.state(),g=groupFor(s.tab),items=groups[g];if(g==='history')return '<nav class="v841-subnav" aria-label="Customer history">'+items.map(function(k){return '<button type="button" data-v841-tab="'+k+'" class="'+(s.tab===k?'on':'')+'">'+labels[k]+'</button>'}).join('')+'</nav>';if(g==='selling')return '<nav class="v841-subnav" aria-label="Selling tools">'+items.map(function(k){return '<button type="button" data-v841-tab="'+k+'" class="'+(s.tab===k?'on':'')+'">'+labels[k]+'</button>'}).join('')+'<button type="button" data-v841="shop">Shop Together</button></nav>';return ''}
@@ -88732,14 +88627,19 @@ html[data-rp-theme="dark"] #rp-overlay .v841-btn.danger{border-color:#765258;bac
  function refreshWorkbench(){var host=document.getElementById('sw799-workspace');if(!host||!host.closest('.h837-call-v841'))return false;var body=host.querySelector('#sw799-body'),scroll=body?body.scrollTop:0,active=document.activeElement,key=active&&active.id&&active.id.indexOf('sw799-')===0?active.id:'';host.innerHTML=workbenchInner();var next=host.querySelector('#sw799-body');if(next)next.scrollTop=scroll;var f=key&&document.getElementById(key);if(f&&f.focus)f.focus({preventScroll:true});return true}
  function patchRefresh(){var w=W();if(!w||patchedRefresh)return;priorRefresh=w.refresh;w.refresh=function(){if(refreshWorkbench())return;return priorRefresh&&priorRefresh.apply(this,arguments)};patchedRefresh=true}
  function activeHtml(d){var purpose=text(callState().draft&&callState().draft.callType)||'Account Updating Call';patchRefresh();var w=W();if(w){var s=w.state();if(!s.tab)s.tab='overview'}return '<div class="v841-stage">'+stepHtml('active')+'<div class="v841-active"><div class="v841-callbar"><div class="v841-call-main"><span class="v841-live">● Live</span><div class="v841-call-copy"><strong>'+esc(d.company)+' · '+esc(contactName(d))+'</strong><span>'+esc(purpose)+' · '+esc(localTime(d))+'</span></div><b class="v841-timer" data-v841-timer>'+duration(seconds())+'</b></div><div class="v841-call-actions"><button class="v841-btn" data-v841="email">✉ Email</button><button class="v841-btn" data-v841="follow">Follow-Up</button><button class="v841-btn" data-v841="quote">Quote</button><button class="v841-btn" data-v841="shop">Shop Together</button><button class="v841-btn danger" data-v841="end">End Call</button></div></div><div class="v841-layout">'+guideHtml(d)+'<main class="v841-workbench sw799 sw800" id="sw799-workspace" aria-label="Active call tools">'+workbenchInner()+'</main></div></div></div>'}
- function prepHtml(d){var p=plan(),m=model(d)||{},purpose=text(callState().draft&&callState().draft.callType)||'Account Updating Call',ph=phone(d),last=m.lastOrder;return '<div class="v841-stage">'+stepHtml('prep')+'<div class="v841-prep"><div class="v841-prep-grid"><section class="v841-panel"><header class="v841-panel-head"><span>Prepare the conversation</span><h3>'+esc(d.company)+' · '+esc(contactName(d))+'</h3></header><div class="v841-panel-body"><div class="v841-prep-reason">'+esc(p[0]&&p[0].text||'Confirm the customer’s current need, timing and next useful step.')+'</div><ul class="v841-guide-list" style="margin-top:10px">'+p.slice(0,4).map(function(x,i){return '<li><b>'+(i+1)+'</b><span>'+esc(x.text||x)+'</span></li>'}).join('')+'</ul></div></section><section class="v841-panel"><header class="v841-panel-head"><span>Account snapshot</span><h3>Useful anchors</h3></header><div class="v841-panel-body"><div class="v841-facts">'+fact('YTD sales',m.ytd==null?'Not recorded':('$'+Number(m.ytd).toLocaleString('en-US',{maximumFractionDigits:0})))+fact('Last purchase',last?('$'+Number(last.total||0).toLocaleString('en-US',{maximumFractionDigits:0})):'Not recorded')+fact('Products',arr(d.products).length+' recorded')+fact('Artwork',arr(d.artwork).length+' recorded')+'</div><div class="v841-guide-section" style="padding-bottom:0"><span class="v841-guide-kicker">Customer local time</span><strong>'+esc(localTime(d))+'</strong></div></div></section></div><div class="v841-prep-actions"><input id="call540-phone" class="v841-input" aria-label="Phone number" value="'+esc(ph)+'" placeholder="Phone number"><select class="v841-select" data-v841-purpose aria-label="Call purpose">'+options(TYPES,purpose)+'</select><button class="v841-btn" data-v841="email">✉ Email</button><button class="v841-btn" data-v841="follow">Follow-Up</button><button class="v841-btn primary" data-v841="start">☎ Start Call</button></div></div></div>'}
- function wrapHtml(d){var suggested=text(dialState().lastOutcome)||'Connected';return '<div class="v841-stage">'+stepHtml('wrap')+'<div class="v841-wrap"><section class="v841-wrap-card"><header class="v841-panel-head"><span>Finish the conversation</span><h3>Wrap up · '+esc(d.company)+'</h3></header><form class="v841-wrap-form" data-v841-wrap><label>Outcome<select name="outcome"><option value="">Choose outcome</option>'+['Completed account update','Connected — follow-up needed','No answer','Left voicemail','Not interested','Order opportunity'].map(function(v){return '<option'+(suggested.toLowerCase().indexOf(v.split(' ')[0].toLowerCase())>=0?' selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select></label><label>Conversation / attempt note<textarea name="note" minlength="3" maxlength="2000" required placeholder="What changed, what does the customer need, and what happens next?"></textarea></label><div class="v841-wrap-actions"><button type="button" class="v841-btn" data-v841="email">✉ Follow-up Email</button><button type="button" class="v841-btn" data-v841="follow">Schedule Follow-Up</button><button class="v841-btn primary" type="submit">Complete Call</button></div></form></section></div></div>'}
+ function prepHtml(d){var p=plan(),m=model(d)||{},purpose=text(callState().draft&&callState().draft.callType)||'Account Updating Call',ph=phone(d),last=m.lastOrder,products=arr(d.products),art=arr(d.artwork),events=arr(d.events),notes=arr(d.notes),primaryProduct=products[0]||{},note=notes[0]||{},evt=events[0]||{},reason=p[0]&&p[0].text||'Confirm the customer’s current need, timing and next useful step.',noteCopy=text(note.note||note.text||note.body||note.summary)||'No pinned customer note is available in this demo record.',productName=text(primaryProduct.name||primaryProduct.product||primaryProduct.title||primaryProduct.style)||'No recent product recorded',eventName=text(evt.title||evt.name||evt.event)||'No upcoming customer event recorded';return '<div class="v841-stage v842-prep-stage">'+stepHtml('prep')+'<div class="v842-prep-shell"><div class="v842-prep-main">'+
+ '<section class="v842-prep-card v842-feature"><header><span>Conversation plan</span><h3>'+esc(d.company)+' · '+esc(contactName(d))+'</h3></header><div class="v842-card-body"><div class="v842-why"><span>Why today</span><strong>'+esc(reason)+'</strong></div><div class="v842-talk-grid">'+p.slice(0,4).map(function(x,i){return '<div class="v842-talk"><b>'+(i+1)+'</b><span>'+esc(x.text||x)+'</span></div>'}).join('')+'</div></div></section>'+ 
+ '<section class="v842-prep-card"><header><span>Account snapshot</span><h3>Useful anchors</h3></header><div class="v842-card-body"><div class="v842-snapshot-grid">'+fact('YTD sales',m.ytd==null?'Not recorded':('$'+Number(m.ytd).toLocaleString('en-US',{maximumFractionDigits:0})))+fact('Last purchase',last?('$'+Number(last.total||0).toLocaleString('en-US',{maximumFractionDigits:0})):'Not recorded')+fact('Products',products.length+' recorded')+fact('Artwork',art.length+' recorded')+'</div><div class="v842-contact-line"><span>Customer local time</span><strong>'+esc(localTime(d))+'</strong></div></div></section>'+ 
+ '<section class="v842-prep-card"><header><span>Recent business</span><h3>What they have been doing</h3></header><div class="v842-card-body v842-rows"><div class="v842-row"><span>Last order</span><strong>'+(last?esc((last.orderNumber||last.number||'Order')+' · '+(last.date||'')):'Not recorded')+'</strong></div><div class="v842-row"><span>Recent product</span><strong>'+esc(productName)+'</strong></div><div class="v842-row"><span>Artwork on file</span><strong>'+art.length+' record'+(art.length===1?'':'s')+'</strong></div></div></section>'+ 
+ '<section class="v842-prep-card"><header><span>Relationship context</span><h3>What should not get lost</h3></header><div class="v842-card-body v842-context-stack"><div class="v842-context-block"><span>Customer note</span><p>'+esc(noteCopy)+'</p></div><div class="v842-context-block"><span>Upcoming event</span><p>'+esc(eventName)+'</p></div><div class="v842-context-block accent"><span>Leave the call with</span><strong>One next step, one owner and one date.</strong></div></div></section>'+ 
+ '</div><div class="v842-prep-footer"><div class="v842-footer-fields"><input id="call540-phone" class="v841-input" aria-label="Phone number" value="'+esc(ph)+'" placeholder="Phone number"><select class="v841-select" data-v841-purpose aria-label="Call purpose">'+options(TYPES,purpose)+'</select></div><div class="v842-footer-actions"><button class="v841-btn" data-v841="email">✉ Email</button><button class="v841-btn" data-v841="follow">Follow-Up</button><button class="v841-btn primary v842-start" data-v841="start">☎ Start Call</button></div></div></div></div>'}
+ function wrapHtml(d){var suggested=text(dialState().lastOutcome)||'Connected';return '<div class="v841-stage">'+stepHtml('wrap')+'<div class="v841-wrap"><section class="v841-wrap-card"><header class="v841-panel-head"><span>Finish the conversation</span><h3>Wrap up · '+esc(d.company)+'</h3></header><form class="v841-wrap-form" data-v841-wrap><label>Outcome<select name="outcome"><option value="">Choose outcome</option>'+['Completed account update','Connected — follow-up needed','No answer','Left voicemail','Not interested','Order opportunity'].map(function(v){return '<option'+(suggested.toLowerCase().indexOf(v.split(' ')[0].toLowerCase())>=0?' selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select></label><label>Conversation / attempt note<textarea name="note" minlength="3" maxlength="2000" required placeholder="What changed, what does the customer need, and what happens next?">'+esc((callState().draft&&callState().draft.liveNote)||'')+'</textarea></label><div class="v841-wrap-actions"><button type="button" class="v841-btn" data-v841="email">✉ Follow-up Email</button><button type="button" class="v841-btn" data-v841="follow">Schedule Follow-Up</button><button class="v841-btn primary" type="submit">Complete Call</button></div></form></section></div></div>'}
  function completeHtml(d){return '<div class="v841-stage"><div class="v841-complete"><section class="v841-complete-card"><div class="v841-complete-mark">✓</div><h3>Call completed</h3><p>The result was saved for '+esc(d.company)+'. My Day can now move on to the next useful action.</p><button class="v841-btn primary" data-v841="close">Return to My Day</button></section></div></div>'}
  function html(d){return '<div class="h837-call-v841">'+(uiStage==='prep'?prepHtml(d):uiStage==='active'?activeHtml(d):uiStage==='wrap'?wrapHtml(d):completeHtml(d))+'</div>'}
  function render(){var host=dialog&&dialog.isConnected?dialog.querySelector('.wf789-dialog-body'):null,d=data();if(!host||!d)return;host.innerHTML=html(d);startTimer()}
  function startTimer(){if(timer)clearInterval(timer);timer=setInterval(function(){var e=dialog&&dialog.querySelector('[data-v841-timer]');if(e)e.textContent=duration(seconds())},1000)}
  function initCompany(name){try{if(typeof window._call540SelectCompany==='function')window._call540SelectCompany(encodeURIComponent(name));else{callState().company=name;callState().stage='prep'}}catch(e){callState().company=name;callState().stage='prep'}uiStage='prep'}
- function open(name){var api=window.CONNECT_HOME_WORK_V837;if(!api||!api.available||!api.available())return false;initCompany(name);var d=data();if(!d)return false;if(api.close)api.close(null);var slot=document.getElementById('h837-workspace');if(!slot)return false;var el=document.createElement('section');el.className='wf789-dialog h837-inline';el.setAttribute('aria-label','Call · '+name);el.innerHTML='<header class="wf789-dialog-head v841-shell-head"><div><span class="wf789-eyebrow">Call Workspace</span><h2>Call · '+esc(name)+'</h2></div><div class="h837-work-controls"><button type="button" class="wf789-btn" data-h837="pop">Pop out</button><button type="button" class="wf789-btn" data-h837="minimize" hidden>Minimize</button><button type="button" class="wf789-btn" data-h837="restore" hidden>Restore</button><button type="button" class="wf789-btn" data-h837="snap" hidden>Dock back</button><button type="button" class="wf789-btn subtle" data-h837="close" aria-label="Close workspace">×</button></div></header><div class="wf789-dialog-body">'+html(d)+'</div>';dialog=el;api.mount(el,'Call · '+name,{company:name,kind:'call'});startTimer();return true}
+ function open(name){var api=window.CONNECT_HOME_WORK_V837;if(!api||!api.available||!api.available())return false;initCompany(name);var d=data();if(!d)return false;if(api.close)api.close(null);var slot=document.getElementById('h837-workspace');if(!slot)return false;var el=document.createElement('section');el.className='wf789-dialog h837-inline';el.setAttribute('aria-label','Call · '+name);el.innerHTML='<header class="wf789-dialog-head v841-shell-head"><div><span class="wf789-eyebrow">Call Workspace</span><h2>'+esc(name)+'</h2></div><div class="h837-work-controls"><button type="button" class="wf789-btn" data-h837="pop">Pop out</button><button type="button" class="wf789-btn" data-h837="minimize" hidden>Minimize</button><button type="button" class="wf789-btn" data-h837="restore" hidden>Restore</button><button type="button" class="wf789-btn" data-h837="snap" hidden>Dock back</button><button type="button" class="wf789-btn subtle" data-h837="close" aria-label="Close workspace">×</button></div></header><div class="wf789-dialog-body">'+html(d)+'</div>';dialog=el;api.mount(el,'Call · '+name,{company:name,kind:'call'});startTimer();return true}
  function syncPurpose(v){var s=callState();s.draft=s.draft||{};s.draft.callType=v;s.draft.updatedAt=new Date().toISOString()}
  function start(){var d=data(),ph=dialog&&dialog.querySelector('#call540-phone');dialState().number=text(ph&&ph.value||phone(d));syncPurpose((dialog&&dialog.querySelector('[data-v841-purpose]')||{}).value||'Account Updating Call');try{if(typeof window._call540StartDial==='function')window._call540StartDial();else{var s=callState();s.stage='active';s.startedAt=new Date().toISOString();s.paused=false;dialState().status='connected'}}catch(e){var s2=callState();s2.stage='active';s2.startedAt=new Date().toISOString();s2.paused=false;dialState().status='connected'}var w=W();if(w){var st=w.state();st.tab='overview';st.scope='tab';st.status='';w.save()}uiStage='active';render()}
  function end(){try{if(typeof window._call540EndDial==='function')window._call540EndDial('Connected')}catch(e){}var s=callState();s.elapsed=seconds();s.startedAt='';s.paused=true;s.stage='wrap';dialState().lastOutcome=dialState().lastOutcome||'Connected';dialState().status='ready';uiStage='wrap';render()}
@@ -88748,10 +88648,11 @@ html[data-rp-theme="dark"] #rp-overlay .v841-btn.danger{border-color:#765258;bac
  function pickGroup(g){var w=W(),s=w&&w.state();if(!w||!s||!groups[g])return;var next=lastByGroup[g]&&groups[g].indexOf(lastByGroup[g])>=0?lastByGroup[g]:groups[g][0];w.setTab(next)}
  document.addEventListener('click',function(e){var root=e.target.closest&&e.target.closest('.h837-call-v841');if(!root)return;var group=e.target.closest('[data-v841-group]');if(group){e.preventDefault();pickGroup(group.dataset.v841Group);return}var tab=e.target.closest('[data-v841-tab]');if(tab){e.preventDefault();lastByGroup[groupFor(tab.dataset.v841Tab)]=tab.dataset.v841Tab;W().setTab(tab.dataset.v841Tab);return}var b=e.target.closest('[data-v841]');if(!b)return;var c=b.dataset.v841;e.preventDefault();if(c==='start')start();else if(c==='end')end();else if(c==='email'&&typeof window._call540OpenEmail==='function')window._call540OpenEmail();else if(c==='follow'){if(uiStage==='active')W().setTab('events');else if(window.CONNECT_HOME_CAL_V817){} }else if(c==='quote'){lastByGroup.selling='quote';W().setTab('quote')}else if(c==='shop')shop();else if(c==='scope'){var s=W().state();s.scope=s.scope==='all'?'tab':'all';W().save();W().refresh()}else if(c==='clear-search'&&window.SW799)SW799.clearSearch();else if(c==='close'&&window.CONNECT_HOME_WORK_V837)window.CONNECT_HOME_WORK_V837.close(dialog)});
  document.addEventListener('change',function(e){if(e.target.matches&&e.target.matches('.h837-call-v841 [data-v841-purpose]'))syncPurpose(e.target.value)});
+ document.addEventListener('input',function(e){if(e.target.matches&&e.target.matches('.h837-call-v841 [data-v841-live-note]')){var s=callState();s.draft=s.draft||{};s.draft.liveNote=e.target.value;s.draft.updatedAt=new Date().toISOString()}});
  document.addEventListener('submit',function(e){var f=e.target.closest&&e.target.closest('[data-v841-wrap]');if(!f)return;e.preventDefault();complete(f)});
  function install(){var api=window.CONNECT_HOME_WORK_V837;if(!api)return false;api.openCall=function(name){return open(name)};api.__v841=true;api.openCallV841=open;return true}
  if(!install())setTimeout(install,0);setTimeout(install,250);setTimeout(install,1000);
- window.CONNECT_MYDAY_CALL_V841={open:open,render:render,refreshWorkbench:refreshWorkbench,diagnostics:function(){var d=data(),w=W();return{company:d&&d.company||'',stage:uiStage,tab:w&&w.state?w.state().tab:'',sw800:true}}};
+ window.CONNECT_MYDAY_CALL_V841={open:open,render:render,refreshWorkbench:refreshWorkbench,diagnostics:function(){var d=data(),w=W();return{company:d&&d.company||'',stage:uiStage,tab:w&&w.state?w.state().tab:'',sw800:true,visual:'v842'}}};window.CONNECT_MYDAY_CALL_V842=window.CONNECT_MYDAY_CALL_V841;
 })();
 </script>
 
