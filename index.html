@@ -1,3 +1,544 @@
+
+
+Connect-MyDay-V838.html
+HTML
+okay, we are continuing with this file analyze the "my day" and tell me what you know, see and need to change
+
+Worked for 3m 34s
+Yes. I went through V838 specifically, and I think I have a solid picture of where My Day currently stands and where we were trying to take it.
+
+The main takeaway is that the concept is good, but the page has accumulated too many generations of My Day underneath the current design. I would not keep adding new pieces until we clean that foundation, because that is almost certainly behind some of the bizarre regressions we've been seeing.
+
+What My Day is supposed to be now
+The current V838 My Day is fundamentally a sales-rep workbench, not just a dashboard.
+
+The active design is:
+
+Top
+
+Good morning/afternoon, Alex
+Date
+KPI / workload summary strip
+My Customer Set summary incorporated into that upper area
+Main work area
+
+Left: Next Best Actions
+Middle: contextual work area that appears when the rep actually opens something
+Right upper: information/resource hub
+Right lower: calendar
+Below the primary work area
+
+My Momentum / performance
+That structure is explicitly present in the current home renderer. Next Best Actions, the resize handle, the hidden contextual workspace, resources, another resize handle, and the calendar are assembled together as the main grid. 
+
+And that is the right overall direction.
+
+What I like and would keep
+1. Next Best Actions as the starting point
+This is probably the strongest part of the My Day concept.
+
+It is no longer just:
+
+Here are some statistics.
+
+It is:
+
+Here is what I should actually do next.
+
+The current system recognizes:
+
+Priorities
+Calls
+Issues
+Follow-ups
+Email
+It also preserves scroll position when switching queues and groups order issues by issue type. That is much more useful than the old generic home dashboard. 
+
+I would absolutely keep this.
+
+2. Opening work inside My Day
+This is the biggest improvement from where we started.
+
+V838 has an actual hidden workspace between Next Best Actions and the right-side information/calendar column:
+
+h837-workspace
+
+It becomes the contextual work area instead of always throwing the rep onto a completely different screen.
+
+When active, the CSS deliberately converts the layout so:
+
+Next Best Actions stays left
+Workspace becomes the large middle column
+Resources stay upper-right
+Calendar stays lower-right
+
+That is exactly the architectural concept we were talking about yesterday.
+
+My Day stays home base.
+
+The rep doesn't lose their day just because they clicked something.
+
+3. My Customer Set belongs up top
+We've moved away from burying customer-set progress in the right column.
+
+That was the right call.
+
+The customer set is not another resource. It is one of the primary measurements of whether the rep is actually working their assigned business.
+
+The current code specifically describes it as:
+
+“A customer is worked when the required cycle touch has been recorded.”
+
+And separates that from simply making calls. 
+
+That distinction is very important for TCP.
+
+I would retain:
+
+Calls ≠ Customers Worked
+
+and make the summary clickable into the complete My Customer Set list.
+
+4. The information hub is legitimately useful
+The hub currently supports:
+
+Message Board
+Production Times
+Product Pulse
+Top Sellers
+Quick Resources
+Leaderboard
+Company Calendar
+Learning Center
+FAQ / Ask Connect
+That is a strong collection.
+
+The problem is how V838 chooses which ones appear.
+
+Right now the default is:
+
+Production
+Product Pulse
+Top Sellers
++ Message Board
+Only three optional modules are selected, and activeKeys() adds Message Board to those three. 
+
+That conflicts with the decision we just made.
+
+This needs to change.
+You wanted all the tabs visible by default.
+
+I agree with that now that we've seen the expanded version.
+
+So I would remove the “choose three” concept from the normal My Day display.
+
+The rep should see:
+
+Message Board | Production | Product Pulse | Top Sellers | Resources | Leaderboard | Company Calendar | Learning | Ask Connect
+
+If we eventually allow customization, it should be something like:
+
+Pin / reorder tabs
+
+not:
+
+Hide five useful parts of Connect.
+
+The biggest problem: the call experience
+This is where we left off, and it is still the most important area to finish.
+
+We have built a lot of great call functionality elsewhere:
+
+customer snapshot
+talking points
+sales history
+purchased products
+artwork
+orders
+events
+inventory
+quote builder
+notes
+communication history
+follow-up
+logging
+email recap
+Shop Together/customer participation
+But My Day is not yet leveraging all of that naturally.
+
+What happened is we created a “call” action and then gradually attached pieces of the old call workflow to it.
+
+That is why you made the point yesterday:
+
+It says Prep Call, but then it is basically just logging the call.
+
+Exactly.
+
+I think the correct model is now obvious.
+When somebody clicks a call in Next Best Actions:
+
+The middle workspace becomes:
+Call: ABC Construction
+Then immediately underneath:
+
+Overview | Notes | Purchased | Artwork | Orders | Events | Inventory | Quote | Shop Together
+
+Not a separate “Prep Call” screen.
+
+At the top of that workspace should be a very compact call control bar:
+
+Jane Smith · Purchasing Manager
+☎ Call | ✉ Email | 💬 Text | 📅 Follow-up | ⋯
+
+and possibly:
+
+Pre-call → In Call → Wrap Up
+
+But those should be states, not three completely different screens.
+
+What “Overview” should actually do
+The first tab can effectively replace “Prep for Call.”
+
+It should show:
+
+Customer snapshot
+Gold Loyalty
+$27,842 YTD
++12% vs PY
+Last order 43 days ago
+
+Why Connect selected them
+Customer is approaching Gold threshold and has not ordered outerwear this fall.
+
+Suggested conversation
+Ask about winter uniforms. Their last jacket order was October 2025.
+
+Current opportunities
+Quote 499649
+$4,821
+Sent 3 days ago
+
+Important notes
+📌 Purchasing contact changed to Jane Smith
+📌 Prefers email approvals
+
+Recommended products / promotion
+That is preparation.
+
+Then you don't need a giant button saying PREP FOR CALL.
+
+The workspace itself is the preparation.
+
+When the call starts
+Nothing should jump screens.
+
+The workspace changes into its in-call state.
+
+The call timer appears.
+
+Something like:
+
+☎ 00:04:38 — Connected
+
+The tabs are still there.
+
+So if the customer says:
+
+“What jacket did we order last year?”
+
+The rep clicks Purchased.
+
+If they say:
+
+“Can you resend that logo?”
+
+Click Artwork.
+
+If they say:
+
+“Can you quote me 75 of those?”
+
+Click Quote.
+
+If they say:
+
+“Let's look through options together.”
+
+Click Shop Together.
+
+That is where Connect starts becoming legitimately different from a normal CRM.
+
+The call ending should not become another giant screen
+When they hang up, give them a compact wrap-up drawer:
+
+Outcome
+
+Connected
+Left voicemail
+No answer
+Email only
+Follow-up needed
+Order opportunity
+Not interested
+Notes
+
+Next step
+
+Follow-up date
+
+☑ Send recap email
+
+Complete Call
+
+Once completed, My Day should immediately:
+
+update the customer
+update the customer-set progress
+remove/update the Next Best Action
+advance to the next recommended action
+That gives the rep a loop:
+
+See work → Do work → Document work → Next work
+
+That's what My Day should ultimately become.
+
+Calendar needs one conceptual correction
+We currently have both:
+
+a dedicated interactive calendar column
+a Company Calendar module inside the information hub
+Those aren't necessarily duplicates, but right now the distinction isn't clear.
+
+I would redefine them.
+
+Right-side calendar
+My Calendar
+
+Personal working calendar:
+
+customer follow-ups
+calls
+meetings
+reminders
+appointments
+tasks
+Outlook/Google events
+Hub tab
+Company Calendar
+
+TCP-wide information:
+
+company meetings
+holidays
+sales deadlines
+training
+promotions
+catalog drops
+production cutoff dates
+events
+Then both deserve to exist.
+
+One serious technical problem I want cleaned up
+This file contains an enormous amount of old My Day architecture.
+
+At the very top alone we have:
+
+V837
+
+connect-v837-my-day-css
+which declares its own layer stack. 
+
+Then:
+
+V834
+
+connect-v834-my-day-elevation
+which modifies the same KPI strip, action column, hub, calendar and dark theme. 
+
+Then:
+
+V833
+
+connect-v833-my-day-workbench
+which explicitly says it is overriding earlier rules. 
+
+And underneath that is still V823/V824.
+
+There are also multiple historical home() implementations still present elsewhere in the HTML.
+
+That does not automatically mean they're all active, because many are wrapped/replaced by later scripts. But it makes the system unnecessarily dangerous.
+
+This is exactly the kind of thing that causes:
+
+“Why did the page suddenly go back to the old version?”
+
+And we have experienced that repeatedly.
+
+Before another major visual redesign, I want to stabilize My Day.
+Not rebuild Connect.
+
+Not strip functionality.
+
+Just:
+
+V838 My Day becomes the single authoritative My Day implementation.
+
+Old fallbacks that other pages actually require stay.
+
+Old duplicate home styling/renderers that no longer serve a purpose get isolated or removed.
+
+That is probably the most important technical cleanup we can make right now.
+
+One other behavior I would specifically guard against
+That stupid thing we were seeing yesterday where the call/work area appeared immediately when somebody loaded My Day.
+
+The workspace is currently marked hidden in the home markup, which is correct. 
+
+I would make the rule stronger:
+
+Entering My Day always starts with no selected workspace item.
+
+Unless the user explicitly came back from another page with a deliberate “return to open work” state.
+
+No stale:
+
+selected customer
+open call
+old email
+minimized dialog
+floating workspace
+should appear simply because localStorage remembered it.
+
+My priority order
+I would do the next work in this order:
+
+Stabilize V838 My Day code
+
+identify the active renderer
+protect it from old My Day code
+eliminate conflicting obsolete overrides
+Show every information-hub tab by default
+
+no more three-tab limit
+Finish the contextual workspace architecture
+
+Rebuild the Call experience inside that workspace
+
+Overview
+Notes
+Purchased
+Artwork
+Orders
+Events
+Inventory
+Quote
+Shop Together
+Build the small call state/control system
+
+Ready
+Calling
+Connected
+Wrap Up
+Complete
+Make the entire workspace responsive to its available width
+
+this directly addresses what you were pointing out yesterday when the workspace got narrower
+Then clean up the remaining My Day visual details.
+
+Where I think we are
+I do not think My Day needs another wholesale redesign.
+
+That would be the wrong move.
+
+The current direction is finally pretty strong.
+
+The left-side work queue, expandable middle working area, persistent resources, calendar, customer-set progress and performance context create a legitimate sales workspace.
+
+The unfinished piece is making the middle area actually perform the work Connect already knows how to do.
+
+And the technical debt underneath My Day needs to be dealt with so we stop accidentally resurrecting versions from six iterations ago.
+
+So if we're continuing right now, I would start with the V838 cleanup/stabilization and then immediately build the Call workspace correctly inside this exact layout.
+
+okay, so first lets do the cleanup
+
+Worked for 5m 20s
+Done. I kept this as a stability cleanup only, with no redesign yet.
+
+What I cleaned up
+Established the current V789/V838 My Day renderer as the single authority.
+Guarded the older V509/V560/V568/V648/V639 Home renderers so they can no longer suddenly reclaim the My Day page.
+Disabled the older Home-only after-hooks that could restyle/reprocess the page after the current version loads.
+Kept the old shared utilities and data functions intact so we do not accidentally break Calls, Customers, Orders, performance data, phased/full modes, etc.
+Left the current V823 → V833 → V834 → V837 visual cascade intact for now because those layers are contributing to the My Day design you currently like.
+Ran JavaScript syntax validation on the modified legacy scripts and the current V789 My Day script. All passed.
+So this first cleanup is specifically aimed at preventing the:
+
+“Why did it suddenly go back to an old version?”
+
+problem.
+
+I have not changed the tabs, call workspace, sizing, colors, layout, or functionality yet.
+
+I would load this one and make sure My Day looks exactly like V838 did before we touch anything else. Once that checks out, the next cleanup pass should be consolidating the actual My Day CSS safely, and then we can move into the all-tabs-default change and the call workspace.
+
+
+Connect-MyDay-V838_Cleaned.html
+HTML
+okay, lets move onto the actual call section, what were your suggestions
+For the actual call section, my recommendation was to stop treating it like a separate “Prep Call” screen and turn it into a single call workspace that changes state as the rep moves through the conversation.
+
+The basic structure I’d use is:
+
+Top call bar: customer, contact, phone, local time, loyalty/status, and the main controls like Call, Email, Text, Follow-Up.
+Persistent tabs underneath: Overview, Notes, Purchased, Artwork, Orders, Events, Inventory, Quote, Shop Together.
+Call state: Ready → Calling → Connected → Wrap Up → Complete.
+The rep stays in the same workspace the whole time. Starting the call should not throw them somewhere else.
+The Overview tab would replace the old “Prep for Call” idea. It should immediately answer, “What do I need to know before I talk to this customer?” So I’d put customer snapshot, why Connect selected them, suggested conversation points, active quotes/opportunities, pinned notes, recent order context, current promotions, and maybe a recommended product opportunity there.
+
+Once the rep clicks Call, that same workspace becomes the live call state. The timer starts, the call status becomes visible, but all the tabs remain usable. If the customer asks about an old jacket, the rep clicks Purchased. If they ask for their logo, Artwork. If they want pricing, Quote. If they want to browse together, Shop Together.
+
+Then when the call ends, I’d use a compact wrap-up area, not a whole new page. It should capture outcome, notes, next step, follow-up date, and whether to send a recap email. Completing it should update the customer record, update the customer-set progress if the required touch was completed, remove/update the Next Best Action, and move the rep to the next recommended item.
+
+The other thing I strongly recommended is making the call workspace responsive to the actual width of the middle column, not just the browser width. Since My Day is resizable, the call section needs to intelligently collapse and rearrange when the rep narrows that center workspace. That was one of the big issues you were pointing out in the previous chat.
+
+If we build it now, I’d start with the shell and flow first: top call bar + tabs + Ready/Connected/Wrap-Up states, then populate each tab with the call tools we already created.
+
+okay, lets try that but i do want all the features we developed during the call to be present, we might might need to rework them and format that section to have them fit in that spot a little bit better.
+
+Worked for 10m 32s
+
+Opened Generate Image
+
+I built the first pass of the actual My Day call workspace.
+
+The big change is that the middle call area now reuses the real customer selling workspace we already developed instead of opening the basic call-log form. That means the call area includes the existing:
+
+Overview
+Notes & History
+Purchased
+Artwork
+Orders
+Events
+Inventory
+Quote Builder
+Shop Together
+I also added the compact call layer around it: customer/contact information, loyalty/status, phone number, call purpose, Start Call, Email, Follow-Up, Quote, Shop Together, live call state/timer, conversation starter, promotion context, and the wrap-up/completion section.
+
+The layout uses container-based responsive rules, so as you drag that middle My Day column narrower, the call controls and content should reorganize based on the actual space available instead of just the overall browser size.
+
+One limitation from the visual-design requirement: Higgsfield was used for the concept pass. Magnific is connected but currently has 0 generation credits, so I could not run the Magnific refinement pass.
+
+I also ran a syntax check on the new V839 call-workspace code and confirmed all nine call features are still present in the resulting file.
+
+The thing I want to see next is how this actually feels in that middle column, especially at your normal width and when you squeeze it down. That will tell us what needs to be condensed, moved, or visually reworked rather than guessing.
+
+
+Connect-MyDay-V838_Call_Workspace.html
+HTML
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v838">
 <head>
@@ -88132,6 +88673,149 @@ function ShopClient828(root,role,send,css){
  window.CONNECT_HOME_WORK_V837={available:available,mount:mount,close:close,openCall:openCall,openCustomer:openCustomer,openEmail:openEmail,openInbox:openInbox,fullEmail:fullEmail,context:context,syncSelection:syncSelection,diagnostics:function(){return {mode:mode,active:!!(current&&current.isConnected),kind:subject.kind||''};}};
 })();
 
+</script>
+
+
+<style id="connect-v839-myday-call-workspace-css">
+/* V839 · My Day call workspace: reuse the full selling workspace inside the resizable center column. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v839{
+  --cw-ink:#17394d;--cw-muted:#647b8c;--cw-line:#cfdee3;--cw-soft:#f4f8f9;--cw-panel:#fff;--cw-teal:#087b89;--cw-teal-soft:#e8f5f6;--cw-green:#2b8a62;--cw-warn:#b57519;
+  display:flex;flex-direction:column;min-width:0;height:100%;background:var(--cw-panel);color:var(--cw-ink);container-type:inline-size;container-name:mydaycall;
+}
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .h837-call-v839{
+  --cw-ink:#edf7fa;--cw-muted:#b8cbd4;--cw-line:#405f6c;--cw-soft:#1d3642;--cw-panel:#172d3a;--cw-teal:#73cbd4;--cw-teal-soft:#21434b;--cw-green:#78d4aa;--cw-warn:#e5b96f;
+}
+#rp-overlay .h837-call-v839 .wf789-dialog-head{display:none!important;}
+#rp-overlay .h837-call-v839>.wf789-dialog-body{display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important;padding:0!important;background:var(--cw-panel)!important;}
+#rp-overlay .h837-call-v839 .v839-call-head{flex:0 0 auto;border-bottom:1px solid var(--cw-line);background:linear-gradient(180deg,var(--cw-panel),var(--cw-soft));}
+#rp-overlay .h837-call-v839 .v839-call-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;padding:13px 14px 10px;align-items:center;}
+#rp-overlay .h837-call-v839 .v839-customer{min-width:0;}
+#rp-overlay .h837-call-v839 .v839-eyebrow{display:flex;align-items:center;gap:7px;flex-wrap:wrap;color:var(--cw-teal);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+#rp-overlay .h837-call-v839 .v839-customer h2{margin:3px 0 2px!important;color:var(--cw-ink)!important;font:760 19px/1.22 'Segoe UI',Arial,sans-serif!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#rp-overlay .h837-call-v839 .v839-customer-meta{display:flex;gap:5px 10px;flex-wrap:wrap;color:var(--cw-muted);font-size:11.5px;line-height:1.4;}
+#rp-overlay .h837-call-v839 .v839-state{display:flex;align-items:center;gap:8px;justify-content:flex-end;}
+#rp-overlay .h837-call-v839 .v839-state-pill{display:inline-flex;align-items:center;gap:6px;min-height:29px;padding:5px 9px;border:1px solid var(--cw-line);border-radius:999px;background:var(--cw-panel);color:var(--cw-muted);font-size:11px;font-weight:750;white-space:nowrap;}
+#rp-overlay .h837-call-v839 .v839-state-pill.live{border-color:#65bfa1;background:#eaf8f2;color:#176847;}
+html[data-rp-theme="dark"] #rp-overlay .h837-call-v839 .v839-state-pill.live{background:#1b4939;color:#9ce7c2;border-color:#4f9c7e;}
+#rp-overlay .h837-call-v839 .v839-timer{font-variant-numeric:tabular-nums;font-size:13px;font-weight:800;color:var(--cw-ink);}
+#rp-overlay .h837-call-v839 .v839-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:0 14px 11px;}
+#rp-overlay .h837-call-v839 .v839-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:6px 9px;border:1px solid var(--cw-line);border-radius:8px;background:var(--cw-panel);color:var(--cw-ink);font:650 11.5px/1.2 'Segoe UI',Arial,sans-serif;cursor:pointer;white-space:nowrap;}
+#rp-overlay .h837-call-v839 .v839-btn:hover{border-color:#67aab3;background:var(--cw-teal-soft);}
+#rp-overlay .h837-call-v839 .v839-btn.primary{background:var(--cw-teal);border-color:var(--cw-teal);color:#fff;}
+#rp-overlay .h837-call-v839 .v839-btn.end{border-color:#d9b6b1;color:#9d4039;background:#fff9f8;}
+html[data-rp-theme="dark"] #rp-overlay .h837-call-v839 .v839-btn.end{background:#482b2d;color:#ffc2bb;border-color:#815052;}
+#rp-overlay .h837-call-v839 .v839-btn.icon{min-width:34px;padding:6px 8px;}
+#rp-overlay .h837-call-v839 .v839-phone{min-width:130px;max-width:190px;height:34px;padding:5px 8px;border:1px solid var(--cw-line);border-radius:8px;background:var(--cw-panel);color:var(--cw-ink);font-size:11.5px;}
+#rp-overlay .h837-call-v839 .v839-purpose{max-width:190px;height:34px;padding:5px 8px;border:1px solid var(--cw-line);border-radius:8px;background:var(--cw-panel);color:var(--cw-ink);font-size:11px;}
+#rp-overlay .h837-call-v839 .v839-brief{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:8px;padding:0 14px 11px;}
+#rp-overlay .h837-call-v839 .v839-brief-card{min-width:0;padding:9px 10px;border:1px solid var(--cw-line);border-radius:9px;background:var(--cw-panel);}
+#rp-overlay .h837-call-v839 .v839-brief-card>span{display:block;color:var(--cw-muted);font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;}
+#rp-overlay .h837-call-v839 .v839-brief-card strong{display:block;margin-top:3px;color:var(--cw-ink);font-size:11.5px;line-height:1.42;}
+#rp-overlay .h837-call-v839 .v839-brief-card small{display:block;margin-top:3px;color:var(--cw-muted);font-size:10.5px;line-height:1.42;}
+#rp-overlay .h837-call-v839 .v839-selling{flex:1 1 auto;min-height:0;overflow:hidden;padding:10px 10px 0;}
+#rp-overlay .h837-call-v839 #sw799-workspace{height:100%;min-height:0;margin:0!important;border:1px solid var(--cw-line)!important;border-radius:11px 11px 0 0!important;box-shadow:none!important;overflow:hidden!important;background:var(--cw-panel)!important;}
+#rp-overlay .h837-call-v839 #sw799-workspace>.sw799-head{padding:10px 11px!important;min-height:0!important;}
+#rp-overlay .h837-call-v839 #sw799-workspace>.sw799-head h3{font-size:14px!important;}
+#rp-overlay .h837-call-v839 #sw799-workspace>.sw799-head small{font-size:10px!important;}
+#rp-overlay .h837-call-v839 #sw799-workspace>.sw799-head .sw799-actions{display:none!important;}
+#rp-overlay .h837-call-v839 .shop828-entry{padding:8px 10px!important;margin:0!important;border-left:0!important;border-right:0!important;border-radius:0!important;}
+#rp-overlay .h837-call-v839 .shop828-entry span{font-size:10px!important;}
+#rp-overlay .h837-call-v839 .shop828-launch{min-height:32px!important;font-size:11px!important;padding:6px 9px!important;}
+#rp-overlay .h837-call-v839 .sw799-tabs{display:flex!important;gap:4px!important;overflow-x:auto!important;overflow-y:hidden!important;flex-wrap:nowrap!important;scrollbar-width:thin!important;padding:7px 8px!important;}
+#rp-overlay .h837-call-v839 .sw799-tab{flex:0 0 auto!important;min-height:32px!important;padding:6px 8px!important;font-size:10.5px!important;white-space:nowrap!important;}
+#rp-overlay .h837-call-v839 .sw799-search{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;gap:5px!important;padding:7px 8px!important;}
+#rp-overlay .h837-call-v839 .sw799-search input,#rp-overlay .h837-call-v839 .sw799-search select{min-height:32px!important;font-size:10.5px!important;}
+#rp-overlay .h837-call-v839 .sw799-search .sw799-btn{min-height:32px!important;font-size:10.5px!important;}
+#rp-overlay .h837-call-v839 .sw799-status{margin:0!important;padding:0 9px!important;min-height:0!important;font-size:10px!important;}
+#rp-overlay .h837-call-v839 .sw799-body{height:calc(100% - 151px)!important;min-height:0!important;overflow:auto!important;padding:8px!important;scrollbar-gutter:stable;}
+#rp-overlay .h837-call-v839 .sw799-card{padding:10px!important;margin-bottom:7px!important;border-radius:9px!important;}
+#rp-overlay .h837-call-v839 .sw799-card h4{font-size:12px!important;line-height:1.35!important;}
+#rp-overlay .h837-call-v839 .sw799-card :is(p,small,span){font-size:10.5px!important;line-height:1.45!important;}
+#rp-overlay .h837-call-v839 .sw799-btn{min-height:31px!important;padding:5px 8px!important;font-size:10.5px!important;}
+#rp-overlay .h837-call-v839 .sw799-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;}
+#rp-overlay .h837-call-v839 .sw799-filters{gap:6px!important;}
+#rp-overlay .h837-call-v839 .sw799-field :is(input,select,textarea){min-height:32px!important;font-size:10.5px!important;}
+#rp-overlay .h837-call-v839 .v839-wrap{flex:0 0 auto;border-top:1px solid var(--cw-line);background:var(--cw-soft);}
+#rp-overlay .h837-call-v839 .v839-wrap summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;color:var(--cw-ink);font-size:11.5px;font-weight:750;list-style:none;}
+#rp-overlay .h837-call-v839 .v839-wrap summary::-webkit-details-marker{display:none;}
+#rp-overlay .h837-call-v839 .v839-wrap summary:after{content:'▾';color:var(--cw-teal);}
+#rp-overlay .h837-call-v839 .v839-wrap:not([open]) summary:after{content:'▸';}
+#rp-overlay .h837-call-v839 .v839-wrap-body{display:grid;grid-template-columns:minmax(120px,.65fr) minmax(0,1.35fr) auto;gap:7px;padding:0 10px 10px;align-items:end;}
+#rp-overlay .h837-call-v839 .v839-wrap label{display:grid;gap:4px;color:var(--cw-muted);font-size:9.5px;font-weight:700;}
+#rp-overlay .h837-call-v839 .v839-wrap :is(select,textarea,input){width:100%;min-height:34px;border:1px solid var(--cw-line);border-radius:8px;background:var(--cw-panel);color:var(--cw-ink);font-size:11px;padding:6px 8px;}
+#rp-overlay .h837-call-v839 .v839-wrap textarea{min-height:58px;resize:vertical;}
+#rp-overlay .h837-call-v839 .v839-complete{padding:9px 11px;border-top:1px solid var(--cw-line);background:#edf8f3;color:#225e48;font-size:11px;}
+html[data-rp-theme="dark"] #rp-overlay .h837-call-v839 .v839-complete{background:#1d4034;color:#b5ead0;}
+@container mydaycall (max-width:760px){
+ #rp-overlay .h837-call-v839 .v839-call-top{grid-template-columns:1fr;}
+ #rp-overlay .h837-call-v839 .v839-state{justify-content:flex-start;}
+ #rp-overlay .h837-call-v839 .v839-brief{grid-template-columns:1fr;}
+ #rp-overlay .h837-call-v839 .v839-actions{align-items:stretch;}
+ #rp-overlay .h837-call-v839 .v839-phone,#rp-overlay .h837-call-v839 .v839-purpose{flex:1 1 145px;max-width:none;}
+ #rp-overlay .h837-call-v839 .sw799-grid.two{grid-template-columns:1fr!important;}
+ #rp-overlay .h837-call-v839 .v839-wrap-body{grid-template-columns:1fr;}
+}
+@container mydaycall (max-width:520px){
+ #rp-overlay .h837-call-v839 .v839-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+ #rp-overlay .h837-call-v839 .v839-phone,#rp-overlay .h837-call-v839 .v839-purpose{grid-column:1/-1;width:100%;}
+ #rp-overlay .h837-call-v839 .v839-btn{width:100%;white-space:normal;}
+ #rp-overlay .h837-call-v839 .sw799-search{grid-template-columns:1fr auto;}
+ #rp-overlay .h837-call-v839 .sw799-search select{grid-column:1/-1;}
+ #rp-overlay .h837-call-v839 .v839-brief{display:none;}
+ #rp-overlay .h837-call-v839 .v839-selling{padding-top:7px;}
+}
+</style>
+<script id="connect-v839-myday-call-workspace-js">
+(function(){
+ 'use strict';
+ function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+ function arr(v){return Array.isArray(v)?v:[]}
+ function text(v){return String(v==null?'':v).trim()}
+ function service(){return window.CONNECT_DEMO_V789}
+ function data(){try{return window.TCP_CALL_V540&&TCP_CALL_V540.currentData?TCP_CALL_V540.currentData():null}catch(e){return null}}
+ function callState(){window._call532=window._call532||{};return window._call532}
+ function dialState(){window._call540DialState=window._call540DialState||{status:'ready',attemptActivityId:'',number:'',startedAt:'',lastOutcome:''};return window._call540DialState}
+ function primary(d){var cs=arr(d&&d.c&&d.c.contacts),p=d&&d.c&&d.c.primary;return p||cs.filter(function(x){return x&&x.isPrimary})[0]||cs[0]||{}}
+ function field(o,keys,def){for(var i=0;i<keys.length;i++){if(o&&o[keys[i]]!=null&&text(o[keys[i]])!=='')return o[keys[i]]}return def||''}
+ function phone(d){var c=primary(d);return field(c,['phone','mobile','phoneNumber'],field(d&&d.c&&d.c.profile,['phone'],'')||'')}
+ function contactName(d){var c=primary(d);return field(c,['name'],[field(c,['firstName']),field(c,['lastName'])].filter(Boolean).join(' '))||'Primary contact not recorded'}
+ function contactMeta(d){var c=primary(d),bits=[field(c,['title','buyingRole']),field(c,['email'])].filter(Boolean);return bits.join(' · ')}
+ function localTime(d){try{var h=window.TCP_PHASED_CALL_HUB_V663,ci=h&&h.clockInfo&&h.clockInfo(d&&d.c);return ci&&ci.text?ci.text+' customer time':''}catch(e){return ''}}
+ function tier(d){return field(d&&d.account&&d.account.data&&d.account.data.profile,['tier'],field(d&&d.c&&d.c.profile,['tier'],'Customer'))}
+ function callReason(d){try{var g=d&&d.g||{},hit=arr(g.calls).filter(function(x){return text(x.customer).toLowerCase()===text(d.company).toLowerCase()})[0];return hit&&text(hit.reason||hit.copy||hit.source)}catch(e){return ''}}
+ function points(){try{var p=window._call540TalkingPointSnapshot&&window._call540TalkingPointSnapshot();if(!arr(p).length&&window.TCP_CALL_V540&&TCP_CALL_V540.generateTalkingPoints)p=TCP_CALL_V540.generateTalkingPoints();return arr(p)}catch(e){return []}}
+ function promotion(){try{return window._call540PromotionSnapshot?window._call540PromotionSnapshot():{}}catch(e){return {}}}
+ function seconds(){var s=callState(),n=Number(s.elapsed)||0;if(s.stage==='active'&&!s.paused&&s.startedAt){var d=new Date(s.startedAt);if(!isNaN(d))n+=Math.max(0,Math.floor((Date.now()-d.getTime())/1000))}return n}
+ function duration(n){n=Math.max(0,Math.floor(n||0));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
+ function types(){var a=window.TCP537&&arr(TCP537.PRIMARY_TYPES);return a.length?a:['Account Updating Call','Product Opportunity Call','Reorder Call','Quote Follow-Up','Sample Follow-Up','Order Follow-Up','Relationship Check-In','Other']}
+ function options(vals,cur){return vals.map(function(v){return '<option'+(String(v)===String(cur)?' selected':'')+'>'+esc(v)+'</option>'}).join('')}
+ function stageLabel(){var s=callState(),d=dialState();if(s.stage==='complete')return'Complete';if(s.stage==='active'||d.status==='dialing'||d.status==='connected')return'In Call';if(d.lastOutcome)return'Wrap Up';return'Ready'}
+ function headHtml(d){var s=callState(),ds=dialState(),c=primary(d),p=points(),promo=promotion(),live=stageLabel()==='In Call',purpose=(s.draft&&s.draft.callType)||'Account Updating Call',lt=localTime(d),ph=ds.number||phone(d);return '<div class="v839-call-head">'+
+  '<div class="v839-call-top"><div class="v839-customer"><div class="v839-eyebrow"><span>'+esc(tier(d))+'</span><span>•</span><span>'+esc(stageLabel())+'</span></div><h2>'+esc(d.company)+'</h2><div class="v839-customer-meta"><span>'+esc(contactName(d))+'</span>'+(contactMeta(d)?'<span>'+esc(contactMeta(d))+'</span>':'')+(lt?'<span>'+esc(lt)+'</span>':'')+'</div></div><div class="v839-state"><span class="v839-state-pill'+(live?' live':'')+'">'+(live?'● Live':'○ '+esc(stageLabel()))+'</span><span class="v839-state-pill"><span>Timer</span><b class="v839-timer" data-v839-timer>'+duration(seconds())+'</b></span><button class="v839-btn icon" data-v839="pop" title="Pop out workspace">↗</button><button class="v839-btn icon" data-v839="close" title="Close workspace">×</button></div></div>'+
+  '<div class="v839-actions"><input id="call540-phone" class="v839-phone" aria-label="Phone number" value="'+esc(ph)+'" placeholder="Phone number"><select class="v839-purpose" aria-label="Call purpose" data-v839-purpose>'+options(types(),purpose)+'</select>'+(live?'<button class="v839-btn end" data-v839="end">End Call</button>':'<button class="v839-btn primary" data-v839="start">☎ Start Call</button>')+'<button class="v839-btn" data-v839="email">✉ Email</button><button class="v839-btn" data-v839="follow">📅 Follow-Up</button><button class="v839-btn" data-v839="quote">Quote</button><button class="v839-btn" data-v839="shop">Shop Together</button></div>'+
+  '<div class="v839-brief"><div class="v839-brief-card"><span>Connect conversation starter</span><strong>'+esc(p[0]||callReason(d)||'Review the account and establish the customer’s current priority, timing and next step.')+'</strong><small>'+(p[1]?esc(p[1]):'Use the customer tabs below during the conversation.')+'</small></div><div class="v839-brief-card"><span>Current promotion / selling focus</span><strong>'+esc(promo.title||'Customer-specific selling opportunity')+'</strong><small>'+esc(promo.offer||promo.body||'Use recorded history and current customer needs to guide the conversation.')+'</small></div></div>'+
+ '</div>'}
+ function sellingHtml(){var W=window.TCP_SELLING_V799;if(!W||!W.inner)return '<div class="h837-card"><h3>Customer tools are loading</h3><p>The existing in-call workspace has not finished mounting yet.</p></div>';return '<div class="v839-selling"><aside class="c649-card sw799" id="sw799-workspace">'+W.inner()+'</aside></div>'}
+ function wrapHtml(d){var s=callState(),complete=s.stage==='complete';if(complete)return '<div class="v839-complete"><strong>✓ Call completed.</strong> Customer history and My Day can now reflect the saved result.</div>';var suggested=dialState().lastOutcome||'';return '<details class="v839-wrap"'+(suggested?' open':'')+'><summary>Wrap up & complete call <span>'+esc(suggested||'record outcome when finished')+'</span></summary><form class="v839-wrap-body" data-v839-wrap><label>Outcome<select name="outcome"><option value="">Choose outcome</option>'+['Completed account update','Connected — follow-up needed','No answer','Left voicemail'].map(function(v){return '<option'+(suggested&&suggested.toLowerCase().indexOf(v.split(' ')[0].toLowerCase())>=0?' selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select></label><label>Conversation / attempt note<textarea name="note" minlength="3" maxlength="2000" required placeholder="Customer need, timing, commitment, next step, or attempted contact."></textarea></label><button class="v839-btn primary" type="submit">Complete Call</button></form></details>'}
+ function html(d){return '<div class="h837-call-v839">'+headHtml(d)+sellingHtml()+wrapHtml(d)+'</div>'}
+ function current(){return document.querySelector('#h837-workspace .h837-call-v839')}
+ function renderBody(){var host=document.querySelector('#h837-workspace .wf789-dialog-body'),d=data();if(!host||!d)return;host.innerHTML=html(d);startTimer()}
+ var timer=null;function startTimer(){if(timer)clearInterval(timer);timer=setInterval(function(){var e=document.querySelector('[data-v839-timer]');if(e)e.textContent=duration(seconds())},1000)}
+ function initCompany(name){try{if(typeof window._call540SelectCompany==='function')window._call540SelectCompany(encodeURIComponent(name));else{window._call532=window._call532||{};window._call532.company=name;window._call532.stage='prep'}}catch(e){window._call532=window._call532||{};window._call532.company=name;window._call532.stage='prep'}}
+ function open(name){var api=window.CONNECT_HOME_WORK_V837;if(!api||!api.available||!api.available())return false;initCompany(name);var d=data();if(!d)return false;if(api.close)api.close(null);var slot=document.getElementById('h837-workspace');if(!slot)return false;var el=document.createElement('section');el.className='wf789-dialog h837-inline';el.setAttribute('aria-label','Call · '+name);el.innerHTML='<header class="wf789-dialog-head"><h2>Call · '+esc(name)+'</h2><button type="button" data-h837="pop">Pop out</button></header><div class="wf789-dialog-body">'+html(d)+'</div>';api.mount(el,'Call · '+name,{company:name,kind:'call'});startTimer();if(window.CONNECT_HOME_V789&&window.CONNECT_HOME_V789.refreshQueue)window.CONNECT_HOME_V789.refreshQueue(false);return true}
+ function syncPurpose(v){var s=callState();s.draft=s.draft||{};s.draft.callType=v;s.draft.updatedAt=new Date().toISOString();}
+ function start(){var ph=document.getElementById('call540-phone');dialState().number=text(ph&&ph.value||phone(data()));syncPurpose((document.querySelector('[data-v839-purpose]')||{}).value||'Account Updating Call');try{if(typeof window._call540StartDial==='function')window._call540StartDial();else{var s=callState();s.stage='active';s.startedAt=new Date().toISOString();s.paused=false;dialState().status='connected'}}catch(e){var s2=callState();s2.stage='active';s2.startedAt=new Date().toISOString();s2.paused=false;dialState().status='connected'}renderBody()}
+ function end(){try{if(typeof window._call540EndDial==='function')window._call540EndDial('Connected');else{var s=callState();s.elapsed=seconds();s.startedAt='';s.paused=true;dialState().lastOutcome='Connected';dialState().status='ready'}}catch(e){}renderBody()}
+ function tab(k){var W=window.TCP_SELLING_V799;if(W&&W.setTab)W.setTab(k)}
+ function shop(){if(window.SHOP_TOGETHER_V828&&SHOP_TOGETHER_V828.open)SHOP_TOGETHER_V828.open()}
+ function complete(form){var outcome=text(form.elements.outcome&&form.elements.outcome.value),note=text(form.elements.note&&form.elements.note.value),d=data(),svc=service();if(!outcome||note.length<3){form.elements.note&&form.elements.note.focus();return}var qualifying=outcome==='Completed account update';var result=svc&&svc.recordTouch?svc.recordTouch(d.company,{note:note,outcome:outcome,qualifying:qualifying}):null;if(!result||result.ok===false){alert(result&&result.message||'The call result could not be saved.');return}var s=callState();s.stage='complete';s.elapsed=seconds();s.startedAt='';s.paused=true;s.completed={outcome:outcome,note:note,at:new Date().toISOString()};if(window.CONNECT_HOME_V789){try{window.CONNECT_HOME_V789.refresh()}catch(e){}}renderBody()}
+ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.h837-call-v839 [data-v839]');if(!b)return;var c=b.dataset.v839;e.preventDefault();if(c==='start')start();else if(c==='end')end();else if(c==='email'&&typeof window._call540OpenEmail==='function')window._call540OpenEmail();else if(c==='follow')tab('events');else if(c==='quote')tab('quote');else if(c==='shop')shop();else if(c==='close'&&window.CONNECT_HOME_WORK_V837)window.CONNECT_HOME_WORK_V837.close(document.querySelector('#h837-workspace .wf789-dialog'));else if(c==='pop'){var old=document.querySelector('#h837-workspace [data-h837="pop"]');if(old)old.click();}});
+ document.addEventListener('change',function(e){if(e.target.matches&&e.target.matches('.h837-call-v839 [data-v839-purpose]'))syncPurpose(e.target.value)});
+ document.addEventListener('submit',function(e){var f=e.target.closest&&e.target.closest('[data-v839-wrap]');if(!f)return;e.preventDefault();complete(f)});
+ function install(){var api=window.CONNECT_HOME_WORK_V837;if(!api||api.__v839)return false;var prior=api.openCall;api.openCall=function(name){return open(name)||prior&&prior(name)};api.__v839=true;api.openCallV839=open;return true}
+ if(!install())setTimeout(install,0);setTimeout(install,250);setTimeout(install,1000);
+ window.CONNECT_MYDAY_CALL_V839={open:open,render:renderBody,diagnostics:function(){var d=data();return{company:d&&d.company||'',stage:stageLabel(),selling:!!(window.TCP_SELLING_V799&&TCP_SELLING_V799.inner),shop:!!window.SHOP_TOGETHER_V828}}};
+})();
 </script>
 </body>
 </html>
