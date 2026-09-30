@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v840">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v846-audited">
 <head>
 <style id="connect-v837-my-day-css">
 @layer connect-work-v837, connect-day834, connect-day833, connect-day823;
@@ -5279,6 +5279,293 @@ html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbenc
 }
 </style>
 
+<style id="connect-v844-call-hierarchy">
+/* V844 · Active-call hierarchy pass. Preserve structure/function, separate visual roles. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841{
+  --v844-navy:#17394d;
+  --v844-teal-dark:#16495b;
+  --v844-teal:#087b89;
+  --v844-teal-mid:#2d8f9b;
+  --v844-page:#eaf1f3;
+  --v844-soft:#f3f7f8;
+  --v844-soft-2:#edf5f6;
+  --v844-card:#ffffff;
+  --v844-line:#c7dce2;
+  --v844-line-soft:#dbe8ec;
+  --v844-muted:#5b7484;
+  background:var(--v844-page)!important;
+}
+
+/* 1. Shell header = strongest hierarchy level. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head{
+  background:var(--v844-teal-dark)!important;
+  border-bottom:1px solid #0f3d4c!important;
+  box-shadow:0 4px 16px rgba(10,50,63,.18)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head .wf789-eyebrow{
+  color:#cce8ec!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head h2{
+  color:#fff!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.10)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head .wf789-btn{
+  background:#fff!important;
+  color:var(--v844-navy)!important;
+  border-color:#d2e2e6!important;
+  box-shadow:0 4px 12px rgba(4,37,48,.18)!important;
+}
+
+/* 2. Stage rail is quiet and separate from live controls. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-progress{
+  margin:0 12px!important;
+  padding:12px 8px 9px!important;
+  background:#f8fbfc!important;
+  border-bottom:1px solid var(--v844-line)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-progress-step{
+  color:#36586a!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-progress-step.on{
+  color:var(--v844-teal-dark)!important;
+  font-weight:800!important;
+}
+
+/* 3. Live call controls become a distinct command card. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-callbar{
+  margin:10px 12px 12px!important;
+  padding:10px 12px!important;
+  min-height:58px!important;
+  border:1px solid #b9d3d9!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  box-shadow:0 5px 14px rgba(18,77,88,.09)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-live{
+  background:#e9f8f2!important;
+  border-color:#72c7a4!important;
+  color:#075a45!important;
+  font-weight:800!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-copy strong{
+  color:var(--v844-navy)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-copy span{
+  color:var(--v844-muted)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-timer{
+  min-width:62px!important;
+  padding:7px 9px!important;
+  border-radius:9px!important;
+  background:var(--v844-soft-2)!important;
+  color:var(--v844-teal-dark)!important;
+  text-align:center!important;
+  font-variant-numeric:tabular-nums!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-actions .v841-btn{
+  background:#fff!important;
+  border:1px solid #d2e2e6!important;
+  box-shadow:0 2px 7px rgba(18,77,88,.05)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-actions .v841-btn:hover{
+  background:#edf7f8!important;
+  border-color:#84bdc6!important;
+}
+
+/* 4. Separate the two workbench zones with a real gutter. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-layout{
+  grid-template-columns:224px minmax(0,1fr)!important;
+  gap:18px!important;
+  padding:0 14px 14px!important;
+  background:var(--v844-page)!important;
+}
+
+/* Call Guide = coaching rail, its own visual object. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide{
+  border:1px solid #a9cbd1!important;
+  border-radius:15px!important;
+  background:#f8fbfc!important;
+  box-shadow:0 8px 22px rgba(18,77,88,.10)!important;
+  overflow:hidden!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head{
+  background:var(--v844-teal-dark)!important;
+  border-bottom:1px solid #103f4e!important;
+  color:#fff!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head :is(span,strong){
+  color:#fff!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head>div>span{
+  color:#cce8ec!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide .v841-guide-body{
+  padding:10px!important;
+  background:#eef5f6!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-section{
+  margin:0 0 9px!important;
+  padding:11px!important;
+  border:1px solid #d4e4e8!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  box-shadow:0 2px 7px rgba(18,77,88,.045)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-section:last-child{
+  margin-bottom:0!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-kicker{
+  color:#087b89!important;
+  font-weight:850!important;
+  letter-spacing:.08em!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-section>strong{
+  color:var(--v844-navy)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-section p,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-list li{
+  color:#476779!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-facts{
+  gap:7px!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-fact{
+  background:#f2f7f8!important;
+  border:1px solid #d6e5e9!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-live-notes textarea{
+  background:#fff!important;
+  border-color:#9fc7ce!important;
+  box-shadow:inset 0 1px 2px rgba(23,57,77,.04)!important;
+}
+
+/* Main selling workspace = primary canvas. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench.sw799.sw800{
+  border:1px solid #9fc5cc!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  box-shadow:0 11px 28px rgba(18,77,88,.12)!important;
+  overflow:hidden!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav{
+  padding:11px 12px!important;
+  gap:8px!important;
+  background:#e8f1f3!important;
+  border-bottom:1px solid #bed5da!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav button{
+  min-height:42px!important;
+  background:#fff!important;
+  border:1px solid #d1e1e5!important;
+  color:#36586a!important;
+  box-shadow:0 2px 5px rgba(18,77,88,.04)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav button:hover{
+  background:#f7fbfc!important;
+  border-color:#86bbc4!important;
+  color:var(--v844-teal-dark)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav button.on{
+  background:var(--v844-teal)!important;
+  border-color:var(--v844-teal)!important;
+  color:#fff!important;
+  box-shadow:0 5px 12px rgba(8,123,137,.20)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav{
+  background:#f8fbfc!important;
+  border-bottom:1px solid #d2e3e7!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav button{
+  background:#fff!important;
+  border:1px solid #d4e3e7!important;
+  color:#446577!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav button.on,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav button[aria-selected="true"]{
+  background:#e1f3f5!important;
+  border-color:#70afb9!important;
+  color:#075d71!important;
+  font-weight:800!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-search{
+  background:#f4f8f9!important;
+  border-bottom:1px solid #d7e6ea!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-status{
+  background:#eef5f6!important;
+  color:#587181!important;
+  border-bottom:1px solid #dbe8ec!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-body.sw799-body{
+  padding:18px!important;
+  background:#f2f6f7!important;
+}
+
+/* Overview: stop one large flat sheet; give each information family its own surface. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-meta{
+  padding:7px 10px!important;
+  border:1px solid #d5e4e8!important;
+  border-radius:9px!important;
+  background:#fff!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-stats{
+  gap:10px!important;
+  border:0!important;
+  background:transparent!important;
+  overflow:visible!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-stats>*{
+  border:1px solid #cfe0e5!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  box-shadow:0 3px 10px rgba(18,77,88,.06)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-section{
+  border:1px solid #cbdfe4!important;
+  background:#fff!important;
+  box-shadow:0 4px 12px rgba(18,77,88,.06)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-section h4{
+  color:var(--v844-navy)!important;
+}
+
+/* All other tool content gets distinct cards against the tinted canvas. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench .sw799-card{
+  border:1px solid #cbdfe4!important;
+  background:#fff!important;
+  box-shadow:0 4px 12px rgba(18,77,88,.06)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench .sw799-filters{
+  border:1px solid #d0e1e5!important;
+  background:#fff!important;
+  box-shadow:0 3px 10px rgba(18,77,88,.05)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench details{
+  border:1px solid #d2e2e6!important;
+  background:#f8fbfc!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench .sw799-totals{
+  border:1px solid #b9dce2!important;
+  background:#e5f4f6!important;
+  box-shadow:0 4px 12px rgba(18,77,88,.05)!important;
+}
+
+/* Narrower states keep the separation instead of reverting to one flat sheet. */
+@container call841 (max-width:900px){
+  html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-layout{
+    grid-template-columns:190px minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+}
+@container call841 (max-width:760px){
+  html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-layout{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+}
+</style>
 <style id="connect-v845-call-guide-horizontal">
 /* V845 · White-on-teal corrections + horizontal call guide above the active workspace. */
 html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head .wf789-eyebrow,
@@ -5406,10 +5693,9 @@ html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbenc
   }
 }
 </style>
+<!-- V846 audit: repaired markup, deduplicated release/build identity hooks, restored V844/V845 CSS to head; legacy shared modules intentionally retained where behavior may depend on them. -->
 </head>
 <body>
-</div>
-
 <!-- ==========================================================================
      CONNECT v568 · SIMPLIFIED REP MY DAY
      One-screen rep landing page: unified command bar, primary call queue,
@@ -7295,296 +7581,7 @@ function buildReport(title,sub,badgeText,bodyHtml){
   +'</div>'
   +bodyHtml
   +'<div class="rpt-footer"><span>Triple Crown Products &middot; Confidential</span><span>'+ds+'</span></div>'
-  +'</div>
-<style id="connect-v844-call-hierarchy">
-/* V844 · Active-call hierarchy pass. Preserve structure/function, separate visual roles. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841{
-  --v844-navy:#17394d;
-  --v844-teal-dark:#16495b;
-  --v844-teal:#087b89;
-  --v844-teal-mid:#2d8f9b;
-  --v844-page:#eaf1f3;
-  --v844-soft:#f3f7f8;
-  --v844-soft-2:#edf5f6;
-  --v844-card:#ffffff;
-  --v844-line:#c7dce2;
-  --v844-line-soft:#dbe8ec;
-  --v844-muted:#5b7484;
-  background:var(--v844-page)!important;
-}
-
-/* 1. Shell header = strongest hierarchy level. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head{
-  background:var(--v844-teal-dark)!important;
-  border-bottom:1px solid #0f3d4c!important;
-  box-shadow:0 4px 16px rgba(10,50,63,.18)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head .wf789-eyebrow{
-  color:#cce8ec!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head h2{
-  color:#fff!important;
-  text-shadow:0 1px 1px rgba(0,0,0,.10)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-shell-head .wf789-btn{
-  background:#fff!important;
-  color:var(--v844-navy)!important;
-  border-color:#d2e2e6!important;
-  box-shadow:0 4px 12px rgba(4,37,48,.18)!important;
-}
-
-/* 2. Stage rail is quiet and separate from live controls. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-progress{
-  margin:0 12px!important;
-  padding:12px 8px 9px!important;
-  background:#f8fbfc!important;
-  border-bottom:1px solid var(--v844-line)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-progress-step{
-  color:#36586a!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-progress-step.on{
-  color:var(--v844-teal-dark)!important;
-  font-weight:800!important;
-}
-
-/* 3. Live call controls become a distinct command card. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-callbar{
-  margin:10px 12px 12px!important;
-  padding:10px 12px!important;
-  min-height:58px!important;
-  border:1px solid #b9d3d9!important;
-  border-radius:13px!important;
-  background:#fff!important;
-  box-shadow:0 5px 14px rgba(18,77,88,.09)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-live{
-  background:#e9f8f2!important;
-  border-color:#72c7a4!important;
-  color:#075a45!important;
-  font-weight:800!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-copy strong{
-  color:var(--v844-navy)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-copy span{
-  color:var(--v844-muted)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-timer{
-  min-width:62px!important;
-  padding:7px 9px!important;
-  border-radius:9px!important;
-  background:var(--v844-soft-2)!important;
-  color:var(--v844-teal-dark)!important;
-  text-align:center!important;
-  font-variant-numeric:tabular-nums!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-actions .v841-btn{
-  background:#fff!important;
-  border:1px solid #d2e2e6!important;
-  box-shadow:0 2px 7px rgba(18,77,88,.05)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-actions .v841-btn:hover{
-  background:#edf7f8!important;
-  border-color:#84bdc6!important;
-}
-
-/* 4. Separate the two workbench zones with a real gutter. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-layout{
-  grid-template-columns:224px minmax(0,1fr)!important;
-  gap:18px!important;
-  padding:0 14px 14px!important;
-  background:var(--v844-page)!important;
-}
-
-/* Call Guide = coaching rail, its own visual object. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide{
-  border:1px solid #a9cbd1!important;
-  border-radius:15px!important;
-  background:#f8fbfc!important;
-  box-shadow:0 8px 22px rgba(18,77,88,.10)!important;
-  overflow:hidden!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head{
-  background:var(--v844-teal-dark)!important;
-  border-bottom:1px solid #103f4e!important;
-  color:#fff!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head :is(span,strong){
-  color:#fff!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head>div>span{
-  color:#cce8ec!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide .v841-guide-body{
-  padding:10px!important;
-  background:#eef5f6!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-section{
-  margin:0 0 9px!important;
-  padding:11px!important;
-  border:1px solid #d4e4e8!important;
-  border-radius:10px!important;
-  background:#fff!important;
-  box-shadow:0 2px 7px rgba(18,77,88,.045)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-section:last-child{
-  margin-bottom:0!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-kicker{
-  color:#087b89!important;
-  font-weight:850!important;
-  letter-spacing:.08em!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-section>strong{
-  color:var(--v844-navy)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-section p,
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-guide-list li{
-  color:#476779!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-facts{
-  gap:7px!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-fact{
-  background:#f2f7f8!important;
-  border:1px solid #d6e5e9!important;
-  border-radius:8px!important;
-  box-shadow:none!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-live-notes textarea{
-  background:#fff!important;
-  border-color:#9fc7ce!important;
-  box-shadow:inset 0 1px 2px rgba(23,57,77,.04)!important;
-}
-
-/* Main selling workspace = primary canvas. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench.sw799.sw800{
-  border:1px solid #9fc5cc!important;
-  border-radius:16px!important;
-  background:#fff!important;
-  box-shadow:0 11px 28px rgba(18,77,88,.12)!important;
-  overflow:hidden!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav{
-  padding:11px 12px!important;
-  gap:8px!important;
-  background:#e8f1f3!important;
-  border-bottom:1px solid #bed5da!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav button{
-  min-height:42px!important;
-  background:#fff!important;
-  border:1px solid #d1e1e5!important;
-  color:#36586a!important;
-  box-shadow:0 2px 5px rgba(18,77,88,.04)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav button:hover{
-  background:#f7fbfc!important;
-  border-color:#86bbc4!important;
-  color:var(--v844-teal-dark)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav button.on{
-  background:var(--v844-teal)!important;
-  border-color:var(--v844-teal)!important;
-  color:#fff!important;
-  box-shadow:0 5px 12px rgba(8,123,137,.20)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav{
-  background:#f8fbfc!important;
-  border-bottom:1px solid #d2e3e7!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav button{
-  background:#fff!important;
-  border:1px solid #d4e3e7!important;
-  color:#446577!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav button.on,
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav button[aria-selected="true"]{
-  background:#e1f3f5!important;
-  border-color:#70afb9!important;
-  color:#075d71!important;
-  font-weight:800!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-search{
-  background:#f4f8f9!important;
-  border-bottom:1px solid #d7e6ea!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-status{
-  background:#eef5f6!important;
-  color:#587181!important;
-  border-bottom:1px solid #dbe8ec!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-body.sw799-body{
-  padding:18px!important;
-  background:#f2f6f7!important;
-}
-
-/* Overview: stop one large flat sheet; give each information family its own surface. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-meta{
-  padding:7px 10px!important;
-  border:1px solid #d5e4e8!important;
-  border-radius:9px!important;
-  background:#fff!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-stats{
-  gap:10px!important;
-  border:0!important;
-  background:transparent!important;
-  overflow:visible!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-stats>*{
-  border:1px solid #cfe0e5!important;
-  border-radius:11px!important;
-  background:#fff!important;
-  box-shadow:0 3px 10px rgba(18,77,88,.06)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-section{
-  border:1px solid #cbdfe4!important;
-  background:#fff!important;
-  box-shadow:0 4px 12px rgba(18,77,88,.06)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .ov800-section h4{
-  color:var(--v844-navy)!important;
-}
-
-/* All other tool content gets distinct cards against the tinted canvas. */
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench .sw799-card{
-  border:1px solid #cbdfe4!important;
-  background:#fff!important;
-  box-shadow:0 4px 12px rgba(18,77,88,.06)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench .sw799-filters{
-  border:1px solid #d0e1e5!important;
-  background:#fff!important;
-  box-shadow:0 3px 10px rgba(18,77,88,.05)!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench details{
-  border:1px solid #d2e2e6!important;
-  background:#f8fbfc!important;
-}
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-workbench .sw799-totals{
-  border:1px solid #b9dce2!important;
-  background:#e5f4f6!important;
-  box-shadow:0 4px 12px rgba(18,77,88,.05)!important;
-}
-
-/* Narrower states keep the separation instead of reverting to one flat sheet. */
-@container call841 (max-width:900px){
-  html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-layout{
-    grid-template-columns:190px minmax(0,1fr)!important;
-    gap:12px!important;
-  }
-}
-@container call841 (max-width:760px){
-  html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-layout{
-    grid-template-columns:minmax(0,1fr)!important;
-    gap:12px!important;
-  }
-}
-</style>
-
-</body></html>';
+  +'</div></body></html>';
 }
 
 function rKPI(val,lbl,sub,col){return'<div class="mc"><div class="lbl">'+lbl+'</div><div class="val"'+(col?' style="color:'+col+'"':'')+'>'+val+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
@@ -59680,13 +59677,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v647"!important}
 body.nav-rail .tabs:after{content:"v647"!important}
 </style>
-<script id="tcp-v647-module-removal-js">
-(function(){
-  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
-  try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();}catch(e){}
-})();
-</script>
-
 <!-- ======================================================================
      v648 · REP HOME INTEGRITY + DAILY SALES RESPONSIVENESS
      Rep Home: current-period metrics, Calls Made separated from Account Updates,
@@ -65640,12 +65630,7 @@ function boot(){if(!wrap())return setTimeout(boot,120);[0,300,1000,2500].forEach
 
 
 <script id="tcp-v653-phased-dev-handoff-js">(function(){var prior=window._rpPhasedDevBundle;function src(id){var e=document.getElementById(id);return e?e.textContent:''}window._rpPhasedDevBundle=function(){var base=typeof prior==='function'?prior():'';return base+'\n\n/* v653 required-today queue + Admin call eligibility */\n<style>'+src('tcp-v653-required-queue-css')+'<\/style>\n<style>'+src('tcp-v653-call-eligibility-css')+'<\/style>\n<script>'+src('tcp-v653-call-eligibility-js')+'<\\/script>'};})();</script>
-
-<script id="tcp-v652-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
-<style id="tcp-v653-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v653"!important}body.nav-rail .tabs:after{content:"v653"!important}</style><script id="tcp-v653-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
-
+<style id="tcp-v653-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v653"!important}body.nav-rail .tabs:after{content:"v653"!important}</style>
 <!-- v654 Phased Follow-Ups Workspace -->
 <style id="tcp-v654-phased-followups-css">
 /* ===== v654 Phased Follow-Ups Workspace ===== */
@@ -65778,7 +65763,7 @@ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");w
 })();
 </script>
 <script id="tcp-v654-phased-dev-handoff-js">(function(){var prior=window._rpPhasedDevBundle;function src(id){var e=document.getElementById(id);return e?e.textContent:''}window._rpPhasedDevBundle=function(){var base=typeof prior==='function'?prior():'';return base+'\n\n/* v654 Phased Follow-Ups Workspace */\n<style>'+src('tcp-v654-phased-followups-css')+'<\/style>\n<script>'+src('tcp-v654-phased-followups-js')+'<\\/script>'};})();</script>
-<style id="tcp-v654-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v654"!important}body.nav-rail .tabs:after{content:"v654"!important}</style><script id="tcp-v654-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
+<style id="tcp-v654-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v654"!important}body.nav-rail .tabs:after{content:"v654"!important}</style>
 \n<style id="tcp-v655-call-data-reconciliation-css">
 html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v655"!important}
 body.nav-rail .tabs:after{content:"v655"!important}
@@ -66170,9 +66155,6 @@ setTimeout(function(){try{if(isPhased()&&window._rp2&&_rp2.page==='call'&&!windo
 })();
 </script>
 <style id="tcp-v656-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v656"!important}body.nav-rail .tabs:after{content:"v656"!important}</style>
-<script id="tcp-v656-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
-
 <!-- v657 Rep Portal Admin Layout / Style Initialization Fix -->
 <style id="tcp-v657-rep-admin-layout-css">
 /* Manager-side Rep Portal admin must look correct even before the login overlay ever runs. */
@@ -66248,9 +66230,6 @@ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");w
 })();
 </script>
 <style id="tcp-v657-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v657"!important}body.nav-rail .tabs:after{content:"v657"!important}</style>
-<script id="tcp-v657-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
-
 <!-- v658 List Builder + universal list view sizes -->
 
 <style id="tcp-v658-call-list-builder-css">
@@ -66343,9 +66322,6 @@ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");w
 </style>
 
 <style id="tcp-v658-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v658"!important}body.nav-rail .tabs:after{content:"v658"!important}</style>
-<script id="tcp-v658-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
-
 <!-- v659 List Builder usability + data-source polish -->
 <style id="tcp-v659-list-builder-polish-css">
 /* Match the current Connect visual language: deep navy panels, cyan labels, orange action emphasis, serif display headings. */
@@ -66440,8 +66416,6 @@ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");w
 @media(max-width:650px){#rp-overlay .c658-builder{padding:15px}#rp-overlay .c658-builder-head h2{font-size:24px}#rp-overlay .c659-validation-banner{align-items:flex-start;flex-direction:column}#rp-overlay .c659-result-metrics{grid-template-columns:1fr}#rp-overlay .c659-result-primary{grid-column:auto}#rp-overlay .c658-savebar>div{min-width:0;width:100%}}
 </style>
 <style id="tcp-v659-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v659"!important}body.nav-rail .tabs:after{content:"v659"!important}</style>
-<script id="tcp-v659-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
 <style id="tcp-v660-list-builder-wizard-css">
 /* v660 Guided List Builder — step workflow aligned to current Connect visual language */
 #rp-overlay .c660-builder{--c660-bg:#07111a;--c660-card:#0c1924;--c660-card2:#0f1d29;--c660-line:#243747;--c660-text:#f4f7fa;--c660-muted:#8fa2b5;--c660-cyan:#00AFEF;--c660-orange:#FA873D;margin-top:14px;padding:20px;border:1px solid rgba(0,175,239,.18);border-radius:20px;background:radial-gradient(circle at 100% 0,rgba(0,175,239,.08),transparent 30%),radial-gradient(circle at 0 0,rgba(250,135,61,.055),transparent 28%),linear-gradient(145deg,#0d1a25,#07111a);box-shadow:0 20px 46px rgba(0,0,0,.20);color:var(--c660-text)}
@@ -66554,11 +66528,8 @@ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");w
 </style>
 <script id="tcp-v660-phased-dev-handoff-js">(function(){var prior=window._rpPhasedDevBundle;window._rpPhasedDevBundle=function(){var base=typeof prior==='function'?prior():'',css=document.getElementById('tcp-v660-list-builder-wizard-css');return base+'\n\n/* v660 Guided List Builder */\n<style id="tcp-v660-list-builder-wizard-css">'+(css?css.textContent:'')+'<\/style>'};})();</script>
 <style id="tcp-v660-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v660"!important}body.nav-rail .tabs:after{content:"v660"!important}</style>
-<script id="tcp-v660-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 <!-- v661 List Builder final stabilization: scroll retention, fresh-after-save drafts, Customer Level defaults -->
 <style id="tcp-v661-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v661"!important}body.nav-rail .tabs:after{content:"v661"!important}</style>
-<script id="tcp-v661-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
 <!-- v662 Contextual Call Lists: Call Prep stays attached to Today / All / selected saved list -->
 <style id="tcp-v662-contextual-call-source-css">
 #rp-overlay .c662-source-head{align-items:flex-end}
@@ -66576,8 +66547,6 @@ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");w
 @media(max-width:900px){#rp-overlay .c662-source-head{align-items:flex-start;flex-direction:column}#rp-overlay .c662-source-controls{width:100%;justify-content:flex-start}#rp-overlay .c662-source-controls label{min-width:min(100%,280px)}}
 </style>
 <style id="tcp-v662-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v662"!important}body.nav-rail .tabs:after{content:"v662"!important}</style>
-<script id="tcp-v662-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
 <!-- v663 My Call Lists Command Center: rep-facing required / suggested / personal list operations -->
 <style id="tcp-v663-my-call-lists-css">
 #rp-overlay .c663-lists{padding:22px;background:radial-gradient(circle at 90% 0,rgba(0,175,239,.07),transparent 32%),linear-gradient(145deg,#0C1924,#07121B)}
@@ -66662,7 +66631,6 @@ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");w
 @media(max-width:760px){#rp-overlay .c663-lists{padding:14px}#rp-overlay .c663-list-tools{align-items:stretch;flex-direction:column}#rp-overlay .c663-list-search{width:100%}#rp-overlay .c663-list-search input{width:auto;flex:1}#rp-overlay .c663-list-metrics,#rp-overlay .c663-refresh-metrics{grid-template-columns:1fr 1fr}#rp-overlay .c663-open-toolbar,#rp-overlay .c663-complete-banner{align-items:flex-start;flex-direction:column}#rp-overlay .c663-open-toolbar>div:last-child{justify-content:flex-start}}
 </style>
 <style id="tcp-v663-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v663"!important}body.nav-rail .tabs:after{content:"v663"!important}</style>
-<script id="tcp-v663-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
 <!-- v664 Manager Campaign Builder: manager-defined Required/Suggested call lists pushed as rep-owned static snapshots -->
 <style id="tcp-v664-manager-campaign-css">
 #pg-callcampaigns #cc664-campaigns{margin:18px 0 22px;border:1px solid rgba(255,255,255,.10);border-radius:24px;background:radial-gradient(circle at 90% 0,rgba(0,175,239,.09),transparent 34%),linear-gradient(145deg,rgba(17,27,42,.96),rgba(8,15,26,.96));box-shadow:0 20px 52px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.06);overflow:hidden}
@@ -66834,8 +66802,6 @@ var priorBundle=window._rpPhasedDevBundle;window._rpPhasedDevBundle=function(){v
 })();
 </script>
 <style id="tcp-v664-footer">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v664"!important}body.nav-rail .tabs:after{content:"v664"!important}</style>
-<script id="tcp-v664-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
 <!-- v665 Call Campaigns dedicated manager tab -->
 <style id="tcp-v665-call-campaigns-page-css">
 #pg-callcampaigns.call-campaigns-page{max-width:1540px;margin:0 auto;padding:4px 0 44px}
@@ -66843,8 +66809,6 @@ var priorBundle=window._rpPhasedDevBundle;window._rpPhasedDevBundle=function(){v
 @media(max-width:1050px){#pg-callcampaigns.call-campaigns-page{padding:0 0 34px}}
 html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v665"!important}body.nav-rail .tabs:after{content:"v665"!important}
 </style>
-<script id="tcp-v665-final-identity-js">(function(){window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}})();</script>
-
 <!-- v666 Campaign modal button + scroll-position polish -->
 <style id="tcp-v666-campaign-modal-polish-css">
 .cc664-modal .cc664-btn{
@@ -67452,17 +67416,6 @@ try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");w
 }
 </style>
 <style id="tcp-v670-build-identity">html body .tabs:after{content:"Cloud Sync • Admin  ·  BUILD v670"!important}body.nav-rail .tabs:after{content:"v670"!important}</style>
-<script id="tcp-v670-build-js">
-(function(){
-  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
-  try{
-    window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");
-    window.CONNECT_SET_RELEASE_TITLE();
-  }catch(e){}
-})();
-</script>
-
-
 <!-- ===== v671 Orders Simplification: search-first manager + rep Orders, unified detail, preserved data engines ===== -->
 <style id="tcp-orders-v671-css">
 /* ===== v671 ORDERS SIMPLIFICATION ===== */
@@ -74992,15 +74945,6 @@ html[data-connect-ui="777"] #rp-overlay .art736-protected{display:inline-flex;al
 })();
 </script>
 
-<script id="connect-v739-final-authority-eof">
-(function(){
- var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
- function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){var t=b.textContent||'';if(/build/i.test(t))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
- enforce();[0,60,180,500,1200].forEach(function(ms){setTimeout(enforce,ms)});
- /* v739: no subtree build observer — early build authority is already idempotent */
-})();
-</script>
-
 <!-- ===== CONNECT v739 · COMPANY PROFILE — COMPANY SNAPSHOT ===== -->
 <style id="connect-v739-company-profile-snapshot-css">
 html[data-connect-ui="777"] #rp-overlay .prof737-wrap{display:flex;flex-direction:column;gap:14px;padding-bottom:12px}
@@ -75097,15 +75041,6 @@ html[data-connect-ui="777"] #rp-overlay .prof737-modal-actions{display:flex;just
  window.TCP_COMPANY_PROFILE_SNAPSHOT_V739={version:BUILD,model:model,refresh:apply};
 })();
 </script>
-<script id="connect-v739-final-authority-eof">
-(function(){
- var BUILD=window.CONNECT_RELEASE.version,DISPLAY=window.CONNECT_RELEASE.display,TITLE=window.CONNECT_RELEASE.title;
- function enforce(){try{window.CONNECT_BUILD_AUTHORITY=window.CONNECT_RELEASE.version;window.CONNECT_BUILD_DISPLAY=window.CONNECT_RELEASE.display;window.CONNECT_BUILD=window.CONNECT_RELEASE.version;window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-authoritative");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-connect-build");window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE();document.querySelectorAll('.cux695-build-badge,.cux700-build-badge,.rp-build-badge,.rp2-build,.rp2-side-build').forEach(function(b){var t=b.textContent||'';if(/build/i.test(t))window.CONNECT_SET_BUILD_BADGE(b)})}catch(e){}}
- enforce();[0,60,180,500,1200].forEach(function(ms){setTimeout(enforce,ms)});
-})();
-</script>
-
-
 <!-- ===== CONNECT v739 · COMPANY STRATEGY — EXECUTION LOOP ===== -->
 <style id="connect-v739-company-strategy-execution-css">
 html[data-connect-ui="777"] .str738-modal{position:fixed;inset:0;z-index:2147483400;display:grid;place-items:center;padding:22px;background:rgba(2,7,12,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
