@@ -1,48 +1,4 @@
 
-okay, so first lets do the cleanup
-
-Worked for 5m 20s
-Done. I kept this as a stability cleanup only, with no redesign yet.
-
-What I cleaned up
-Established the current V789/V838 My Day renderer as the single authority.
-Guarded the older V509/V560/V568/V648/V639 Home renderers so they can no longer suddenly reclaim the My Day page.
-Disabled the older Home-only after-hooks that could restyle/reprocess the page after the current version loads.
-Kept the old shared utilities and data functions intact so we do not accidentally break Calls, Customers, Orders, performance data, phased/full modes, etc.
-Left the current V823 → V833 → V834 → V837 visual cascade intact for now because those layers are contributing to the My Day design you currently like.
-Ran JavaScript syntax validation on the modified legacy scripts and the current V789 My Day script. All passed.
-So this first cleanup is specifically aimed at preventing the:
-
-“Why did it suddenly go back to an old version?”
-
-problem.
-
-I have not changed the tabs, call workspace, sizing, colors, layout, or functionality yet.
-
-I would load this one and make sure My Day looks exactly like V838 did before we touch anything else. Once that checks out, the next cleanup pass should be consolidating the actual My Day CSS safely, and then we can move into the all-tabs-default change and the call workspace.
-
-
-Connect-MyDay-V838_Cleaned.html
-HTML
-okay, lets move onto the actual call section, what were your suggestions
-For the actual call section, my recommendation was to stop treating it like a separate “Prep Call” screen and turn it into a single call workspace that changes state as the rep moves through the conversation.
-
-The basic structure I’d use is:
-
-Top call bar: customer, contact, phone, local time, loyalty/status, and the main controls like Call, Email, Text, Follow-Up.
-Persistent tabs underneath: Overview, Notes, Purchased, Artwork, Orders, Events, Inventory, Quote, Shop Together.
-Call state: Ready → Calling → Connected → Wrap Up → Complete.
-The rep stays in the same workspace the whole time. Starting the call should not throw them somewhere else.
-The Overview tab would replace the old “Prep for Call” idea. It should immediately answer, “What do I need to know before I talk to this customer?” So I’d put customer snapshot, why Connect selected them, suggested conversation points, active quotes/opportunities, pinned notes, recent order context, current promotions, and maybe a recommended product opportunity there.
-
-Once the rep clicks Call, that same workspace becomes the live call state. The timer starts, the call status becomes visible, but all the tabs remain usable. If the customer asks about an old jacket, the rep clicks Purchased. If they ask for their logo, Artwork. If they want pricing, Quote. If they want to browse together, Shop Together.
-
-Then when the call ends, I’d use a compact wrap-up area, not a whole new page. It should capture outcome, notes, next step, follow-up date, and whether to send a recap email. Completing it should update the customer record, update the customer-set progress if the required touch was completed, remove/update the Next Best Action, and move the rep to the next recommended item.
-
-The other thing I strongly recommended is making the call workspace responsive to the actual width of the middle column, not just the browser width. Since My Day is resizable, the call section needs to intelligently collapse and rearrange when the rep narrows that center workspace. That was one of the big issues you were pointing out in the previous chat.
-
-If we build it now, I’d start with the shell and flow first: top call bar + tabs + Ready/Connected/Wrap-Up states, then populate each tab with the call tools we already created.
-
 okay, lets try that but i do want all the features we developed during the call to be present, we might might need to rework them and format that section to have them fit in that spot a little bit better.
 
 Worked for 10m 32s
@@ -90,8 +46,8 @@ this is super crammed, i think we should still do the prep for the call, and the
 
 Worked for 6m 58s
 
-Opened Higgsfield
-
+Opening Higgsfield
+Opening Higgsfield
 Yes, this needed more than just shrinking things. I rebuilt the call flow around what you're describing.
 
 What changed in V840
@@ -192,6 +148,57 @@ That feels much closer to what this section is supposed to be.
 
 
 Connect-MyDay-V840_Call_Redesign.html
+HTML
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+User attachment
+okay, these screens....not great. the UI is awful, the layout and flow. it all does not fit the rest of the page.
+
+Worked for 9m 39s
+
+Opened Higgsfield
+
+Agreed. The screenshots made the problem clearer: the tools themselves are useful, but the active-call area still looks like a different full application embedded inside My Day.
+
+I rebuilt the active-call layout around that.
+
+The biggest changes are that the duplicated “Customer workspace / Lakeshore…” header is gone, the oversized three-step bar is reduced to a small workflow indicator, and the eight competing tabs are reorganized into a cleaner structure:
+
+Overview | Notes | History | Selling | Events
+
+History then exposes Purchased, Orders, Artwork. Selling exposes Inventory, Quote, Shop Together. Nothing is being removed, it is just not all shouting for attention at the same time.
+
+I also added a dedicated Call Guide rail during the live call. It keeps the useful prep information available without mixing it into the work tool:
+
+why you are calling
+conversation prompts
+YTD / last purchase / last contact
+purchase-history count
+reminder to leave with a next step and date
+The actual workspace now gets most of the room.
+
+I also corrected an actual styling bug: the embedded workspace was missing the sw800 class that the newer Overview/customer-workspace styling depends on. That was a major reason Overview and Notes looked so raw in your screenshots.
+
+Other changes in this pass:
+
+search only appears on sections where searching is useful
+Inventory rows are much denser
+Artwork is treated like artwork records instead of giant posters
+Purchased and Orders are tighter history cards
+Quote Builder is visually flatter and more like a working sales tool
+the call layout becomes one column when the middle workspace gets narrow
+the Call Guide can collapse instead of crushing the work area
+popout/resizing and the Gmail-style Email behavior from the previous build remain intact
+This should feel much more like My Day extending into a call, instead of Connect opening another app inside itself.
+
+
+Connect-MyDay-V841_Call_Elevation.html
 HTML
 
 
@@ -88527,5 +88534,226 @@ html[data-connect-ui="777"] #rp-overlay .h837-floating:not(.h837-minimized){righ
  window.CONNECT_MYDAY_CALL_V840={open:open,render:renderBody,diagnostics:function(){var d=data();return{company:d&&d.company||'',stage:uiStage,selling:!!(window.TCP_SELLING_V799&&TCP_SELLING_V799.inner),shop:!!window.SHOP_TOGETHER_V828}}};
 })();
 </script>
+<style id="connect-v841-myday-call-elevation-css">
+/* V841 · Active call elevation. Built for the My Day workbench, not a nested full Customer page. */
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841{
+ --c841-ink:#17394d;--c841-muted:#607789;--c841-faint:#7e93a0;--c841-line:#cbdde4;--c841-line-soft:#dfebef;
+ --c841-soft:#f3f7f8;--c841-soft2:#edf4f5;--c841-panel:#fff;--c841-teal:#087b89;--c841-teal-dark:#075d71;
+ --c841-teal-soft:#e8f5f6;--c841-green:#26795b;--c841-green-soft:#eaf7f1;--c841-orange:#c66f27;--c841-orange-soft:#fff6ec;
+ display:flex;flex-direction:column;height:100%;min-height:0;min-width:0;background:var(--c841-panel);color:var(--c841-ink);
+ container-type:inline-size;container-name:call841;font:400 13px/1.45 'Segoe UI',Arial,sans-serif;
+}
+html[data-rp-theme="dark"] #rp-overlay .h837-call-v841{
+ --c841-ink:#eef7fa;--c841-muted:#b8cbd4;--c841-faint:#8ea6b1;--c841-line:#41616d;--c841-line-soft:#36515d;
+ --c841-soft:#1d3541;--c841-soft2:#213d48;--c841-panel:#172d3a;--c841-teal:#72cbd4;--c841-teal-dark:#a8edf2;
+ --c841-teal-soft:#21434b;--c841-green:#83d7b2;--c841-green-soft:#1d3b31;--c841-orange:#f1bb78;--c841-orange-soft:#3b3127;
+}
+#rp-overlay .v841-shell-head{min-height:58px!important;padding:10px 14px!important;border-bottom:1px solid var(--c841-line)!important;background:var(--c841-panel)!important;}
+#rp-overlay .v841-shell-head .wf789-eyebrow{font-size:9px!important;letter-spacing:.09em!important;color:var(--c841-muted)!important;}
+#rp-overlay .v841-shell-head h2{font:760 17px/1.2 'Segoe UI',Arial,sans-serif!important;color:var(--c841-ink)!important;}
+#rp-overlay .v841-shell-head .wf789-btn{min-height:32px!important;padding:5px 9px!important;border-radius:9px!important;font-size:11px!important;}
+#rp-overlay .v841-stage{display:flex;flex-direction:column;min-height:0;height:100%;background:var(--c841-soft);}
+#rp-overlay .v841-flow{display:flex;align-items:center;gap:8px;flex:0 0 auto;padding:7px 12px;border-bottom:1px solid var(--c841-line);background:var(--c841-panel);}
+#rp-overlay .v841-flow-step{display:inline-flex;align-items:center;gap:6px;min-width:0;color:var(--c841-muted);font-size:10.5px;font-weight:700;white-space:nowrap;}
+#rp-overlay .v841-flow-step b{display:grid;place-items:center;width:19px;height:19px;border:1px solid var(--c841-line);border-radius:50%;background:var(--c841-soft);font-size:9px;}
+#rp-overlay .v841-flow-step.on{color:var(--c841-teal-dark);}
+#rp-overlay .v841-flow-step.on b{border-color:#6fb4bd;background:var(--c841-teal-soft);color:var(--c841-teal-dark);}
+#rp-overlay .v841-flow-line{height:1px;flex:1 1 26px;max-width:55px;background:var(--c841-line);}
+#rp-overlay .v841-callbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;flex:0 0 auto;padding:9px 12px;border-bottom:1px solid var(--c841-line);background:var(--c841-panel);}
+#rp-overlay .v841-call-main{display:flex;align-items:center;gap:9px;min-width:0;}
+#rp-overlay .v841-live{display:inline-flex;align-items:center;gap:5px;flex:0 0 auto;padding:5px 8px;border:1px solid #77c7a8;border-radius:999px;background:var(--c841-green-soft);color:var(--c841-green);font-size:10px;font-weight:800;}
+#rp-overlay .v841-call-copy{min-width:0;}
+#rp-overlay .v841-call-copy strong{display:block;color:var(--c841-ink);font-size:12px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#rp-overlay .v841-call-copy span{display:block;margin-top:1px;color:var(--c841-muted);font-size:9.8px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#rp-overlay .v841-timer{flex:0 0 auto;color:var(--c841-ink);font-size:15px;font-variant-numeric:tabular-nums;}
+#rp-overlay .v841-call-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap;}
+#rp-overlay .v841-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:6px 9px;border:1px solid var(--c841-line);border-radius:9px;background:var(--c841-panel);color:var(--c841-ink);font:700 11px/1.2 'Segoe UI',Arial,sans-serif;cursor:pointer;white-space:nowrap;box-shadow:0 1px 3px rgba(20,57,72,.035);}
+#rp-overlay .v841-btn:hover{border-color:#75b2bb;background:var(--c841-teal-soft);}
+#rp-overlay .v841-btn.primary{border-color:var(--c841-teal);background:var(--c841-teal);color:#fff;box-shadow:0 4px 12px rgba(8,123,137,.16);}
+#rp-overlay .v841-btn.danger{border-color:#e4c1bd;background:#fff8f7;color:#9b3c36;}
+html[data-rp-theme="dark"] #rp-overlay .v841-btn.danger{border-color:#765258;background:#472d31;color:#ffc8c2;}
+#rp-overlay .v841-active{display:flex;flex-direction:column;min-height:0;flex:1 1 auto;overflow:hidden;}
+#rp-overlay .v841-layout{display:grid;grid-template-columns:238px minmax(0,1fr);gap:10px;min-height:0;flex:1 1 auto;padding:10px;background:var(--c841-soft);overflow:hidden;}
+#rp-overlay .v841-guide{min-width:0;min-height:0;align-self:stretch;border:1px solid var(--c841-line);border-radius:13px;background:var(--c841-panel);box-shadow:0 5px 16px rgba(21,59,74,.05);overflow:hidden;}
+#rp-overlay .v841-guide>summary{display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;cursor:pointer;padding:10px 11px;border-bottom:1px solid var(--c841-line-soft);background:var(--c841-soft2);color:var(--c841-ink);font-size:11.5px;font-weight:800;}
+#rp-overlay .v841-guide>summary::-webkit-details-marker{display:none;}
+#rp-overlay .v841-guide>summary:after{content:'−';display:grid;place-items:center;width:20px;height:20px;border:1px solid var(--c841-line);border-radius:7px;background:var(--c841-panel);color:var(--c841-muted);font-size:12px;}
+#rp-overlay .v841-guide:not([open])>summary:after{content:'+';}
+#rp-overlay .v841-guide-body{display:grid;gap:0;padding:0 11px 10px;max-height:100%;overflow:auto;scrollbar-width:thin;}
+#rp-overlay .v841-guide-section{padding:10px 0;border-bottom:1px solid var(--c841-line-soft);}
+#rp-overlay .v841-guide-section:last-child{border-bottom:0;}
+#rp-overlay .v841-guide-kicker{display:block;margin-bottom:4px;color:var(--c841-teal-dark);font-size:9px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;}
+#rp-overlay .v841-guide-section strong{display:block;color:var(--c841-ink);font-size:11.5px;line-height:1.4;}
+#rp-overlay .v841-guide-section p{margin:4px 0 0;color:var(--c841-muted);font-size:10.5px;line-height:1.45;}
+#rp-overlay .v841-guide-list{display:grid;gap:7px;margin:5px 0 0;padding:0;list-style:none;}
+#rp-overlay .v841-guide-list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:6px;align-items:start;color:var(--c841-ink);font-size:10.5px;line-height:1.4;}
+#rp-overlay .v841-guide-list b{display:grid;place-items:center;width:18px;height:18px;border-radius:6px;background:var(--c841-teal-soft);color:var(--c841-teal-dark);font-size:9px;}
+#rp-overlay .v841-facts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;}
+#rp-overlay .v841-fact{padding:7px;border:1px solid var(--c841-line-soft);border-radius:8px;background:var(--c841-soft);min-width:0;}
+#rp-overlay .v841-fact span{display:block;color:var(--c841-muted);font-size:8.5px;line-height:1.2;text-transform:uppercase;letter-spacing:.04em;}
+#rp-overlay .v841-fact strong{display:block;margin-top:2px;color:var(--c841-ink);font-size:10.5px;line-height:1.3;overflow-wrap:anywhere;}
+#rp-overlay .v841-workbench.sw799.sw800{display:flex!important;flex-direction:column!important;align-self:stretch!important;min-height:0!important;width:100%!important;margin:0!important;padding:0!important;border:1px solid var(--c841-line)!important;border-radius:13px!important;background:var(--c841-panel)!important;box-shadow:0 5px 16px rgba(21,59,74,.05)!important;overflow:hidden!important;container-type:inline-size!important;}
+#rp-overlay .v841-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto;padding:7px 8px;border-bottom:1px solid var(--c841-line);background:var(--c841-panel);overflow-x:auto;scrollbar-width:thin;}
+#rp-overlay .v841-nav button{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:31px;padding:5px 9px;border:0;border-radius:8px;background:transparent;color:var(--c841-muted);font:700 10.8px/1.2 'Segoe UI',Arial,sans-serif;cursor:pointer;white-space:nowrap;}
+#rp-overlay .v841-nav button:hover{background:var(--c841-soft);color:var(--c841-ink);}
+#rp-overlay .v841-nav button.on{background:var(--c841-teal-soft);color:var(--c841-teal-dark);box-shadow:inset 0 -2px var(--c841-teal);}
+#rp-overlay .v841-subnav{display:flex;align-items:center;gap:5px;flex:0 0 auto;padding:7px 9px;border-bottom:1px solid var(--c841-line-soft);background:var(--c841-soft);overflow-x:auto;scrollbar-width:thin;}
+#rp-overlay .v841-subnav button{appearance:none;min-height:29px;padding:5px 9px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--c841-muted);font:700 10.5px/1.2 'Segoe UI',Arial,sans-serif;cursor:pointer;white-space:nowrap;}
+#rp-overlay .v841-subnav button:hover{background:var(--c841-panel);border-color:var(--c841-line);color:var(--c841-ink);}
+#rp-overlay .v841-subnav button.on{background:var(--c841-panel);border-color:#84bec6;color:var(--c841-teal-dark);box-shadow:0 1px 3px rgba(21,59,74,.05);}
+#rp-overlay .v841-search{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;flex:0 0 auto;padding:8px 10px;border-bottom:1px solid var(--c841-line-soft);background:var(--c841-panel);}
+#rp-overlay .v841-search input{width:100%!important;min-width:0!important;min-height:34px!important;margin:0!important;padding:7px 10px!important;border:1px solid #b9d2db!important;border-radius:8px!important;background:var(--c841-panel)!important;color:var(--c841-ink)!important;font-size:11px!important;}
+#rp-overlay .v841-search button{appearance:none;min-height:32px;padding:5px 8px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--c841-teal-dark);font:700 10.5px/1.2 'Segoe UI',Arial,sans-serif;cursor:pointer;white-space:nowrap;}
+#rp-overlay .v841-search button:hover{border-color:var(--c841-line);background:var(--c841-soft);}
+#rp-overlay .v841-status{flex:0 0 auto;margin:0;padding:6px 10px;border-bottom:1px solid var(--c841-line-soft);background:var(--c841-soft);color:var(--c841-muted);font-size:10px;line-height:1.4;}
+#rp-overlay .v841-body.sw799-body{flex:1 1 auto!important;min-height:0!important;max-height:none!important;padding:12px!important;overflow:auto!important;background:var(--c841-panel)!important;scrollbar-gutter:stable!important;}
+/* Remove the full-page chrome from the embedded customer tools. */
+#rp-overlay .h837-call-v841 .v841-workbench>.sw799-head,#rp-overlay .h837-call-v841 .v841-workbench>.sw799-tabs,#rp-overlay .h837-call-v841 .v841-workbench>.sw799-search{display:none!important;}
+/* Give the V800 overview the styling it was built for. */
+#rp-overlay .h837-call-v841 .v841-workbench.sw799.sw800 .sw800-overview{padding:0!important;}
+#rp-overlay .h837-call-v841 .v841-workbench.sw799.sw800 .ov800-meta{margin:0 0 8px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench.sw799.sw800 .ov800-stats{margin-bottom:10px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench.sw799.sw800 .ov800-grid{gap:10px!important;}
+/* Normalize tab content into My Day cards instead of giant page sections. */
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-card{margin:0 0 8px!important;padding:10px 11px!important;border:1px solid var(--c841-line-soft)!important;border-radius:10px!important;background:var(--c841-panel)!important;box-shadow:0 2px 7px rgba(21,59,74,.035)!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-card h4{font-size:12.5px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-card p{font-size:11.5px!important;line-height:1.45!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-card small{font-size:10.5px!important;color:var(--c841-muted)!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-filters{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(135px,1fr))!important;gap:7px!important;margin:0 0 9px!important;padding:9px!important;border:1px solid var(--c841-line-soft)!important;border-radius:10px!important;background:var(--c841-soft)!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-field{gap:4px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-field>span{font-size:9.5px!important;color:var(--c841-muted)!important;}
+#rp-overlay .h837-call-v841 .v841-workbench input:not([type="checkbox"]):not([type="radio"]),
+#rp-overlay .h837-call-v841 .v841-workbench select,
+#rp-overlay .h837-call-v841 .v841-workbench textarea{min-height:34px!important;padding:7px 9px!important;border-color:#bfd6df!important;border-radius:8px!important;font-size:11px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench textarea{min-height:84px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-btn{min-height:32px!important;padding:6px 9px!important;border-radius:8px!important;font-size:10.5px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench details{margin:8px 0!important;padding:8px 10px!important;border-color:var(--c841-line-soft)!important;border-radius:9px!important;background:var(--c841-soft)!important;}
+#rp-overlay .h837-call-v841 .v841-workbench details>summary{font-size:10.8px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-note{font-size:10.5px!important;line-height:1.4!important;color:var(--c841-muted)!important;}
+/* Purchased: concise customer-history cards. */
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-card>.sw799-row:first-child{align-items:flex-start!important;}
+/* Artwork: smaller visual cards that scan like records, not posters. */
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-grid.two{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;gap:9px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-art-image{max-height:115px!important;margin:4px auto 8px!important;padding:5px!important;border-color:var(--c841-line-soft)!important;}
+/* Inventory: keep product browsing dense. */
+#rp-overlay .h837-call-v841 .v841-workbench article.sw799-card:has(.sw799-product-thumb){padding:8px 10px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench article.sw799-card:has(.sw799-product-thumb)>.sw799-row{display:grid!important;grid-template-columns:46px minmax(0,1fr) auto!important;gap:9px!important;align-items:center!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-product-thumb{width:44px!important;height:44px!important;flex-basis:44px!important;border-radius:9px!important;}
+/* Quote: create one clear working canvas instead of stacked full-width form slabs. */
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-totals{margin:10px 0 0!important;padding:10px 11px!important;border-color:#b9dbe2!important;border-radius:10px!important;background:var(--c841-teal-soft)!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-total-row{font-size:11px!important;}
+#rp-overlay .h837-call-v841 .v841-workbench .sw799-total-row:last-child{font-size:14px!important;}
+/* Notes/history modules should read like a timeline/editor. */
+#rp-overlay .h837-call-v841 .v841-workbench [class*="hist"],#rp-overlay .h837-call-v841 .v841-workbench [class*="note"]{max-width:100%!important;}
+/* Wrap + Prep share the same visual language. */
+#rp-overlay .v841-prep,#rp-overlay .v841-wrap{flex:1 1 auto;min-height:0;overflow:auto;padding:14px;}
+#rp-overlay .v841-prep-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr);gap:10px;align-items:start;}
+#rp-overlay .v841-panel{border:1px solid var(--c841-line);border-radius:12px;background:var(--c841-panel);box-shadow:0 4px 14px rgba(21,59,74,.045);overflow:hidden;}
+#rp-overlay .v841-panel-head{padding:10px 12px;border-bottom:1px solid var(--c841-line-soft);background:var(--c841-soft2);}
+#rp-overlay .v841-panel-head span{display:block;color:var(--c841-teal-dark);font-size:9px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;}
+#rp-overlay .v841-panel-head h3{margin:2px 0 0;color:var(--c841-ink);font-size:14px;line-height:1.3;}
+#rp-overlay .v841-panel-body{padding:11px 12px;}
+#rp-overlay .v841-prep-reason{padding:9px 10px;border-left:3px solid var(--c841-orange);border-radius:8px;background:var(--c841-orange-soft);color:var(--c841-ink);font-size:11.5px;font-weight:650;line-height:1.45;}
+#rp-overlay .v841-prep-actions{position:sticky;bottom:-14px;display:grid;grid-template-columns:minmax(130px,.8fr) minmax(160px,1fr) auto auto auto;gap:7px;margin:12px -14px -14px;padding:10px 14px;border-top:1px solid var(--c841-line);background:color-mix(in srgb,var(--c841-panel) 95%,transparent);backdrop-filter:blur(8px);}
+#rp-overlay .v841-input,#rp-overlay .v841-select{width:100%;min-width:0;min-height:35px;padding:7px 9px;border:1px solid #bdd4dc;border-radius:8px;background:var(--c841-panel);color:var(--c841-ink);font-size:11px;}
+#rp-overlay .v841-wrap-card{max-width:690px;margin:0 auto;border:1px solid var(--c841-line);border-radius:13px;background:var(--c841-panel);box-shadow:0 6px 18px rgba(21,59,74,.06);overflow:hidden;}
+#rp-overlay .v841-wrap-form{display:grid;gap:11px;padding:13px;}
+#rp-overlay .v841-wrap-form label{display:grid;gap:5px;color:var(--c841-muted);font-size:10px;font-weight:700;}
+#rp-overlay .v841-wrap-form select,#rp-overlay .v841-wrap-form textarea{width:100%;min-height:36px;padding:8px 9px;border:1px solid #bdd4dc;border-radius:8px;background:var(--c841-panel);color:var(--c841-ink);font:400 12px/1.45 'Segoe UI',Arial,sans-serif;}
+#rp-overlay .v841-wrap-form textarea{min-height:125px;resize:vertical;}
+#rp-overlay .v841-wrap-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;padding-top:3px;}
+#rp-overlay .v841-complete{display:grid;place-items:center;height:100%;padding:20px;}
+#rp-overlay .v841-complete-card{max-width:460px;padding:24px;border:1px solid var(--c841-line);border-radius:14px;background:var(--c841-panel);text-align:center;box-shadow:0 8px 24px rgba(21,59,74,.07);}
+#rp-overlay .v841-complete-mark{display:grid;place-items:center;width:42px;height:42px;margin:0 auto 10px;border-radius:50%;background:var(--c841-green-soft);color:var(--c841-green);font-size:21px;font-weight:900;}
+@container call841 (max-width:820px){
+ #rp-overlay .v841-layout{grid-template-columns:minmax(0,1fr);overflow:auto;}
+ #rp-overlay .v841-guide{align-self:start;}
+ #rp-overlay .v841-guide:not([open]){min-height:auto;}
+ #rp-overlay .v841-workbench.sw799.sw800{min-height:540px!important;}
+ #rp-overlay .v841-callbar{grid-template-columns:minmax(0,1fr);}
+ #rp-overlay .v841-call-actions{justify-content:flex-start;}
+ #rp-overlay .v841-prep-grid{grid-template-columns:minmax(0,1fr);}
+}
+@container call841 (max-width:620px){
+ #rp-overlay .v841-flow-line{display:none;}
+ #rp-overlay .v841-flow{justify-content:space-between;}
+ #rp-overlay .v841-call-main{flex-wrap:wrap;}
+ #rp-overlay .v841-timer{margin-left:auto;}
+ #rp-overlay .v841-call-actions .v841-btn{flex:1 1 auto;}
+ #rp-overlay .v841-prep-actions{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+ #rp-overlay .v841-prep-actions .v841-btn.primary{grid-column:1/-1;}
+ #rp-overlay .v841-search{grid-template-columns:minmax(0,1fr) auto;}
+ #rp-overlay .v841-search .v841-scope{grid-column:1/-1;justify-self:start;}
+ #rp-overlay .h837-call-v841 .v841-workbench .sw799-grid.two{grid-template-columns:minmax(0,1fr)!important;}
+ #rp-overlay .h837-call-v841 .v841-workbench article.sw799-card:has(.sw799-product-thumb)>.sw799-row{grid-template-columns:42px minmax(0,1fr)!important;}
+ #rp-overlay .h837-call-v841 .v841-workbench article.sw799-card:has(.sw799-product-thumb)>.sw799-row>.sw799-btn{grid-column:2!important;justify-self:start!important;}
+}
+@media(prefers-reduced-motion:reduce){#rp-overlay .h837-call-v841 *{scroll-behavior:auto!important;transition:none!important;}}
+</style>
+<script id="connect-v841-myday-call-elevation-js">
+(function(){
+ 'use strict';
+ var uiStage='prep',dialog=null,timer=null,lastByGroup={history:'purchased',selling:'inventory'},patchedRefresh=false,priorRefresh=null;
+ var TYPES=['Account Updating Call','Product Opportunity Call','Reorder Call','Quote Follow-Up','Sample Follow-Up','Order Follow-Up','New Lead / Prospecting Call','Dormant Account Re-engagement','Web Order Follow-Up','Trade Show Follow-Up','Service Recovery Call','Relationship Check-In','Payment / Accounting Follow-Up','Other'];
+ var groups={overview:['overview'],notes:['notes'],history:['purchased','orders','artwork'],selling:['inventory','quote'],events:['events']};
+ var labels={overview:'Overview',notes:'Notes',history:'History',selling:'Selling',events:'Events',purchased:'Purchased',orders:'Orders',artwork:'Artwork',inventory:'Inventory',quote:'Quote'};
+ function text(v){return String(v==null?'':v).trim()}
+ function arr(v){return Array.isArray(v)?v:[]}
+ function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+ function svc(){return window.CONNECT_DEMO_V789}
+ function W(){return window.TCP_SELLING_V799}
+ function data(){try{return window.TCP_PREP_V796&&TCP_PREP_V796.data?TCP_PREP_V796.data():null}catch(e){return null}}
+ function callState(){window._call532=window._call532||{};window._call532.draft=window._call532.draft||{};return window._call532}
+ function dialState(){window._call540=window._call540||{};return window._call540}
+ function plan(){try{return window.TCP_PREP_V796&&TCP_PREP_V796.plan?arr(TCP_PREP_V796.plan()):[]}catch(e){return []}}
+ function model(d){try{return window.OV800&&OV800.model?OV800.model(d):null}catch(e){return null}}
+ function contact(d){var draft=callState().draft||{},list=arr(d&&d.c&&d.c.contacts).concat(arr(d&&d.account&&d.account.data&&d.account.data.contacts)),id=text(draft.contactId),hit=list.find(function(c){return String(c.id||c.contactId||'')===id});return hit||d&&d.c&&d.c.primary||list[0]||{}}
+ function contactName(d){var c=contact(d);return text(c.name||c.contactName)||'Primary contact'}
+ function phone(d){var c=contact(d);return text(c.phone||c.mobile||c.phoneNumber)||text(d&&d.c&&d.c.phone)||''}
+ function localTime(d){try{var h=window.TCP_PHASED_CALL_HUB_V663;if(h&&h.clockInfo){var c=h.clockInfo(d.c);if(c&&c.text)return c.text+' customer time'}}catch(e){}return 'Customer local time'}
+ function options(values,current){return values.map(function(v){return '<option'+(v===current?' selected':'')+'>'+esc(v)+'</option>'}).join('')}
+ function seconds(){var s=callState(),base=Number(s.elapsed||0)||0;if(uiStage==='active'&&s.startedAt&&!s.paused){var t=new Date(s.startedAt).getTime();if(isFinite(t))base+=Math.max(0,Math.floor((Date.now()-t)/1000))}return base}
+ function duration(n){n=Math.max(0,Math.floor(Number(n)||0));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
+ function stepHtml(stage){var idx=stage==='prep'?0:stage==='active'?1:2,names=['Prep','Active Call','Wrap Up'];return '<div class="v841-flow">'+names.map(function(n,i){return '<span class="v841-flow-step'+(i===idx?' on':'')+'"><b>'+(i+1)+'</b>'+n+'</span>'+(i<2?'<i class="v841-flow-line" aria-hidden="true"></i>':'')}).join('')+'</div>'}
+ function fact(label,value){return '<div class="v841-fact"><span>'+esc(label)+'</span><strong>'+esc(value||'Not recorded')+'</strong></div>'}
+ function guideHtml(d){var p=plan(),m=model(d)||{},first=p[0],talk=p.slice(0,3),last=m.lastOrder,reason=first&&first.text||'Confirm the customer’s current need, timing and next useful step.';return '<details class="v841-guide" open><summary><span>Call Guide</span><small>customer context</small></summary><div class="v841-guide-body">'+
+  '<section class="v841-guide-section"><span class="v841-guide-kicker">Why today</span><strong>'+esc(reason)+'</strong>'+(first&&first.source?'<p>'+esc(first.source)+'</p>':'')+'</section>'+ 
+  '<section class="v841-guide-section"><span class="v841-guide-kicker">Talk about</span><ul class="v841-guide-list">'+(talk.length?talk.map(function(x,i){return '<li><b>'+(i+1)+'</b><span>'+esc(x.text||x)+'</span></li>'}).join(''):'<li><b>1</b><span>Confirm the customer need, timing and next step.</span></li>')+'</ul></section>'+ 
+  '<section class="v841-guide-section"><span class="v841-guide-kicker">Account anchors</span><div class="v841-facts">'+fact('YTD sales',m.ytd==null?'Not recorded':('$'+Number(m.ytd).toLocaleString('en-US',{maximumFractionDigits:0})))+fact('Last order',last?((last.orderNumber||last.number||'Order')+' · '+(last.date||'')):'Not recorded')+fact('Last contact',m.lastContact?String(m.lastContact).slice(0,10):'Not recorded')+fact('Purchases',arr(d.products).length+' product record'+(arr(d.products).length===1?'':'s'))+'</div></section>'+ 
+  '<section class="v841-guide-section"><span class="v841-guide-kicker">Leave with</span><strong>One next step, one owner and one date.</strong></section></div></details>'}
+ function groupFor(tab){var keys=Object.keys(groups);for(var i=0;i<keys.length;i++)if(groups[keys[i]].indexOf(tab)>=0)return keys[i];return 'overview'}
+ function primaryNav(){var w=W(),s=w.state(),g=groupFor(s.tab);return '<nav class="v841-nav" aria-label="Call workspace sections">'+Object.keys(groups).map(function(k){return '<button type="button" data-v841-group="'+k+'" class="'+(g===k?'on':'')+'">'+labels[k]+'</button>'}).join('')+'</nav>'}
+ function subNav(){var w=W(),s=w.state(),g=groupFor(s.tab),items=groups[g];if(g==='history')return '<nav class="v841-subnav" aria-label="Customer history">'+items.map(function(k){return '<button type="button" data-v841-tab="'+k+'" class="'+(s.tab===k?'on':'')+'">'+labels[k]+'</button>'}).join('')+'</nav>';if(g==='selling')return '<nav class="v841-subnav" aria-label="Selling tools">'+items.map(function(k){return '<button type="button" data-v841-tab="'+k+'" class="'+(s.tab===k?'on':'')+'">'+labels[k]+'</button>'}).join('')+'<button type="button" data-v841="shop">Shop Together</button></nav>';return ''}
+ function searchable(tab){return ['notes','purchased','orders','artwork','inventory'].indexOf(tab)>=0}
+ function placeholder(tab){return tab==='notes'?'Search notes and activity':tab==='purchased'?'Search purchased products':tab==='orders'?'Search order, invoice, SKU or promotion':tab==='artwork'?'Search COID, logo or placement':'Search SKU, product or brand'}
+ function searchHtml(){var w=W(),s=w.state();if(!searchable(s.tab))return '';return '<div class="v841-search"><input id="sw799-search" type="search" aria-label="'+esc(placeholder(s.tab))+'" placeholder="'+esc(placeholder(s.tab))+'" value="'+esc(w.getQuery())+'" oninput="SW799.search(this.value)"><button type="button" data-v841="clear-search">Clear</button><button type="button" class="v841-scope" data-v841="scope">'+(s.scope==='all'?'All customer records':'This section')+'</button></div>'}
+ function statusHtml(){var s=W().state(),v=text(s.status);if(!v||/browser storage is unavailable/i.test(v))return '';return '<p class="v841-status" id="sw799-status" role="status" aria-live="polite">'+esc(v)+'</p>'}
+ function workbenchInner(){var w=W();return primaryNav()+subNav()+searchHtml()+statusHtml()+'<div class="v841-body sw799-body" id="sw799-body">'+w.renderContent()+'</div>'}
+ function refreshWorkbench(){var host=document.getElementById('sw799-workspace');if(!host||!host.closest('.h837-call-v841'))return false;var body=host.querySelector('#sw799-body'),scroll=body?body.scrollTop:0,active=document.activeElement,key=active&&active.id&&active.id.indexOf('sw799-')===0?active.id:'';host.innerHTML=workbenchInner();var next=host.querySelector('#sw799-body');if(next)next.scrollTop=scroll;var f=key&&document.getElementById(key);if(f&&f.focus)f.focus({preventScroll:true});return true}
+ function patchRefresh(){var w=W();if(!w||patchedRefresh)return;priorRefresh=w.refresh;w.refresh=function(){if(refreshWorkbench())return;return priorRefresh&&priorRefresh.apply(this,arguments)};patchedRefresh=true}
+ function activeHtml(d){var purpose=text(callState().draft&&callState().draft.callType)||'Account Updating Call';patchRefresh();var w=W();if(w){var s=w.state();if(!s.tab)s.tab='overview'}return '<div class="v841-stage">'+stepHtml('active')+'<div class="v841-active"><div class="v841-callbar"><div class="v841-call-main"><span class="v841-live">● Live</span><div class="v841-call-copy"><strong>'+esc(d.company)+' · '+esc(contactName(d))+'</strong><span>'+esc(purpose)+' · '+esc(localTime(d))+'</span></div><b class="v841-timer" data-v841-timer>'+duration(seconds())+'</b></div><div class="v841-call-actions"><button class="v841-btn" data-v841="email">✉ Email</button><button class="v841-btn" data-v841="follow">Follow-Up</button><button class="v841-btn" data-v841="quote">Quote</button><button class="v841-btn" data-v841="shop">Shop Together</button><button class="v841-btn danger" data-v841="end">End Call</button></div></div><div class="v841-layout">'+guideHtml(d)+'<main class="v841-workbench sw799 sw800" id="sw799-workspace" aria-label="Active call tools">'+workbenchInner()+'</main></div></div></div>'}
+ function prepHtml(d){var p=plan(),m=model(d)||{},purpose=text(callState().draft&&callState().draft.callType)||'Account Updating Call',ph=phone(d),last=m.lastOrder;return '<div class="v841-stage">'+stepHtml('prep')+'<div class="v841-prep"><div class="v841-prep-grid"><section class="v841-panel"><header class="v841-panel-head"><span>Prepare the conversation</span><h3>'+esc(d.company)+' · '+esc(contactName(d))+'</h3></header><div class="v841-panel-body"><div class="v841-prep-reason">'+esc(p[0]&&p[0].text||'Confirm the customer’s current need, timing and next useful step.')+'</div><ul class="v841-guide-list" style="margin-top:10px">'+p.slice(0,4).map(function(x,i){return '<li><b>'+(i+1)+'</b><span>'+esc(x.text||x)+'</span></li>'}).join('')+'</ul></div></section><section class="v841-panel"><header class="v841-panel-head"><span>Account snapshot</span><h3>Useful anchors</h3></header><div class="v841-panel-body"><div class="v841-facts">'+fact('YTD sales',m.ytd==null?'Not recorded':('$'+Number(m.ytd).toLocaleString('en-US',{maximumFractionDigits:0})))+fact('Last purchase',last?('$'+Number(last.total||0).toLocaleString('en-US',{maximumFractionDigits:0})):'Not recorded')+fact('Products',arr(d.products).length+' recorded')+fact('Artwork',arr(d.artwork).length+' recorded')+'</div><div class="v841-guide-section" style="padding-bottom:0"><span class="v841-guide-kicker">Customer local time</span><strong>'+esc(localTime(d))+'</strong></div></div></section></div><div class="v841-prep-actions"><input id="call540-phone" class="v841-input" aria-label="Phone number" value="'+esc(ph)+'" placeholder="Phone number"><select class="v841-select" data-v841-purpose aria-label="Call purpose">'+options(TYPES,purpose)+'</select><button class="v841-btn" data-v841="email">✉ Email</button><button class="v841-btn" data-v841="follow">Follow-Up</button><button class="v841-btn primary" data-v841="start">☎ Start Call</button></div></div></div>'}
+ function wrapHtml(d){var suggested=text(dialState().lastOutcome)||'Connected';return '<div class="v841-stage">'+stepHtml('wrap')+'<div class="v841-wrap"><section class="v841-wrap-card"><header class="v841-panel-head"><span>Finish the conversation</span><h3>Wrap up · '+esc(d.company)+'</h3></header><form class="v841-wrap-form" data-v841-wrap><label>Outcome<select name="outcome"><option value="">Choose outcome</option>'+['Completed account update','Connected — follow-up needed','No answer','Left voicemail','Not interested','Order opportunity'].map(function(v){return '<option'+(suggested.toLowerCase().indexOf(v.split(' ')[0].toLowerCase())>=0?' selected':'')+'>'+esc(v)+'</option>'}).join('')+'</select></label><label>Conversation / attempt note<textarea name="note" minlength="3" maxlength="2000" required placeholder="What changed, what does the customer need, and what happens next?"></textarea></label><div class="v841-wrap-actions"><button type="button" class="v841-btn" data-v841="email">✉ Follow-up Email</button><button type="button" class="v841-btn" data-v841="follow">Schedule Follow-Up</button><button class="v841-btn primary" type="submit">Complete Call</button></div></form></section></div></div>'}
+ function completeHtml(d){return '<div class="v841-stage"><div class="v841-complete"><section class="v841-complete-card"><div class="v841-complete-mark">✓</div><h3>Call completed</h3><p>The result was saved for '+esc(d.company)+'. My Day can now move on to the next useful action.</p><button class="v841-btn primary" data-v841="close">Return to My Day</button></section></div></div>'}
+ function html(d){return '<div class="h837-call-v841">'+(uiStage==='prep'?prepHtml(d):uiStage==='active'?activeHtml(d):uiStage==='wrap'?wrapHtml(d):completeHtml(d))+'</div>'}
+ function render(){var host=dialog&&dialog.isConnected?dialog.querySelector('.wf789-dialog-body'):null,d=data();if(!host||!d)return;host.innerHTML=html(d);startTimer()}
+ function startTimer(){if(timer)clearInterval(timer);timer=setInterval(function(){var e=dialog&&dialog.querySelector('[data-v841-timer]');if(e)e.textContent=duration(seconds())},1000)}
+ function initCompany(name){try{if(typeof window._call540SelectCompany==='function')window._call540SelectCompany(encodeURIComponent(name));else{callState().company=name;callState().stage='prep'}}catch(e){callState().company=name;callState().stage='prep'}uiStage='prep'}
+ function open(name){var api=window.CONNECT_HOME_WORK_V837;if(!api||!api.available||!api.available())return false;initCompany(name);var d=data();if(!d)return false;if(api.close)api.close(null);var slot=document.getElementById('h837-workspace');if(!slot)return false;var el=document.createElement('section');el.className='wf789-dialog h837-inline';el.setAttribute('aria-label','Call · '+name);el.innerHTML='<header class="wf789-dialog-head v841-shell-head"><div><span class="wf789-eyebrow">Call Workspace</span><h2>Call · '+esc(name)+'</h2></div><div class="h837-work-controls"><button type="button" class="wf789-btn" data-h837="pop">Pop out</button><button type="button" class="wf789-btn" data-h837="minimize" hidden>Minimize</button><button type="button" class="wf789-btn" data-h837="restore" hidden>Restore</button><button type="button" class="wf789-btn" data-h837="snap" hidden>Dock back</button><button type="button" class="wf789-btn subtle" data-h837="close" aria-label="Close workspace">×</button></div></header><div class="wf789-dialog-body">'+html(d)+'</div>';dialog=el;api.mount(el,'Call · '+name,{company:name,kind:'call'});startTimer();return true}
+ function syncPurpose(v){var s=callState();s.draft=s.draft||{};s.draft.callType=v;s.draft.updatedAt=new Date().toISOString()}
+ function start(){var d=data(),ph=dialog&&dialog.querySelector('#call540-phone');dialState().number=text(ph&&ph.value||phone(d));syncPurpose((dialog&&dialog.querySelector('[data-v841-purpose]')||{}).value||'Account Updating Call');try{if(typeof window._call540StartDial==='function')window._call540StartDial();else{var s=callState();s.stage='active';s.startedAt=new Date().toISOString();s.paused=false;dialState().status='connected'}}catch(e){var s2=callState();s2.stage='active';s2.startedAt=new Date().toISOString();s2.paused=false;dialState().status='connected'}var w=W();if(w){var st=w.state();st.tab='overview';st.scope='tab';st.status='';w.save()}uiStage='active';render()}
+ function end(){try{if(typeof window._call540EndDial==='function')window._call540EndDial('Connected')}catch(e){}var s=callState();s.elapsed=seconds();s.startedAt='';s.paused=true;s.stage='wrap';dialState().lastOutcome=dialState().lastOutcome||'Connected';dialState().status='ready';uiStage='wrap';render()}
+ function shop(){if(window.SHOP_TOGETHER_V828&&SHOP_TOGETHER_V828.open)SHOP_TOGETHER_V828.open()}
+ function complete(form){var outcome=text(form.elements.outcome&&form.elements.outcome.value),note=text(form.elements.note&&form.elements.note.value),d=data(),service=svc();if(!outcome||note.length<3){form.elements.note&&form.elements.note.focus();return}var qualifying=outcome==='Completed account update',result=service&&service.recordTouch?service.recordTouch(d.company,{note:note,outcome:outcome,qualifying:qualifying}):null;if(!result||result.ok===false){alert(result&&result.message||'The call result could not be saved.');return}var s=callState();s.stage='complete';s.elapsed=seconds();s.startedAt='';s.paused=true;s.completed={outcome:outcome,note:note,at:new Date().toISOString()};uiStage='complete';if(window.CONNECT_HOME_V789){try{window.CONNECT_HOME_V789.refresh()}catch(e){}}render()}
+ function pickGroup(g){var w=W(),s=w&&w.state();if(!w||!s||!groups[g])return;var next=lastByGroup[g]&&groups[g].indexOf(lastByGroup[g])>=0?lastByGroup[g]:groups[g][0];w.setTab(next)}
+ document.addEventListener('click',function(e){var root=e.target.closest&&e.target.closest('.h837-call-v841');if(!root)return;var group=e.target.closest('[data-v841-group]');if(group){e.preventDefault();pickGroup(group.dataset.v841Group);return}var tab=e.target.closest('[data-v841-tab]');if(tab){e.preventDefault();lastByGroup[groupFor(tab.dataset.v841Tab)]=tab.dataset.v841Tab;W().setTab(tab.dataset.v841Tab);return}var b=e.target.closest('[data-v841]');if(!b)return;var c=b.dataset.v841;e.preventDefault();if(c==='start')start();else if(c==='end')end();else if(c==='email'&&typeof window._call540OpenEmail==='function')window._call540OpenEmail();else if(c==='follow'){if(uiStage==='active')W().setTab('events');else if(window.CONNECT_HOME_CAL_V817){} }else if(c==='quote'){lastByGroup.selling='quote';W().setTab('quote')}else if(c==='shop')shop();else if(c==='scope'){var s=W().state();s.scope=s.scope==='all'?'tab':'all';W().save();W().refresh()}else if(c==='clear-search'&&window.SW799)SW799.clearSearch();else if(c==='close'&&window.CONNECT_HOME_WORK_V837)window.CONNECT_HOME_WORK_V837.close(dialog)});
+ document.addEventListener('change',function(e){if(e.target.matches&&e.target.matches('.h837-call-v841 [data-v841-purpose]'))syncPurpose(e.target.value)});
+ document.addEventListener('submit',function(e){var f=e.target.closest&&e.target.closest('[data-v841-wrap]');if(!f)return;e.preventDefault();complete(f)});
+ function install(){var api=window.CONNECT_HOME_WORK_V837;if(!api)return false;api.openCall=function(name){return open(name)};api.__v841=true;api.openCallV841=open;return true}
+ if(!install())setTimeout(install,0);setTimeout(install,250);setTimeout(install,1000);
+ window.CONNECT_MYDAY_CALL_V841={open:open,render:render,refreshWorkbench:refreshWorkbench,diagnostics:function(){var d=data(),w=W();return{company:d&&d.company||'',stage:uiStage,tab:w&&w.state?w.state().tab:'',sw800:true}}};
+})();
+</script>
+
 </body>
 </html>
