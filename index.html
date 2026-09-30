@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v840">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v838">
 <head>
 <style id="connect-v837-my-day-css">
 @layer connect-work-v837, connect-day834, connect-day833, connect-day823;
 @layer connect-work-v837 {
  html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h837-tabs {
-  display:flex!important;flex-wrap:wrap!important;gap:6px!important;padding:11px 10px 9px!important;overflow:visible!important;
-  flex:0 0 auto!important;border-bottom:1px solid var(--ui-line-soft,#cbdde2)!important;
+  display:flex!important;gap:6px!important;padding:11px 10px 9px!important;overflow-x:auto!important;
+  flex:0 0 auto!important;scrollbar-width:thin!important;border-bottom:1px solid var(--ui-line-soft,#cbdde2)!important;
  }
  html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h837-tabs button {
-  appearance:none!important;flex:1 1 auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;
+  appearance:none!important;flex:0 0 auto!important;display:inline-flex!important;align-items:center!important;gap:6px!important;
   min-height:39px!important;border:1px solid #c7dce2!important;border-radius:9px!important;padding:7px 10px!important;
   background:#fff!important;color:#315164!important;font:650 12px/1.2 'Segoe UI',Arial,sans-serif!important;white-space:nowrap!important;cursor:pointer!important;
  }
@@ -721,6 +721,10 @@
 (function(){
   'use strict';
   window.CONNECT_STANDALONE_SREP=true;
+   /* V838 cleanup: V789/V838 is the only authoritative My Day renderer.
+      Legacy home renderers remain available as historical/shared utility code,
+      but may no longer intercept the Home page or run legacy Home-only after hooks. */
+   window.CONNECT_MY_DAY_AUTHORITY='v838-v789';
    document.documentElement.setAttribute('data-connect-layout','778');
   window.CONNECT_STANDALONE_REP='Alex Morgan';
   document.documentElement.classList.add('connect-srep-prep');
@@ -1343,7 +1347,7 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v842',display:'V842',title:'Connect v842 — My Day Call Desk'});
+  var release=Object.freeze({version:'v837',display:'V837',title:'Connect v837 — My Day Workspace'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -30915,8 +30919,8 @@ window._rp2NotificationsDraw=function(){if(typeof Chart!=='function'||window._rp
  /* Final shell override keeps period controls and live notification badge. */
  try{if(typeof RP2_NAV!=='undefined'&&RP2_NAV.length){var items=RP2_NAV[0].items.filter(function(x){return x[0]!=='home'});items.unshift(['home','Home','🏠']);RP2_NAV[0].items=items}}catch(e){}
  var legacyPage=window._rp2Page,legacyAfter=window._rp2After;
- window._rp2Page=function(){if(_rp2.page==='home')return window._rp2HomeV3();return legacyPage()};
- window._rp2After=function(){if(_rp2.page==='home'){setTimeout(function(){try{window._rp2HomeDraw()}catch(e){}},0);return}return legacyAfter()};
+ window._rp2Page=function(){if(!window.CONNECT_MY_DAY_AUTHORITY&&_rp2.page==='home')return window._rp2HomeV3();return legacyPage()};
+ window._rp2After=function(){if(!window.CONNECT_MY_DAY_AUTHORITY&&_rp2.page==='home'){setTimeout(function(){try{window._rp2HomeDraw()}catch(e){}},0);return}return legacyAfter()};
  window._rp2Html=function(rep){_rp2.rep=rep;if(_rp2.dailyY==null){var d=new Date();_rp2.dailyY=d.getFullYear();_rp2.dailyM=d.getMonth()}var nav=RP2_NAV.map(function(gr){var its=gr.items.map(function(it){var badge=0;try{if(it[0]==='notifications'&&typeof window._rp2NotificationUnreadCount==='function')badge=window._rp2NotificationUnreadCount()}catch(e){}return'<button data-rp2-nav="'+it[0]+'" class="rp2-nav'+(_rp2.page===it[0]?' on':'')+'" onclick="_rp2Go(\''+it[0]+'\')"><span>'+it[2]+'</span>'+it[1]+(badge?'<em class="rp2-nav-badge">'+(badge>99?'99+':badge)+'</em>':'')+'</button>'}).join('');return(gr.g?'<div class="rp2-navg">'+gr.g+'</div>':'')+its}).join('');var initials='';try{initials=typeof rp2Initials==='function'?rp2Initials(rep):String(rep||'').split(/\s+/).map(function(x){return x[0]||''}).slice(0,2).join('').toUpperCase()}catch(e){}return'<div class="rp2-app"><aside class="rp2-side"><div class="rp2-logo">▲ CONNECT<span>REP PERFORMANCE PORTAL</span></div>'+nav+'<button class="rp2-nav rp2-out" onclick="_rpLogout()">⏻ Sign out</button></aside><main class="rp2-main"><div class="rp2-top"><div class="rp2-person"><div class="rp2-person-mark">'+esc(initials)+'</div><div><div class="rp2-hi">'+esc(rep)+'</div><div class="rp2-sub">Personal performance workspace · '+getQ()+' '+getYr()+' · identity scope v500</div></div></div>'+(typeof window._rp2PeriodControls==='function'?window._rp2PeriodControls():'')+'</div><div id="rp2-page">'+window._rp2Page()+'</div></main></div>'};
  _rp2.page='home';
 })();
@@ -37761,7 +37765,7 @@ window._rp2NotificationsDraw=function(){if(typeof Chart!=='function'||window._rp
   var right='<aside class="cl1-panel cl1-context-panel"><div class="cl1-panel-head"><div><div class="cl1-kick">CUSTOMER CONTEXT</div><div class="cl1-panel-title">What matters during the call</div><div class="cl1-panel-copy">Only recorded customer evidence is shown.</div></div><button class="cl1-mini primary" onclick="_call532OpenCustomer()">Full profile</button></div><div class="cl1-panel-body cl1-scroll">'+contextHtml(g,ctx)+'</div></aside>';
   return'<div class="cl1-shell">'+hero+'<div class="cl1-main">'+queuePanel+active+right+'</div></div>'
  }
- function rerender(){if(_rp2.page==='call'){var page=document.getElementById('rp2-page');if(page)page.innerHTML=window._rp2CallV1();draw()}else if(window.CONNECT_INLINE_CALL_V840&&window.CONNECT_INLINE_CALL_V840.active()){window.CONNECT_INLINE_CALL_V840.refresh()}else if(typeof window._call534Render==='function'){window._call534Render()}}
+ function rerender(){if(_rp2.page==='call'){var page=document.getElementById('rp2-page');if(page)page.innerHTML=window._rp2CallV1();draw()}else if(typeof window._call534Render==='function'){window._call534Render()}}
  function draw(){stopTimer();if(window._call532.stage==='active'&&!window._call532.paused){window._call532TimerHandle=setInterval(function(){var e=document.getElementById('cl1-timer');if(e)e.textContent=duration(currentSeconds())},1000)}}
  function stopTimer(){if(window._call532TimerHandle){clearInterval(window._call532TimerHandle);window._call532TimerHandle=null}}
  function installNav(){
@@ -52139,7 +52143,7 @@ body.ps58-dashboard-active .wrap:after{
 
  var basePage=window._rp2Page;
  window._rp2Page=function(){
-  if(_rp2.page==='home')return home();
+  if(!window.CONNECT_MY_DAY_AUTHORITY&&_rp2.page==='home')return home();
   return basePage()
  };
  window._rp2Html=shell;
@@ -52749,7 +52753,7 @@ body.ps58-dashboard-active .wrap:after{
 
  var basePage=window._rp2Page;
  window._rp2Page=function(){
-  if(window._rp2&&_rp2.page==='home')return enhanceHome();
+  if(!window.CONNECT_MY_DAY_AUTHORITY&&window._rp2&&_rp2.page==='home')return enhanceHome();
   return typeof basePage==='function'?basePage.apply(this,arguments):''
  };
  window._rp2Html=cleanShell;
@@ -56391,7 +56395,7 @@ body.ps58-dashboard-active .wrap:after{
  }
 
  window._rp2Page=function(){
-  if(window._rp2&&_rp2.page==='home')return home();
+  if(!window.CONNECT_MY_DAY_AUTHORITY&&window._rp2&&_rp2.page==='home')return home();
   return typeof basePage==='function'?basePage.apply(this,arguments):''
  };
  window._rp2HomeV3=home;
@@ -56399,7 +56403,7 @@ body.ps58-dashboard-active .wrap:after{
  var oldAfter=window._rp2After;
  window._rp2After=function(){
   var result=typeof oldAfter==='function'?oldAfter.apply(this,arguments):undefined;
-  if(window._rp2&&_rp2.page==='home')setTimeout(after,0);
+  if(!window.CONNECT_MY_DAY_AUTHORITY&&window._rp2&&_rp2.page==='home')setTimeout(after,0);
   return result
  };
 
@@ -56407,7 +56411,7 @@ body.ps58-dashboard-active .wrap:after{
  if(typeof oldGo==='function'&&!oldGo._ps68){
   var go=function(){
    var result=oldGo.apply(this,arguments);
-   if(window._rp2&&_rp2.page==='home')setTimeout(after,0);
+   if(!window.CONNECT_MY_DAY_AUTHORITY&&window._rp2&&_rp2.page==='home')setTimeout(after,0);
    return result
   };
   go._ps68=true;
@@ -59081,7 +59085,7 @@ function home(){var m=model(),p=m.pace,rep=m.rep,greeting=m.today.getHours()<12?
 '<footer class="p639-home-footer"><div><span class="signal">★</span>'+(p&&p.todayRemaining?('Today’s account-update focus: <strong>'+num(p.todayRemaining)+' remaining.</strong>'):'<strong>Your prioritized work is ready.</strong>')+'</div><div class="p639-home-footer-right p648-cutoff">Sales through '+esc(m.cutSales||'pending')+' · Calls through '+esc(m.cutCalls||'pending')+' &nbsp; • &nbsp; '+esc(syncLabel())+' &nbsp; ↻</div></footer></div>'}
 function phased(){try{var forced=typeof window._rpUrlPortalView==='function'?clean(window._rpUrlPortalView()).toLowerCase():'';if(forced)return forced==='phased';if(window.TCP_REP_PORTAL_DUAL_VIEW_V608&&typeof TCP_REP_PORTAL_DUAL_VIEW_V608.getMode==='function')return TCP_REP_PORTAL_DUAL_VIEW_V608.getMode(window._rp2&&_rp2.rep)==='phased'}catch(e){}return !!document.querySelector('#rp-overlay .rp2-app.rp2-mode-phased')}
 window._tcp648StartDay=function(){var a=window._tcp648FirstAction;if(!a){_rp2Go('customers');return}var c=encodeURIComponent(a.company);if(a.type==='quote'&&typeof window._ud4OpenQuote==='function')return _ud4OpenQuote(c);if(a.type==='task'&&typeof window._ps60OpenBusiness==='function')return _ps60OpenBusiness(a.page||'action',c);if(a.type==='opp'&&typeof window._ps60OpenBusiness==='function')return _ps60OpenBusiness('pipeline',c);if(typeof window._ps60OpenCall==='function')return _ps60OpenCall(c);_rp2Go('call')};
-window._rp2Page=function(){if(phased()&&window._rp2&&_rp2.page==='home')return home();return typeof priorPage==='function'?priorPage.apply(this,arguments):''};
+window._rp2Page=function(){if(!window.CONNECT_MY_DAY_AUTHORITY&&phased()&&window._rp2&&_rp2.page==='home')return home();return typeof priorPage==='function'?priorPage.apply(this,arguments):''};
 window.TCP_REP_HOME_INTEGRITY_V648={version:BUILD,model:model,render:home,cycle:function(){return cycle(window._rp2&&_rp2.rep,new Date())},invalidate:function(){modelCache={key:'',value:null};cycleCache={key:'',value:null}}};
 var priorMark=window.markDirty;if(typeof priorMark==='function'&&!priorMark._tcp648){var wrap=function(){modelCache={key:'',value:null};cycleCache={key:'',value:null};return priorMark.apply(this,arguments)};wrap._tcp648=true;window.markDirty=wrap}
 window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;try{window.CONNECT_SET_RELEASE_ATTR(document.documentElement,"data-tcp-build");window.CONNECT_SET_RELEASE_TITLE()}catch(e){}
@@ -59421,9 +59425,8 @@ function queue(d){if(typeof window._call662DetailQueueHtml==='function'){try{var
  if(q.mode==='extra'){return'<section class="c649-queue c653-extra"><div class="c649-queue-head"><div><strong>Extra calls</strong><span> · today’s required list is complete</span><div class="c652-qmeta"><span>'+q.todayCompleted+' completed today</span><span>·</span><span>Finish this 5-account bonus batch before loading another.</span></div></div><div class="c652-queue-actions"><button class="c649-btn ghost" onclick="_call652ViewWholeList()">View Whole List</button><span class="c649-chip green">Ahead of requirement</span></div></div><div class="c649-qgrid">'+show.map(function(x,i){return'<div class="c649-q '+(norm(x.customer)===norm(d.company)?'on':'')+'" onclick="_call653Select(\''+encodeURIComponent(x.customer)+'\')"><i>+'+(i+1)+'</i><div><strong>'+esc(x.customer)+'</strong><span>'+esc(x.reason||x.copy||'Extra account update')+'</span></div></div>'}).join('')+'</div></section>'}
  return'<section class="c649-queue c653-complete"><div class="c653-required-complete"><div class="c653-complete-mark">✓</div><div><strong>'+(q.dailyTarget?'Today’s required calls are complete':'No required calls are due today')+'</strong><span>'+(q.dailyTarget?(q.todayCompleted+' completed against a '+q.dailyTarget+'-account daily requirement.'):'You can still work ahead in the current cycle if you want.')+'</span></div><div class="c652-queue-actions"><button class="c649-btn ghost" onclick="_call652ViewWholeList()">View Whole List</button>'+(q.extraPool.length?'<button class="c649-btn primary" onclick="_call652QueueLoadMore()">Load 5 More +</button>':'<span class="c649-chip green">Cycle list complete</span>')+'</div></div></section>'}
 function render(){try{var d=data(),draft=ensureDraft(d),st=stage();if(st==='prep')return renderPrep796(d,draft);var main=st==='prep'?prep(d,draft):st==='call'?callStage(d,draft):st==='complete'?completeStage(d,draft):doneStage(d);var selling=st==='call'&&window.TCP_SELLING_V799&&TCP_SELLING_V799.active(),work=selling?TCP_SELLING_V799:null;return'<div class="c649 c794 c795 '+(selling?'c799-shell ':'')+(st==='prep'?'c794-prep':'')+'">'+hero(d,st)+'<div class="c649-layout'+(selling?' c799-layout':'')+'"'+(selling?work.layoutStyle():'')+'>'+(selling?work.callPanel(main)+work.dividerHtml()+work.renderSidebar():main+carryHtml798(d))+'</div>'+queue(d)+contactModal(d)+fullQueueModal(d)+'</div>'}catch(e){console.error('[v652 phased call]',e);return'<div class="c649"><section class="c649-card"><div class="c649-body"><h2>Call Workspace could not render</h2><p>'+esc(e&&e.message||String(e))+'</p></div></section></div>'}}
-function rerender(top){if(window.CONNECT_INLINE_CALL_V840&&window.CONNECT_INLINE_CALL_V840.active()){window.CONNECT_INLINE_CALL_V840.refresh(top);return}if(!(window._rp2&&_rp2.page==='call'&&isPhased()))return;var main=document.querySelector('#rp-overlay .rp2-main'),scroll=main?main.scrollTop:0,page=document.getElementById('rp2-page');if(page)page.innerHTML=render();if(main)requestAnimationFrame(function(){main.scrollTop=top===true?0:scroll});try{if(typeof window._rp2CallDraw==='function')window._rp2CallDraw()}catch(e){}}
+function rerender(top){if(!(window._rp2&&_rp2.page==='call'&&isPhased()))return;var main=document.querySelector('#rp-overlay .rp2-main'),scroll=main?main.scrollTop:0,page=document.getElementById('rp2-page');if(page)page.innerHTML=render();if(main)requestAnimationFrame(function(){main.scrollTop=top===true?0:scroll});try{if(typeof window._rp2CallDraw==='function')window._rp2CallDraw()}catch(e){}}
 window._call662Rerender=function(top){return rerender(top)};
-window._call652InlinePrepare=function(company){return loadDirect(company)};
 window._rp2CallV1=function(){if(isPhased())return render();return typeof priorCall==='function'?priorCall.apply(this,arguments):''};
 window._rp2After=function(){if(isPhased()&&window._rp2&&_rp2.page==='call'){setTimeout(function(){try{if(typeof window._rp2CallDraw==='function')window._rp2CallDraw()}catch(e){}},0);return}return typeof priorAfter==='function'?priorAfter.apply(this,arguments):undefined};
 window._call652ToggleMore=function(btn){window._call652More=!window._call652More;var e=document.getElementById('c649-more');if(e)e.classList.toggle('open',!!window._call652More);if(btn)btn.textContent=window._call652More?'Hide extra details':'More details'};
@@ -64338,7 +64341,7 @@ html[data-connect-ui="777"] #rp-overlay .hub784-learning-detail h3{margin:12px 0
   var top=homePage?'':'<div class="p639-page-top"><div><strong>'+esc(pageTitle())+'</strong><span>Phased Rep Portal · '+esc((typeof getQ==='function'?getQ():'')+' '+(typeof getYr==='function'?getYr():''))+'</span></div><div class="p639-page-top-actions"><button onclick="_rp2Go(\'home\')">← My Day</button><button onclick="_rp2RefreshCloud(this,false)">↻ Refresh</button></div></div>';
   return'<div class="rp2-app rp2-mode-phased rp2-v639'+(forcedView()?' rp2-link-locked':'')+'" data-rp-portal-mode="phased"><aside class="rp2-side"><div class="p639-brand">'+logo()+'<strong>Connect</strong><span>Rep Portal</span><em>Phased</em></div><nav class="p639-nav">'+navHtml()+'</nav><div class="p639-user"><div class="p639-user-card"><div class="p639-user-mark">'+esc(initials(rep))+'</div><div><strong>'+esc(rep)+'</strong><span>Rep account</span></div><button onclick="_rp2Go(\'profile\')">›</button></div><button class="p639-logout" onclick="_rpLogout()">↪ &nbsp; Log Out</button></div></aside><main class="rp2-main">'+top+'<div id="rp2-page"'+(homePage?'':' class="p639-subpage"')+'>'+body+'</div></main></div>'
  }
- window._rp2Page=function(){if(isPhased()&&window._rp2&&_rp2.page==='home')return home();return priorPage.apply(this,arguments)};
+ window._rp2Page=function(){if(!window.CONNECT_MY_DAY_AUTHORITY&&isPhased()&&window._rp2&&_rp2.page==='home')return home();return priorPage.apply(this,arguments)};
  window._rp2Html=function(rep){if(isPhased(rep))return phasedShell(rep);return priorHtml.apply(this,arguments)};
  window.TCP_PHASED_REP_DAILY_COCKPIT_V639={version:BUILD,render:home,mode:mode,workData:workData,nextActions:nextActions,allActions:demoActionRows};
  window.TCP_BUILD_VERSION=window.CONNECT_RELEASE.version;
@@ -79036,6 +79039,7 @@ window.CONNECT_HOME_CAL_V817={render:function(){return window.CONNECT_CALENDAR_V
 })();
 </script>
 
+<!-- V838 cleanup authority: connect-v789-homepage owns My Day rendering. Legacy Home implementations are guarded above. -->
 <script id="connect-v789-homepage">
 /* V789 My Day: a single demo-state view. Crown Bot positioning is untouched. */
 (function () {
@@ -88055,7 +88059,7 @@ function ShopClient828(root,role,send,css){
  function mount(el,title,context){
    if(!available())return false;
    if(!current||!current.isConnected)returnFocus=document.activeElement;
-   if(current&&current!==el){if(current.hasAttribute('data-h840-call')&&window.CONNECT_INLINE_CALL_V840)window.CONNECT_INLINE_CALL_V840.suspend();saveDraft(current);current.remove();}
+   if(current&&current!==el){saveDraft(current);current.remove();}
    current=el;mode='dock';subject=context||{};
    el.classList.remove('h837-floating','h837-minimized');
    ['left','top','width','height','bottom'].forEach(function(p){el.style[p]='';});
@@ -88063,7 +88067,7 @@ function ShopClient828(root,role,send,css){
    if(!reduced())el.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:260,easing:'ease-out'});
    return true;
  }
- function close(el){if(el&&el!==current||!current)return;if(current.hasAttribute('data-h840-call')&&window.CONNECT_INLINE_CALL_V840)window.CONNECT_INLINE_CALL_V840.suspend();saveDraft(current);current=null;mode='dock';subject={};moveLayout(false);syncSelection();}
+ function close(el){if(el&&el!==current||!current)return;saveDraft(current);current=null;mode='dock';subject={};moveLayout(false);syncSelection();}
  function closeCurrent(restore){if(!current)return;if(current.hasAttribute('aria-labelledby')&&window.CONNECT_WORKFLOW_V789){window.CONNECT_WORKFLOW_V789.close(restore!==false);return;}var old=current,target=returnFocus&&returnFocus.isConnected?returnFocus:null;close(old);old.remove();returnFocus=null;if(restore!==false){if(!target){var h=root();target=h&&h.querySelector('.h837-tabs [aria-selected="true"]');}if(target&&target.focus)target.focus({preventScroll:true});}}
  function float(){
    if(!current||mode!=='dock')return;
@@ -88098,7 +88102,7 @@ function ShopClient828(root,role,send,css){
    body+=card('Quotes','',quotes.map(function(q){return '<button type="button" class="h837-line" data-h837="quote" data-id="'+esc(q.id)+'"><strong>'+esc(q.quoteNumber)+'</strong><span>'+esc(q.status||'Open')+'</span></button>';}).join('')||'<p>No quotes in this demo.</p>');
    return custom(a.name,body,{company:a.name,kind:'customer'});
  }
- function openCall(name){return !!(window.CONNECT_INLINE_CALL_V840&&window.CONNECT_INLINE_CALL_V840.open(name));}
+ function openCall(name){var flow=window.CONNECT_WORKFLOW_V789;if(!flow||!available())return false;var result=flow.openOutcome(name);if(result&&result.ok&&current){var body=current.querySelector('.wf789-dialog-body');if(body){body.insertAdjacentHTML('afterbegin','<div class="h837-call-intro"><strong>Today’s call · '+esc(name)+'</strong><p>Review the customer and record the actual conversation. Open the full call workspace for deeper preparation.</p><button type="button" class="wf789-btn" data-h837="full-call" data-company="'+esc(name)+'">Full call workspace →</button></div>');}subject={company:name,kind:'call'};syncSelection();}return !!(result&&result.ok);}
  function mail(r,id){var api=emailApi();return api&&api.getThread&&api.getThread(r||'Alex Morgan',id);}
  function openEmail(id){
    var t=mail('Alex Morgan',id);if(!t)return false;var api=emailApi();if(api&&api.markRead)api.markRead('Alex Morgan',id);
@@ -88128,166 +88132,6 @@ function ShopClient828(root,role,send,css){
  window.CONNECT_HOME_WORK_V837={available:available,mount:mount,close:close,openCall:openCall,openCustomer:openCustomer,openEmail:openEmail,openInbox:openInbox,fullEmail:fullEmail,context:context,syncSelection:syncSelection,diagnostics:function(){return {mode:mode,active:!!(current&&current.isConnected),kind:subject.kind||''};}};
 })();
 
-</script>
-<style id="connect-v840-inline-call-css">
-/* The existing call stages run inside the My Day work slot. */
-@layer connect-work-v837 {
-html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h837-workspace .h840-call .wf789-dialog-body {padding:0!important;overflow:auto!important;}
-#rp-overlay .h840-call #h840-call-body {min-width:0;padding:14px 16px 24px;}
-#rp-overlay .h840-call .p796,#rp-overlay .h840-call .c649 {width:100%!important;max-width:100%!important;margin:0!important;min-width:0!important;}
-#rp-overlay .h840-call .p796 .p796-layout {grid-template-columns:minmax(0,1fr)!important;}
-#rp-overlay .h840-call .p796 .p796-contact,#rp-overlay .h840-call .p796 .p796-records,#rp-overlay .h840-call .p796 .p796-plan {grid-column:1!important;grid-row:auto!important;min-width:0!important;}
-#rp-overlay .h840-call .c799-corner,#rp-overlay .h840-call .c649-queue,#rp-overlay .h840-call button[onclick="_call652Next()"],#rp-overlay .h840-call button[onclick="_call656BackHub()"] {display:none!important;}
-#rp-overlay .h840-call .sw799 {min-width:0!important;width:100%!important;}
-#rp-overlay .h840-call .sw799 .sw799-body {max-height:none!important;}
-#rp-overlay .h840-call .c649-hero {margin-bottom:12px!important;}
-#rp-overlay .h840-call .p796-tabs {flex-wrap:wrap!important;}
-#rp-overlay .h840-call .p796 :is(button,input,textarea,select):focus-visible,#rp-overlay .h840-call .c649 :is(button,input,textarea,select):focus-visible {outline:3px solid #138cad!important;outline-offset:2px!important;}
-}
-</style>
-<script id="connect-v840-inline-call-js">
-(function(){
- 'use strict';
- var el=null,name='',sessions=Object.create(null);
- function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
- function active(){return !!(el&&el.isConnected&&document.getElementById('h840-call-body')&&window._rp2&&_rp2.page==='home'&&window._call532&&_call532.company===name);}
- function refresh(top){
-   if(!active())return false;
-   var body=el.querySelector('#h840-call-body'),scroller=el.querySelector('.wf789-dialog-body'),y=scroller.scrollTop;
-   var engine=window.TCP_PHASED_CALL_WORKSPACE_V652;
-   if(!engine||typeof engine.render!=='function')return false;
-   body.innerHTML=engine.render();
-   requestAnimationFrame(function(){if(scroller.isConnected)scroller.scrollTop=top===true?0:y;});
-   if(typeof window._rp2CallDraw==='function')window._rp2CallDraw();
-   return true;
- }
- function suspend(){
-   if(!active())return;
-   if(typeof window._call532Draft==='function')window._call532Draft();
-   if(_call532.stage==='active'&&!_call532.paused&&typeof window._call532Pause==='function')window._call532Pause();
-   if(_call532.completed)delete sessions[name];
-   else sessions[name]={stage:window._call652UiStage||'prep',elapsed:_call532.elapsed||0,draft:JSON.parse(JSON.stringify(_call532.draft||{}))};
- }
- function open(company){
-   company=String(company||'').trim();var dock=window.CONNECT_HOME_WORK_V837,engine=window.TCP_PHASED_CALL_WORKSPACE_V652;
-   if(!company||!dock||!dock.available()||!engine||typeof window._call652InlinePrepare!=='function')return false;
-   if(active()&&name===company){el.querySelector('.wf789-dialog-body').focus({preventScroll:true});return true;}
-   if(active()){dock.close(el);if(el.isConnected)el.remove();el=null;}
-   window._call652InlinePrepare(company);
-   if(sessions[company]){var saved=sessions[company];_call532.draft=saved.draft;_call532.elapsed=saved.elapsed;_call532.paused=saved.stage==='call';_call532.stage=saved.stage==='call'?'active':'prep';window._call652UiStage=saved.stage;}
-   name=company;
-   el=document.createElement('section');el.className='wf789-dialog h837-inline h840-call';el.setAttribute('data-h840-call','');el.setAttribute('aria-label','Call workspace for '+company);
-   el.innerHTML='<header class="wf789-dialog-head"><div><span class="wf789-eyebrow">MY DAY · CUSTOMER CALL</span><h2>'+esc(company)+'</h2></div><div class="h837-work-controls"><button type="button" class="wf789-btn" data-h837="pop">Pop out</button><button type="button" class="wf789-btn" data-h837="minimize" hidden>Minimize</button><button type="button" class="wf789-btn" data-h837="restore" hidden>Restore</button><button type="button" class="wf789-btn" data-h837="snap" hidden>Snap back</button><button type="button" class="wf789-btn" data-h837="close" aria-label="Close call workspace">×</button></div></header><div class="wf789-dialog-body" tabindex="-1"><div id="h840-call-body"></div></div>';
-   if(!dock.mount(el,company,{company:company,kind:'call'})){el=null;return false;}
-   refresh(true);el.querySelector('.wf789-dialog-body').focus({preventScroll:true});
-   return true;
- }
- window.CONNECT_INLINE_CALL_V840={open:open,refresh:refresh,suspend:suspend,active:active,diagnostics:function(){return {open:active(),company:name,stage:window._call652UiStage||'prep',inCall:!!(window._call532&&_call532.stage==='active')}}};
- var priorGo=window._rp2Go;
- if(typeof priorGo==='function')window._rp2Go=function(page){if(active())suspend();return priorGo.apply(this,arguments);};
-})();
-</script>
-<style id="connect-v842-my-day-call-desk-css">
-@layer connect-work-v837 {
-#rp-overlay .h840-call.h842-call .wf789-dialog-head{align-items:center;padding:13px 18px;background:#fff;border-bottom:1px solid #d7e5ec}
-#rp-overlay .h840-call.h842-call .wf789-dialog-head h2{font-size:18px;line-height:1.2;margin:2px 0 0}
-#rp-overlay .h840-call.h842-call .wf789-dialog-body{background:#f5f8fa;overflow:auto!important;padding:0!important}
-#rp-overlay .h840-call.h842-call #h840-call-body{padding:0!important;min-width:0}
-#rp-overlay .h842-stage{display:inline-flex;align-items:center;gap:6px;color:#275b75;font-weight:700;font-size:11px;letter-spacing:.025em}
-#rp-overlay .h842-stage i{width:7px;height:7px;border-radius:50%;background:#1888ad;display:inline-block}
-#rp-overlay .h842-timer{font-variant-numeric:tabular-nums;background:#eaf6fa;color:#075d7a;border:1px solid #b9dbe6;border-radius:8px;padding:7px 10px;font-weight:750;font-size:13px}
-#rp-overlay .h842-desk{padding:18px;max-width:1280px;width:100%;margin:auto;color:#18394b;background:transparent}
-#rp-overlay .h842-desk *{box-sizing:border-box}
-#rp-overlay .h842-desk .h842-topline{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:14px}
-#rp-overlay .h842-desk .h842-topline strong{font-size:17px}
-#rp-overlay .h842-desk .h842-topline p{font-size:12px;color:#5b7280;margin:3px 0 0}
-#rp-overlay .h842-desk .h842-stepper{display:flex;gap:4px;padding:3px;background:#eaf1f5;border-radius:9px}
-#rp-overlay .h842-desk .h842-stepper span{padding:6px 10px;border-radius:7px;color:#617988;font-size:11px;font-weight:700}
-#rp-overlay .h842-desk .h842-stepper .on{background:white;color:#006f93;box-shadow:0 1px 4px #18394b19}
-#rp-overlay .h842-card{background:white;border:1px solid #d5e3ea;border-radius:12px;box-shadow:0 2px 8px #15384b0a;min-width:0}
-#rp-overlay .h842-prep .h842-prep-main{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(280px,.88fr);gap:14px}
-#rp-overlay .h842-prep .p797-contactbar{margin:0 0 14px!important;border-radius:12px!important;background:#fff!important}
-#rp-overlay .h842-prep .p797-tools{margin:0 0 14px!important}
-#rp-overlay .h842-prep .p797-brief{margin:0!important;min-width:0}
-#rp-overlay .h842-prep .p796-records{margin:0!important;min-width:0;max-height:560px;overflow:auto;border-radius:12px!important;background:#fff!important}
-#rp-overlay .h842-prep .p796-grid{grid-template-columns:1fr!important}
-#rp-overlay .h842-prep .p796-header,#rp-overlay .h842-prep .p796-footer{display:none!important}
-#rp-overlay .h842-live{display:grid;grid-template-columns:minmax(245px,310px) minmax(0,1fr);gap:14px;align-items:start}
-#rp-overlay .h842-rail{display:flex;flex-direction:column;gap:12px;min-width:0}
-#rp-overlay .h842-rail .h842-card{padding:15px}
-#rp-overlay .h842-rail h3{font-size:14px;margin:0 0 8px;color:#17394d}
-#rp-overlay .h842-rail .h842-contact{font-size:13px;line-height:1.5}
-#rp-overlay .h842-rail .h842-contact strong{display:block;font-size:15px}
-#rp-overlay .h842-rail .c649-call-tools{display:block;margin:0;padding:0;background:transparent;border:0}
-#rp-overlay .h842-rail .c649-btns{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-#rp-overlay .h842-rail .c649-btn{min-height:34px}
-#rp-overlay .h842-rail .c649-timer{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:7px 10px;border:1px solid #b9dbe6;border-radius:8px;background:#eaf6fa;color:#075d7a;font-size:12px}
-#rp-overlay .h842-rail .c649-timer strong{color:#075d7a;font-variant-numeric:tabular-nums}
-#rp-overlay .h842-rail .c649-notes{padding:0!important;margin:0!important;border:0!important;background:transparent!important}
-#rp-overlay .h842-rail .c649-section-title{font-weight:750;font-size:14px}
-#rp-overlay .h842-rail .c649-section-copy{font-size:11px;line-height:1.4}
-#rp-overlay .h842-rail #cl1-notes{width:100%;min-height:150px;resize:vertical;font-size:13px;line-height:1.55}
-#rp-overlay .h842-rail .c649-footer{display:block;margin:0;padding:0;border:0;background:none}
-#rp-overlay .h842-rail .c649-footer-note{font-size:11px;line-height:1.4}
-#rp-overlay .h842-rail .c649-footer .c649-btns{margin-top:10px}
-#rp-overlay .h842-rail .c649-footer .primary{flex:1}
-#rp-overlay .h842-topics{padding:0!important;overflow:hidden}
-#rp-overlay .h842-topics>summary{padding:13px 15px;cursor:pointer;font-size:13px;font-weight:700;color:#275b75}
-#rp-overlay .h842-topics .c798-topics{border:0!important;margin:0!important;padding:0 12px 13px!important}
-#rp-overlay .h842-tool{padding:0;min-width:0;overflow:hidden}
-#rp-overlay .h842-tool .sw799.sw800{display:block!important;width:100%!important;max-width:none!important;border:0!important;box-shadow:none!important;margin:0!important;background:#fff!important}
-#rp-overlay .h842-tool .sw800-head{display:none!important}
-#rp-overlay .h842-tool .shop828-entry{margin:0!important}
-#rp-overlay .h842-tool .sw799-tabs{display:flex!important;overflow-x:auto;flex-wrap:nowrap!important;gap:2px;padding:12px 12px 10px!important;scrollbar-width:thin;border-bottom:1px solid #e1eaf0}
-#rp-overlay .h842-tool .sw799-tab{flex:0 0 auto!important;min-height:40px!important;padding:7px 10px!important;white-space:nowrap;font-size:12px!important}
-#rp-overlay .h842-tool .sw799-search{margin:10px 14px!important}
-#rp-overlay .h842-tool .sw799-body{max-height:none!important;min-height:300px!important;overflow:visible!important;padding:14px!important}
-#rp-overlay .h842-tool .sw799-grid.two{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important}
-#rp-overlay .h842-tool .ov800-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))!important}
-#rp-overlay .h842-tool .ov800-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))!important}
-#rp-overlay .h842-finish .c649{width:100%;max-width:none;margin:0}
-#rp-overlay .h842-finish .c649-card{width:100%;max-width:none;margin:0}
-#rp-overlay .h842-finish .c649-complete-grid{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))!important}
-#rp-overlay .h842-finish .c649-hero,#rp-overlay .h842-finish .c649-queue,#rp-overlay .h842-finish .c798-reference{display:none!important}
-#rp-overlay .h842-desk :is(button,input,select,textarea,summary):focus-visible{outline:3px solid #1688a9!important;outline-offset:2px!important}
-@media(max-width:850px){#rp-overlay .h842-live,#rp-overlay .h842-prep .h842-prep-main{grid-template-columns:1fr!important}#rp-overlay .h842-live .h842-rail{display:grid;grid-template-columns:1fr 1fr;align-items:start}#rp-overlay .h842-live .h842-rail .h842-topics{grid-column:1/-1}#rp-overlay .h842-prep .p796-records{max-height:none}}
-@media(max-width:580px){#rp-overlay .h842-desk{padding:11px}#rp-overlay .h842-live .h842-rail{display:flex}#rp-overlay .h842-desk .h842-topline{align-items:flex-start}#rp-overlay .h842-desk .h842-stepper{width:100%;justify-content:space-between}}
-}
-</style>
-<script id="connect-v842-my-day-call-desk-js">
-(function(){
- 'use strict';
- var api=window.CONNECT_INLINE_CALL_V840,engine=window.TCP_PHASED_CALL_WORKSPACE_V652;
- if(!api||!engine)return;
- var original=engine.render;
- function stage(){return window._call652UiStage||'prep';}
- function item(node){return node?node.outerHTML:'';}
- function extract(html){var t=document.createElement('template');t.innerHTML=html;return t.content;}
- function steps(st){return '<div class="h842-stepper" aria-label="Call progress"><span class="'+(st==='prep'?'on':'')+'">1 Prepare</span><span class="'+(st==='call'?'on':'')+'">2 Conversation</span><span class="'+(st==='complete'||st==='done'?'on':'')+'">3 Finish</span></div>';}
- function headline(st){var title=st==='prep'?'Get ready for the conversation':st==='call'?'Conversation desk':st==='done'?'Call saved':'Wrap up the call',copy=st==='prep'?'Review what matters, then start the call.':st==='call'?'Capture the conversation while you work with the customer.':st==='done'?'The customer record has been updated.':'Record the outcome and the next commitment.';return '<div class="h842-topline"><div><strong>'+title+'</strong><p>'+copy+'</p></div>'+steps(st)+'</div>';}
- function render(){var full=original();if(!api.active())return full;var st=stage(),f=extract(full),head=headline(st),modals=Array.from(f.querySelectorAll('.c652-modal-wrap')).map(item).join('');
-   if(st==='prep'){
-     var bar=f.querySelector('.p797-contactbar'),tools=f.querySelector('.p797-tools'),brief=f.querySelector('.p797-brief'),records=f.querySelector('.p796-records'),bank=f.querySelector('.p796 > div[hidden]');
-     if(!bar||!brief||!records)return full;
-     return '<div class="h842-desk h842-prep p796 p797">'+head+item(bar)+item(tools)+'<div class="h842-prep-main">'+item(brief)+item(records)+'</div>'+item(bank)+modals+'</div>';
-   }
-   if(st==='call'){
-     var main=f.querySelector('.c798-call'),work=f.querySelector('#sw799-workspace');if(!main||!work)return full;
-     var contact=main.querySelector('.c649-call-tools'),notes=main.querySelector('.c649-notes'),footer=main.querySelector('.c649-footer'),topics=main.querySelector('.c798-topics'),hidden=item(main.querySelector('.c649-body > div[hidden]'));
-     var time=main.querySelector('.c649-timer');
-     var controls=item(contact).replace('class="c649-call-contact"','class="c649-call-contact h842-contact"');
-     return '<div class="h842-desk h842-conversation c649 c794 c795 c799-shell">'+head+'<div class="h842-live"><div class="h842-rail"><section class="h842-card"><h3>On the line</h3>'+controls+item(time)+'</section><section class="h842-card"><h3>Live notes</h3>'+item(notes)+item(footer)+'</section>'+(topics?'<details class="h842-card h842-topics"><summary>Talking points and topics</summary>'+item(topics)+'</details>':'')+'</div><section class="h842-card h842-tool" aria-label="Customer tools">'+item(work)+'</section></div>'+hidden+modals+'</div>';
-   }
-   var finish=f.querySelector('.c798-call')||f.querySelector('.c649-card');if(!finish)return full;
-   return '<div class="h842-desk h842-finish c649 c794 c795">'+head+item(finish)+modals+'</div>';
- }
- engine.render=render;
- var priorRefresh=api.refresh;
- api.refresh=function(top){var result=priorRefresh(top),host=document.querySelector('#rp-overlay .h840-call');if(host){host.classList.add('h842-call');var st=stage(),label=host.querySelector('.wf789-eyebrow');if(label)label.innerHTML='<span class="h842-stage"><i></i>'+({prep:'PREPARE',call:'IN CONVERSATION',complete:'FINISH',done:'SAVED'}[st]||'CUSTOMER CALL')+'</span>';}
-   return result;};
- var priorOpen=api.open;api.open=function(company){var result=priorOpen(company);if(result)api.refresh(false);return result;};
- window.CONNECT_MY_DAY_CALL_DESK_V842={render:render,diagnostics:function(){return {stage:stage(),active:api.active(),layout:!!document.querySelector('#rp-overlay .h842-desk')}}};
-})();
 </script>
 </body>
 </html>
