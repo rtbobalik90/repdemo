@@ -89357,5 +89357,52 @@ html[data-rp-theme="dark"] #rp-overlay .v842-prep-card,html[data-rp-theme="dark"
 })();
 </script>
 
+
+
+<!-- V848 · FINAL BANNER CONTRAST AUTHORITY
+     Must remain after all legacy V841/V842/V843/V844/V847 call styles. -->
+<style id="connect-v848-banner-contrast-authority">
+/* Established My Day banner treatment: dark teal surface + white banner copy. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head,
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v841-shell-head,
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v842-guide-head,
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v842-feature > header {
+  background:#16495b!important;
+  border-color:#16495b!important;
+  color:#fff!important;
+}
+
+/* Never allow inherited navy/teal text on a dark banner. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head :is(h1,h2,h3,h4,h5,h6,p,span,strong,small,label,a,.h789-text),
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v841-shell-head :is(.wf789-eyebrow,h1,h2,h3,h4,h5,h6,p,span,strong,small,label,a),
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v842-guide-head :is(h1,h2,h3,h4,h5,h6,p,span,strong,small,label,a),
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v842-feature > header :is(h1,h2,h3,h4,h5,h6,p,span,strong,small,label,a) {
+  color:#fff!important;
+  text-shadow:none!important;
+}
+
+/* Banner utility controls intentionally remain light pills with dark readable text. */
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v841-shell-head .wf789-btn,
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v842-guide-head .v842-guide-badge {
+  background:#fff!important;
+  border-color:#d7e7eb!important;
+  color:#17394d!important;
+  text-shadow:none!important;
+}
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v841-shell-head .wf789-btn *,
+html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v842-guide-head .v842-guide-badge * {
+  color:#17394d!important;
+}
+
+/* Next Best Actions help bubble stays a light contrast control, matching the established design. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head .h789-help {
+  background:#d9f1f3!important;
+  border-color:#d9f1f3!important;
+  color:#16495b!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-section-head .h789-help * {
+  color:#16495b!important;
+}
+</style>
 </body>
 </html>
