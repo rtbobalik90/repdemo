@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v852-default-sizing-internal-scroll">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v853-responsive-call-cards">
 <head>
 <style id="connect-v837-my-day-css">
 @layer connect-work-v837, connect-day834, connect-day833, connect-day823;
@@ -89894,5 +89894,217 @@ html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-grid:not(.h83
 })();
 </script>
 
+<!-- V853 · RESPONSIVE CALL CARDS + CONSISTENT STARTING COLUMNS
+     Keeps Next Best Actions close to the Email tab at startup, prevents narrow-card word collapse,
+     preserves internal scrolling, and makes selected tabs match the primary Prepare Call button. -->
+<style id="connect-v853-responsive-call-cards-css">
+/* --------------------------------------------------------------------------
+   V853 selected-state authority
+   -------------------------------------------------------------------------- */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h837-tabs>button[aria-selected="true"],
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-tabs>button[aria-selected="true"],
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav>button.on,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav>button.on{
+  background:var(--ui-blue,#006e9a)!important;
+  border-color:var(--ui-blue,#006e9a)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  box-shadow:0 2px 6px rgba(0,110,154,.20)!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h837-tabs>button[aria-selected="true"] *,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-tabs>button[aria-selected="true"] *,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav>button.on *,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav>button.on *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  fill:currentColor!important;
+  stroke:currentColor!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h837-tabs>button[aria-selected="true"]>span,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-tabs>button[aria-selected="true"]>span{
+  background:#fff!important;
+  color:var(--ui-blue,#006e9a)!important;
+  -webkit-text-fill-color:var(--ui-blue,#006e9a)!important;
+}
+
+/* --------------------------------------------------------------------------
+   V853 base card safety: no card is ever allowed to make words one letter wide.
+   -------------------------------------------------------------------------- */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task *{
+  box-sizing:border-box!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task-copy{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task-copy :is(h3,p,span,strong,small){
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  hyphens:none!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task h3{
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-task-actions{
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+/* --------------------------------------------------------------------------
+   V853 wide action column: full card detail.
+   -------------------------------------------------------------------------- */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task{
+  display:grid!important;
+  grid-template-columns:25px minmax(0,1fr) 146px!important;
+  column-gap:10px!important;
+  row-gap:7px!important;
+  align-items:start!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task .h789-rank{display:grid!important;grid-column:1!important;grid-row:1!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task .h789-task-copy{grid-column:2!important;grid-row:1!important;width:auto!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task .h789-task-actions{
+  grid-column:3!important;grid-row:1!important;
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:6px!important;padding:0!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task :is(.h789-issue,.h789-why){display:block!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task .h789-task-facts{display:flex!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task .v851-call-details{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-column:1/-1!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task .v851-call-details>div{display:block!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task h3{font-size:15px!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-wide .v851-call-task .v851-call-details strong{overflow-wrap:normal!important;word-break:normal!important;}
+
+/* --------------------------------------------------------------------------
+   V853 medium action column: keep company + core context + button on a sane row.
+   -------------------------------------------------------------------------- */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .v851-call-task{
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr) 126px!important;
+  column-gap:9px!important;
+  row-gap:6px!important;
+  padding:11px!important;
+  align-items:start!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .v851-call-task .h789-rank{display:grid!important;grid-column:1!important;grid-row:1!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .v851-call-task .h789-task-copy{grid-column:2!important;grid-row:1!important;width:auto!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .v851-call-task .h789-task-actions{
+  grid-column:3!important;grid-row:1!important;width:auto!important;padding:0!important;
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:5px!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .v851-call-task .h789-task-actions .h789-primary{
+  width:100%!important;min-width:0!important;min-height:36px!important;padding:7px 8px!important;white-space:normal!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .v851-call-task .h789-issue{display:block!important;margin-top:3px!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .v851-call-task .h789-task-facts{display:flex!important;margin-top:5px!important;gap:3px 7px!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .v851-call-task :is(.v851-call-details,.h789-why){display:none!important;}
+
+/* --------------------------------------------------------------------------
+   V853 narrow action column: exactly what is useful, no collapsed letters.
+   Company name + Prepare Call only, stacked and fully readable.
+   -------------------------------------------------------------------------- */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .v851-call-task{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:9px!important;
+  padding:11px!important;
+  align-items:start!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .v851-call-task :is(.h789-rank,.h789-issue,.h789-task-facts,.v851-call-details,.h789-why){display:none!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .v851-call-task .h789-task-copy{
+  display:block!important;grid-column:1!important;grid-row:auto!important;width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .v851-call-task h3{
+  display:block!important;width:100%!important;max-width:100%!important;margin:0!important;
+  font-size:13.5px!important;line-height:1.3!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  word-break:normal!important;overflow-wrap:normal!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .v851-call-task .h789-task-actions{
+  display:block!important;grid-column:1!important;grid-row:auto!important;width:100%!important;min-width:0!important;padding:0!important;margin:0!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .v851-call-task .h789-task-actions .h789-primary{
+  display:flex!important;width:100%!important;max-width:100%!important;min-width:0!important;min-height:38px!important;padding:8px 9px!important;
+  white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;
+}
+
+/* Generic priorities / email / order cards also remain usable if the whole column is pulled narrow. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .h789-task:not(.v851-call-task){
+  grid-template-columns:24px minmax(0,1fr) 126px!important;gap:9px!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-mid .h789-task:not(.v851-call-task) .h789-task-actions{grid-column:3!important;grid-row:1!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .h789-task:not(.v851-call-task){
+  grid-template-columns:24px minmax(0,1fr)!important;gap:8px!important;padding:10px!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .h789-task:not(.v851-call-task) .h789-rank{grid-column:1!important;grid-row:1!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .h789-task:not(.v851-call-task) .h789-task-copy{grid-column:2!important;grid-row:1!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .h789-task:not(.v851-call-task) .h789-task-actions{
+  grid-column:1/-1!important;grid-row:auto!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:7px!important;padding-top:2px!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .h789-task:not(.v851-call-task) .h789-task-actions .h789-primary{flex:1 1 auto!important;min-width:0!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h817-grid.v853-actions-narrow .h789-task:not(.v851-call-task) :is(.h789-why,.h789-contact){display:none!important;}
+
+/* The panels stay fixed-height work areas with their own scroll, never page-stretch controls. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-resources-col,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-calendar-col{overflow:hidden!important;min-height:0!important;}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h789-action-list,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h789-home .h817-resources-col .hub779-body{overflow-y:auto!important;overflow-x:hidden!important;min-height:0!important;}
+
+/* Dark theme safety. */
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .h789-home .h817-actions-col .h837-tabs>button[aria-selected="true"],
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav>button.on,
+html[data-rp-theme="dark"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav>button.on{
+  background:#216e7a!important;border-color:#60b3bd!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
+}
+</style>
+<script id="connect-v853-responsive-call-cards-js">
+(function(){
+ 'use strict';
+ var HOME_KEY='tcp.repPortal.myDay.columns.v817';
+ var START=[.40,.33,.27];
+ var ro=null,observed=null,raf=0;
+ function qs(s,r){return (r||document).querySelector(s)}
+ function grid(){return qs('#rp-overlay #rp2-page .h789-home .h817-grid')}
+ function actions(){return qs('#rp-overlay #rp2-page .h789-home .h817-actions-col')}
+ function setHomeStart(){
+   try{localStorage.setItem(HOME_KEY,JSON.stringify({shares:START.slice()}))}catch(_){}
+   requestAnimationFrame(function(){try{window.CONNECT_HOME_CAL_V817&&CONNECT_HOME_CAL_V817.applyLayout&&CONNECT_HOME_CAL_V817.applyLayout()}catch(_){}});
+ }
+ function classify(){
+   var g=grid(),a=actions();if(!g||!a)return;
+   var w=Math.round(a.getBoundingClientRect().width||0);
+   var next=w<420?'v853-actions-narrow':(w<590?'v853-actions-mid':'v853-actions-wide');
+   var hasWide=g.classList.contains('v853-actions-wide'),hasMid=g.classList.contains('v853-actions-mid'),hasNarrow=g.classList.contains('v853-actions-narrow');
+   if(!g.classList.contains(next)||(hasWide?1:0)+(hasMid?1:0)+(hasNarrow?1:0)!==1){
+     g.classList.remove('v853-actions-wide','v853-actions-mid','v853-actions-narrow');
+     g.classList.add(next);
+   }
+   if(g.dataset.v853ActionWidth!==String(w))g.dataset.v853ActionWidth=String(w);
+ }
+ function watch(){
+   var g=grid(),a=actions();
+   if(g===observed)return;
+   if(ro)ro.disconnect();observed=g;
+   if(!g||!a||!window.ResizeObserver){classify();return}
+   ro=new ResizeObserver(function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(classify)});
+   ro.observe(g);ro.observe(a);classify();
+ }
+ function refresh(){watch();classify()}
+ function boot(){
+   /* Each fresh file load starts from the approved home proportions. Dragging still works for the rest of the session. */
+   setHomeStart();
+   var root=qs('#rp2-page')||document.body;
+   new MutationObserver(function(){requestAnimationFrame(refresh)}).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class','data-h817-a','data-h817-b','data-h817-c']});
+   window.addEventListener('resize',refresh,{passive:true});
+   requestAnimationFrame(refresh);setTimeout(refresh,120);setTimeout(refresh,500);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+ window.CONNECT_V853_RESPONSIVE={refresh:refresh,resetColumns:setHomeStart};
+})();
+</script>
 </body>
 </html>
