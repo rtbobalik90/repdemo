@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v849-color-audit">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v850-call-tonal-audit">
 <head>
 <style id="connect-v837-my-day-css">
 @layer connect-work-v837, connect-day834, connect-day833, connect-day823;
@@ -89461,6 +89461,125 @@ html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v841-nav button:not(.on
 html[data-connect-ui="777"] #rp-overlay .h837-call-v841 .v841-subnav button:not(.on) {
   background:#fff!important;
   color:#294d60!important;
+}
+</style>
+
+
+<!-- V850 · CALL WORKSPACE TONAL TEXT AUTHORITY
+     Light-theme workspace chrome stays light. Dark/teal call surfaces always use white copy.
+     This is intentionally last and uses #rp2-page / .h837-call-v841 specificity so V843/V847 cannot win. -->
+<style id="connect-v850-call-tonal-text-authority">
+/* 1) Workspace shell chrome is LIGHT in the light theme, matching the approved Call Workspace frame. */
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .v841-shell-head {
+  background:#fff!important;
+  border-color:#c8dce2!important;
+  color:#17394d!important;
+}
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .v841-shell-head > div:first-child,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .v841-shell-head > div:first-child h2 {
+  color:#17394d!important;
+  -webkit-text-fill-color:#17394d!important;
+  text-shadow:none!important;
+}
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .v841-shell-head > div:first-child .wf789-eyebrow {
+  color:#536f7f!important;
+  -webkit-text-fill-color:#536f7f!important;
+  text-shadow:none!important;
+}
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .v841-shell-head .wf789-btn {
+  background:#fff!important;
+  border-color:#d6e5e9!important;
+  color:#294d60!important;
+  -webkit-text-fill-color:#294d60!important;
+}
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .v841-shell-head .wf789-btn * {
+  color:#294d60!important;
+  -webkit-text-fill-color:#294d60!important;
+}
+
+/* 2) True tonal/dark call surfaces use WHITE copy, never muted navy/teal copy. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-feature > header,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head,
+html[data-connect-ui="777"] #rp-overlay .ce540-head {
+  background:#16495b!important;
+  border-color:#16495b!important;
+  color:#fff!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-feature > header > span,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-feature > header h3,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head > div > span,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head > div > strong,
+html[data-connect-ui="777"] #rp-overlay .ce540-head strong,
+html[data-connect-ui="777"] #rp-overlay .ce540-head span,
+html[data-connect-ui="777"] #rp-overlay .ce540-head .ce540-close {
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-feature > header svg,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head > div svg,
+html[data-connect-ui="777"] #rp-overlay .ce540-head svg {
+  color:#fff!important;
+  fill:currentColor!important;
+  stroke:currentColor!important;
+}
+
+/* 3) Light control inside the Live Call Guide tonal header remains dark-on-light. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head .v842-guide-badge {
+  background:#fff!important;
+  border-color:#d7e7eb!important;
+  color:#17394d!important;
+  -webkit-text-fill-color:#17394d!important;
+  text-shadow:none!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-guide-head .v842-guide-badge * {
+  color:#17394d!important;
+  -webkit-text-fill-color:#17394d!important;
+}
+
+/* 4) Teal selected/primary call controls always carry white labels/icons. */
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav button.on,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav button.on,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-btn.primary,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-start {
+  background:#087b89!important;
+  border-color:#087b89!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-nav button.on *,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-subnav button.on *,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-btn.primary *,
+html[data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-start * {
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  fill:currentColor!important;
+  stroke:currentColor!important;
+}
+
+/* 5) Light call surfaces keep DARK copy. No white-text spill into Account Snapshot, Recent Business, Relationship Context or Wrap Up. */
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-prep-card:not(.v842-feature) > header,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-panel-head,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-callbar,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-flow {
+  color:#17394d!important;
+}
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-prep-card:not(.v842-feature) > header > span,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-panel-head > span {
+  color:#087b89!important;
+  -webkit-text-fill-color:#087b89!important;
+}
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v842-prep-card:not(.v842-feature) > header h3,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-panel-head h3,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-copy strong,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-timer {
+  color:#17394d!important;
+  -webkit-text-fill-color:#17394d!important;
+}
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-call-copy span,
+html[data-rp-theme="light"][data-connect-ui="777"] #rp-overlay #rp2-page .h837-call-v841 .v841-flow-step:not(.on) {
+  color:#536f7f!important;
+  -webkit-text-fill-color:#536f7f!important;
 }
 </style>
 
