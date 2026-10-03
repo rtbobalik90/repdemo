@@ -1887,11 +1887,11 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 </style>
 <!-- Connect v622: dashboard explainability layer + readable coaching metric provenance; retains v620 integrity and v621 readability -->
 <!-- v617 second sweep: removed unused globals/theme tokens after v616 cleanup; preserved v614 durable autosave + v615 full-state safety. -->
-<title>Connect V871 - Email Audit Completion</title>
+<title>Connect V872 - Email Settings Polish</title>
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v871',display:'V871',title:'Connect V871 - Email Audit Completion'});
+  var release=Object.freeze({version:'v872',display:'V872',title:'Connect V872 - Email Settings Polish'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -8211,7 +8211,99 @@ function buildReport(title,sub,badgeText,bodyHtml){
   +'</div>'
   +bodyHtml
   +'<div class="rpt-footer"><span>Triple Crown Products &middot; Confidential</span><span>'+ds+'</span></div>'
-  +'</div></body></html>';
+  +'</div>
+<style id="connect-v872-email-settings-polish">
+/* V872 · Email settings polish + demo shared-mailbox control. */
+html body>dialog.ea869-control .ea869-download-includes{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px 18px!important;padding:5px 0 2px!important;
+}
+html body>dialog.ea869-control .ea869-download-includes label,
+html body>dialog.ea869-control .ea869-permissions label{
+ display:flex!important;align-items:center!important;gap:8px!important;min-width:0!important;color:#31586b!important;font:600 12px/1.4 'Segoe UI',Arial,sans-serif!important;
+}
+html body>dialog.ea869-control .ea869-download-includes input[type="checkbox"],
+html body>dialog.ea869-control .ea869-permissions input[type="checkbox"]{
+ appearance:auto!important;-webkit-appearance:auto!important;width:18px!important;height:18px!important;min-width:18px!important;max-width:18px!important;min-height:18px!important;max-height:18px!important;padding:0!important;margin:0!important;flex:0 0 18px!important;border:0!important;border-radius:3px!important;box-shadow:none!important;accent-color:#087b89!important;
+}
+html body>dialog.ea869-control .ea869-permissions{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px 18px!important;padding:8px 0 0!important;align-items:center!important;
+}
+html body>dialog.ea869-control .ea869-settings-section:has([data-export-run]) .ea869-setting.full{
+ margin-top:2px!important;padding-top:4px!important;border-top:1px solid #e1eaee!important;
+}
+html body>dialog.ea869-control .ea869-settings-section:has([data-export-run]) [data-export-run]{
+ min-width:132px!important;
+}
+html body>dialog.ea869-control .ea869-empty-state{
+ padding:18px!important;border:1px solid #d9e5ea!important;border-radius:10px!important;background:#f7fafb!important;color:#69818e!important;
+}
+.ea872-demo-shared{
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:14px!important;align-items:center!important;margin:18px 0 0 auto!important;padding:14px 16px!important;max-width:520px!important;border:1px solid #bfd6df!important;border-radius:11px!important;background:#edf6f8!important;box-shadow:inset 3px 0 #087b89!important;
+}
+.ea872-demo-shared strong{display:block!important;color:#17495d!important;font-size:13px!important}
+.ea872-demo-shared small{display:block!important;margin-top:3px!important;color:#617d8b!important;font-size:11px!important;line-height:1.45!important}
+.ea872-demo-toggle{display:inline-flex!important;align-items:center!important;gap:8px!important;white-space:nowrap!important;color:#31586b!important;font-size:12px!important;font-weight:700!important}
+.ea872-demo-toggle input{width:19px!important;height:19px!important;min-width:19px!important;min-height:19px!important;margin:0!important;accent-color:#087b89!important}
+@media(max-width:760px){
+ html body>dialog.ea869-control .ea869-download-includes,html body>dialog.ea869-control .ea869-permissions{grid-template-columns:minmax(0,1fr)!important}
+ .ea872-demo-shared{grid-template-columns:minmax(0,1fr)!important;max-width:none!important}
+}
+</style>
+<script id="connect-v872-email-settings-polish-js">
+(function(w,d){
+'use strict';
+if(w.CONNECT_EMAIL_SETTINGS_V872)return;
+const REG='tcp.connect.email.v871.shareRegistry';
+const DEMO='tcp.connect.email.v872.demoSharedMailbox';
+const OWNER='Scott';
+const norm=v=>String(v==null?'':v).trim().toLowerCase();
+const viewer=()=>w._rp2?.rep||'Alex Morgan';
+function readReg(){try{const x=JSON.parse(localStorage.getItem(REG)||'null');return x&&Array.isArray(x.shares)?x:{version:1,shares:[]}}catch(_){return{version:1,shares:[]}}}
+function writeReg(x){try{localStorage.setItem(REG,JSON.stringify(x))}catch(_){}}
+function enabled(){try{return localStorage.getItem(DEMO)==='1'}catch(_){return false}}
+function setDemo(on){
+ try{localStorage.setItem(DEMO,on?'1':'0')}catch(_){}
+ const reg=readReg();
+ reg.version=1;
+ reg.shares=(reg.shares||[]).filter(x=>x.id!=='demo-v872-shared');
+ if(on){reg.shares.push({id:'demo-v872-shared',owner:OWNER,delegate:viewer(),source:'demo',permissions:['view','reply','complete','move','send'],start:'',end:'',label:'Demo shared mailbox'});}
+ writeReg(reg);
+ if(!on&&norm(w.CONNECT_EMAIL_ACTIVE_MAILBOX_OWNER)===norm(OWNER)){
+   try{w.CONNECT_EMAIL_V869?.switchMailbox?.(viewer())}catch(_){}
+ }
+ try{w.CONNECT_EMAIL_V869?.refresh?.()}catch(_){}
+ mountDemo();
+}
+function mountDemo(){
+ const dlg=d.getElementById('ea869-control');
+ if(!dlg?.open)return;
+ const panel=dlg.querySelector('.ea869-control-panel');
+ if(!panel)return;
+ const access=Array.from(dlg.querySelectorAll('.ea869-control-nav button')).find(b=>b.classList.contains('on')&&b.dataset.ea869Tab==='access');
+ if(!access)return;
+ let box=panel.querySelector('.ea872-demo-shared');
+ if(!box){
+   box=d.createElement('div');box.className='ea872-demo-shared';
+   box.innerHTML='<div><strong>Demo Controls</strong><small>Turn on a sample shared mailbox so you can test the inbox selector, shared-mailbox indicator, and delegated permissions in the Email workspace.</small></div><label class="ea872-demo-toggle"><input type="checkbox" data-ea872-demo-shared> Enable shared inbox</label>';
+   panel.append(box);
+   box.querySelector('[data-ea872-demo-shared]').addEventListener('change',e=>setDemo(e.target.checked));
+ }
+ const input=box.querySelector('[data-ea872-demo-shared]');if(input)input.checked=enabled();
+}
+const obs=new MutationObserver(()=>mountDemo());
+function start(){
+ const dlg=d.getElementById('ea869-control');
+ if(dlg){obs.observe(dlg,{subtree:true,childList:true,attributes:true,attributeFilter:['class','open']});mountDemo();}
+ else setTimeout(start,250);
+}
+if(enabled())setDemo(true);
+start();
+w.CONNECT_EMAIL_SETTINGS_V872={setDemo,enabled,mountDemo};
+})(window,document);
+</script>
+<script type="application/json" id="connect-v872-change-log">{"version":"V872","base":"V871","scope":"Email settings visual polish and demo shared mailbox","approved_changes":["Downloads & Exports uses normal Connect-sized checkboxes and cleaner include layout","Out of Office coverage permissions use consistent normal-sized controls including Move / Organize","Access & Delegation includes a demo-only shared mailbox toggle that activates Scott's Inbox in the shared inbox selector"]}</script>
+
+</body></html>';
 }
 
 function rKPI(val,lbl,sub,col){return'<div class="mc"><div class="lbl">'+lbl+'</div><div class="val"'+(col?' style="color:'+col+'"':'')+'>'+val+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
