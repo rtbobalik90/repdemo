@@ -91708,8 +91708,11 @@ function wire(){if(d.documentElement.dataset.ea866Wired)return;d.documentElement
  d.addEventListener('email-open-record',e=>{if(!e.target.closest?.('.ea866-context-col'))return;const flow=w.CONNECT_WORKFLOW_V789,detail=e.detail||{};if(detail.kind==='quote')flow?.openQuote(detail.id);else if(detail.kind==='order')flow?.openOrder(detail.id)},true);
  d.addEventListener('click',e=>{if(!e.target.closest('#ea866-menu')&&!e.target.closest('.ea866-mail-row'))closeMenu()});
 }
-function boot(){wire();const root=d.getElementById('rp2-page');if(root)new MutationObserver(()=>{const page=d.querySelector('.ea865-email-page'),grid=page&&page.querySelector('.ea865-mailgrid');if(page&&!structureReady(grid))page.classList.remove('ea866-ready');cancelAnimationFrame(runtime.raf);runtime.raf=requestAnimationFrame(enhance)}).observe(root,{childList:true,subtree:true});requestAnimationFrame(enhance);setTimeout(enhance,180);setTimeout(enhance,650);setTimeout(enhance,1400)}
+function scheduleEnhance(){cancelAnimationFrame(runtime.raf);runtime.raf=requestAnimationFrame(enhance)}
+function boot(){wire();const root=d.getElementById('rp-overlay')||d.body;if(root&&!root.dataset.ea866Observed){root.dataset.ea866Observed='true';new MutationObserver(()=>{const page=d.querySelector('.ea865-email-page'),grid=page&&page.querySelector('.ea865-mailgrid');if(page&&!structureReady(grid))page.classList.remove('ea866-ready');scheduleEnhance()}).observe(root,{childList:true,subtree:true});}scheduleEnhance();setTimeout(enhance,180);setTimeout(enhance,650);setTimeout(enhance,1400);setTimeout(enhance,2400)}
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+/* V866 repair: Email navigation replaces #rp2-page, so re-run after Connect route changes. */
+setTimeout(function(){const go=w._rp2Go;if(typeof go==='function'&&!go.__ea866Wrapped){const wrapped=function(){const out=go.apply(this,arguments);setTimeout(scheduleEnhance,0);setTimeout(enhance,120);return out};wrapped.__ea866Wrapped=true;w._rp2Go=wrapped}},0);
 w.CONNECT_EMAIL_V866={state:()=>JSON.parse(JSON.stringify(S)),refresh:renderAll,reset:function(){localStorage.removeItem(PREF);S=def();runtime.checked.clear();renderAll()}};
 })(window,document);
 </script>
