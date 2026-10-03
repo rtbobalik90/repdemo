@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v854-my-day-refinements">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v866-email-four-column">
 <head>
 <style id="connect-v854-my-day-css">
 @layer connect-v854;
@@ -1887,11 +1887,11 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 </style>
 <!-- Connect v622: dashboard explainability layer + readable coaching metric provenance; retains v620 integrity and v621 readability -->
 <!-- v617 second sweep: removed unused globals/theme tokens after v616 cleanup; preserved v614 durable autosave + v615 full-state safety. -->
-<title>Connect V865 - Email Workspace</title>
+<title>Connect V866 - Email Workspace</title>
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v865',display:'V865',title:'Connect V865 - Email Workspace'});
+  var release=Object.freeze({version:'v866',display:'V866',title:'Connect V866 - Email Workspace'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -8211,7 +8211,341 @@ function buildReport(title,sub,badgeText,bodyHtml){
   +'</div>'
   +bodyHtml
   +'<div class="rpt-footer"><span>Triple Crown Products &middot; Confidential</span><span>'+ds+'</span></div>'
-  +'</div></body></html>';
+  +'</div>
+<style id="connect-v866-email-four-column-css">
+/* V866 · Four-column Email workbench. Built on V865 without changing the My Day baseline. */
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page{
+ --mail866-navy:#16495b;--mail866-teal:#087b89;--mail866-blue:#007fa8;--mail866-soft:#edf5f7;--mail866-line:#c9dde5;--mail866-ink:#173e53;--mail866-muted:#5f7887;
+}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-folder-tabs{display:flex!important;align-items:center!important;gap:7px!important;min-height:42px!important;padding:1px 0!important;overflow-x:auto!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-folder-tabs .ea756-chip{display:none!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-tag-filter{display:inline-flex!important;align-items:center!important;gap:7px!important;min-height:36px!important;padding:7px 11px!important;border:1px solid #bfd4dd!important;border-radius:8px!important;background:#fff!important;color:#31586b!important;font:700 12px/1.2 'Segoe UI',Arial,sans-serif!important;white-space:nowrap!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-tag-filter:hover{background:#eef7fa!important;border-color:#84b9c8!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-tag-filter.on{background:#087b89!important;border-color:#087b89!important;color:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-tag-filter small{display:grid!important;place-items:center!important;min-width:20px!important;height:20px!important;padding:0 5px!important;border-radius:999px!important;background:#edf4f6!important;color:#31586b!important;font-size:10px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-tag-filter.on small{background:#ffffff2b!important;color:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-tag-clear{border-style:dashed!important;color:#547180!important;}
+
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-mailgrid{
+ --ea866-nav:238px;--ea866-list:340px;--ea866-context:390px;
+ grid-template-columns:var(--ea866-nav) 7px var(--ea866-list) 7px minmax(390px,1fr) 7px var(--ea866-context)!important;
+ gap:0!important;align-items:stretch!important;overflow:hidden!important;min-width:0!important;
+}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-col,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-context-col{
+ min-width:0!important;min-height:0!important;height:100%!important;overflow:hidden!important;border:1px solid #c7dce5!important;border-radius:14px!important;background:#fff!important;box-shadow:0 8px 22px rgba(31,76,87,.07)!important;color:var(--mail866-ink)!important;
+}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-col{display:flex!important;flex-direction:column!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-context-col{display:flex!important;flex-direction:column!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-resizer{position:relative!important;min-width:7px!important;cursor:col-resize!important;touch-action:none!important;user-select:none!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-resizer:before{content:'';position:absolute;left:3px;top:12px;bottom:12px;width:1px;background:#bed2da!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-resizer:hover:before,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-resizer.dragging:before{left:2px;width:3px;background:#168b99!important;border-radius:4px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-col{overflow:visible!important;}
+
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;min-height:54px!important;padding:10px 11px!important;background:var(--mail866-navy)!important;color:#fff!important;flex:0 0 auto!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-head strong{font-size:15px!important;color:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-head-actions{display:flex!important;gap:5px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-head button{display:grid!important;place-items:center!important;width:32px!important;height:32px!important;padding:0!important;border:1px solid #ffffff55!important;border-radius:8px!important;background:#ffffff10!important;color:#fff!important;font-size:16px!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-scroll{flex:1 1 0!important;min-height:0!important;overflow:auto!important;padding:9px!important;scrollbar-gutter:stable!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-compose-main{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:100%!important;min-height:42px!important;margin:0 0 10px!important;border:1px solid #007fa8!important;border-radius:9px!important;background:#007fa8!important;color:#fff!important;font:750 13px/1.2 'Segoe UI',Arial,sans-serif!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-nav-section{margin:0 0 15px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-nav-label{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;margin:0 3px 6px!important;color:#607989!important;font:800 10px/1.3 'Segoe UI',Arial,sans-serif!important;letter-spacing:.08em!important;text-transform:uppercase!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-nav-label button{border:0!important;background:transparent!important;color:#007b9e!important;font-size:11px!important;font-weight:800!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-item,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-pin-item{display:grid!important;grid-template-columns:30px minmax(0,1fr) auto!important;gap:8px!important;align-items:center!important;width:100%!important;min-height:42px!important;margin:0 0 4px!important;padding:6px 7px!important;border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;color:#254e62!important;text-align:left!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-item:hover,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-pin-item:hover{background:#eef6f8!important;border-color:#d2e3e8!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-item.on,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-pin-item.on{background:#dff1f5!important;border-color:#7ebbc8!important;color:#075d71!important;box-shadow:inset 3px 0 var(--folder-color,#087b89)!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-icon{display:grid!important;place-items:center!important;width:28px!important;height:28px!important;border-radius:8px!important;background:color-mix(in srgb,var(--folder-color,#087b89) 12%,white)!important;color:var(--folder-color,#087b89)!important;font:850 15px/1 Arial,sans-serif!important;border:1px solid color-mix(in srgb,var(--folder-color,#087b89) 22%,white)!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-copy{min-width:0!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-copy strong{display:block!important;font-size:13px!important;line-height:1.3!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-count{display:grid!important;place-items:center!important;min-width:24px!important;height:22px!important;padding:0 6px!important;border-radius:999px!important;background:#edf3f6!important;color:#4e6d7c!important;font-size:10px!important;font-weight:800!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-more{border:0!important;background:transparent!important;color:#688391!important;width:26px!important;height:26px!important;padding:0!important;font-size:16px!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-item.drop-target{background:#d9f0f4!important;border-color:#087b89!important;box-shadow:inset 0 0 0 1px #087b89!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-pin-logo{display:grid!important;place-items:center!important;width:30px!important;height:30px!important;border-radius:9px!important;background:#e8f2f5!important;border:1px solid #cbdde4!important;color:#174b5f!important;font:800 10px/1 'Segoe UI',Arial,sans-serif!important;overflow:hidden!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-pin-logo img{width:100%!important;height:100%!important;object-fit:contain!important;background:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-pin-name{font-size:12.5px!important;font-weight:700!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-pin-remove{border:0!important;background:transparent!important;color:#77909d!important;font-size:15px!important;cursor:pointer!important;padding:2px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-nav-search{position:relative!important;margin:0 0 8px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-nav-search input,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-nav-search select{width:100%!important;min-width:0!important;min-height:38px!important;border:1px solid #c4d8e1!important;border-radius:8px!important;background:#fff!important;color:#173e53!important;padding:8px 9px!important;font:13px/1.3 'Segoe UI',Arial,sans-serif!important;box-sizing:border-box!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-search-results{display:grid!important;gap:4px!important;margin-top:5px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-result{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:6px!important;align-items:center!important;padding:7px 8px!important;border:1px solid #d9e5ea!important;border-radius:8px!important;background:#f8fbfc!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-result button{border:0!important;background:transparent!important;color:#174e64!important;text-align:left!important;font:700 12px/1.3 'Segoe UI',Arial,sans-serif!important;cursor:pointer!important;min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-result .ea866-pin-add{width:28px!important;height:28px!important;border:1px solid #bdd4de!important;border-radius:7px!important;text-align:center!important;background:#fff!important;color:#007da3!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-search-options{margin-top:6px!important;border:1px solid #d7e4e9!important;border-radius:8px!important;background:#f7fafb!important;padding:7px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-search-options summary{cursor:pointer!important;color:#547282!important;font-size:11px!important;font-weight:750!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-search-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px!important;margin-top:7px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-search-grid label{display:grid!important;gap:3px!important;font-size:10px!important;color:#667e8c!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-search-grid .full{grid-column:1/-1!important;}
+
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-inbox-panel{min-width:0!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-inbox-panel>.ea756-panel-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-inbox-panel .ea756-search{display:none!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-list-tools{display:flex!important;align-items:center!important;gap:6px!important;padding:8px 9px!important;border-bottom:1px solid #d7e5ea!important;background:#f4f8fa!important;min-height:42px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-list-tools[hidden]{display:none!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-list-tools strong{font-size:11px!important;color:#375d70!important;margin-right:auto!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-list-tools button,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-list-tools select{min-height:30px!important;border:1px solid #bdd2dc!important;border-radius:7px!important;background:#fff!important;color:#17455d!important;padding:5px 7px!important;font-size:10.5px!important;font-weight:700!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea756-thread-list{padding:7px 8px 10px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row{position:relative!important;display:grid!important;grid-template-columns:24px minmax(0,1fr)!important;gap:0 7px!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row .ea866-row-check{grid-column:1!important;grid-row:1/6!important;display:flex!important;align-items:flex-start!important;justify-content:center!important;padding-top:3px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row .ea866-row-check input{width:16px!important;height:16px!important;accent-color:#087b89!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row .ea756-thread-top,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row .ea756-thread-subj,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row .ea756-thread-snippet,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row .ea756-thread-foot{grid-column:2!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row.is-unread .ea756-thread-name,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row.is-unread .ea756-thread-subj{font-weight:850!important;color:#0f3b50!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row.is-unread{background:#f9fdff!important;border-left-color:#007fa8!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row.is-completed{opacity:.78!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-mail-row .ea866-status-icons{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;margin-left:auto!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-status{display:grid!important;place-items:center!important;width:22px!important;height:22px!important;border:1px solid #cddde4!important;border-radius:7px!important;background:#f5f9fa!important;color:#567381!important;font:800 11px/1 Arial,sans-serif!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-status.flagged{background:#fff7e9!important;border-color:#e5c391!important;color:#a65c11!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-status.overdue{background:#fff3e6!important;border-color:#ebc89b!important;color:#a6521b!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-status.action{background:#fff1f0!important;border-color:#e5bbb7!important;color:#a33d34!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-row-tags{display:flex!important;flex-wrap:wrap!important;gap:4px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-row-tag{display:inline-flex!important;align-items:center!important;min-height:20px!important;padding:3px 6px!important;border:1px solid #c9dde5!important;border-radius:5px!important;background:#edf5f8!important;color:#3d6475!important;font-size:9px!important;font-weight:700!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-completed-mark{font-size:9px!important;color:#26705c!important;font-weight:800!important;}
+
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col{min-width:0!important;height:100%!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col .ea865-workspace-head,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col .ea865-workspace-head *{color:#fff!important;-webkit-text-fill-color:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col .ea865-workspace-head span{color:#d3edf3!important;-webkit-text-fill-color:#d3edf3!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col .ea865-workspace-body{padding:12px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col connect-mail-workspace .v861-customer-strip,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col connect-mail-workspace .v863-labels,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col connect-mail-workspace .v861-check-jump{display:none!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col connect-mail-workspace .v861-work-grid{display:block!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col connect-mail-workspace .v861-work-main{display:block!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col connect-mail-workspace connect-mail-context{display:none!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col connect-mail-workspace .v863-received-email{margin:0 0 12px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col connect-mail-workspace .v861-compose{margin:12px 0!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-chain{margin-top:12px!important;border:1px solid #cbdde5!important;border-radius:11px!important;background:#fff!important;overflow:hidden!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-chain>div:first-child{padding:10px 13px!important;background:#edf5f7!important;border-bottom:1px solid #d5e4e9!important;color:#31586a!important;font-size:12px!important;font-weight:800!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-chain details{border-bottom:1px solid #e2ebef!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-chain details:last-child{border-bottom:0!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-chain summary{display:flex!important;justify-content:space-between!important;gap:12px!important;padding:10px 13px!important;cursor:pointer!important;color:#244d61!important;font-size:12px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-chain summary span{color:#68818e!important;font-size:10px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-chain .ea866-chain-body{padding:12px 13px!important;color:#31596b!important;font-size:13px!important;line-height:1.65!important;}
+
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-context-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:10px!important;min-height:54px!important;padding:11px 13px!important;background:var(--mail866-navy)!important;color:#fff!important;flex:0 0 auto!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-context-head strong{display:block!important;color:#fff!important;font-size:15px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-context-head span{display:block!important;margin-top:2px!important;color:#d4e9ef!important;font-size:10px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-context-scroll{flex:1 1 0!important;min-height:0!important;overflow:auto!important;padding:10px!important;scrollbar-gutter:stable!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-card{display:grid!important;gap:10px!important;padding:12px!important;margin-bottom:10px!important;border:1px solid #cbdfe6!important;border-radius:11px!important;background:#f8fbfc!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-grid>div{min-width:0!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-kicker{display:block!important;color:#68818f!important;font-size:9px!important;font-weight:850!important;letter-spacing:.08em!important;text-transform:uppercase!important;margin-bottom:3px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-grid strong{display:block!important;color:#17465b!important;font-size:13px!important;line-height:1.35!important;overflow-wrap:anywhere!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-grid small{display:block!important;margin-top:2px!important;color:#687f8d!important;font-size:10px!important;line-height:1.4!important;overflow-wrap:anywhere!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-response-slot{display:flex!important;align-items:center!important;gap:7px!important;flex-wrap:wrap!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-label-block{padding:10px 11px!important;margin-bottom:10px!important;border:1px solid #cbdfe6!important;border-radius:10px!important;background:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-label-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;margin-bottom:7px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-label-head strong{font-size:12px!important;color:#31586a!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-label-head button{border:1px solid #bdd2dc!important;border-radius:7px!important;background:#fff!important;color:#00799d!important;padding:5px 7px!important;font-size:10px!important;font-weight:750!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-labels{display:flex!important;flex-wrap:wrap!important;gap:5px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-labels span{display:inline-flex!important;align-items:center!important;min-height:23px!important;padding:4px 7px!important;border-radius:5px!important;background:#087d9f!important;color:#fff!important;font-size:10px!important;font-weight:750!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-context-col connect-mail-context{display:block!important;width:100%!important;min-width:0!important;margin-bottom:10px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-empty-context{padding:20px!important;text-align:center!important;color:#617c8a!important;font-size:13px!important;line-height:1.5!important;}
+
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-head strong,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-head [data-ea866-new-folder],
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-scroll>.ea866-nav-section:not(:first-of-type),
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-compose-main span,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-copy,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-count,
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-more{display:none!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-head{justify-content:center!important;padding:10px 5px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-scroll{padding:8px 5px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-compose-main{width:42px!important;margin:0 auto 10px!important;padding:0!important;}
+html[data-connect-ui="777"] #rp-overlay .ea865-email-page.ea866-nav-collapsed .ea866-folder-item{grid-template-columns:32px!important;justify-content:center!important;padding:5px!important;width:42px!important;margin:0 auto 5px!important;}
+
+html[data-connect-ui="777"] #rp-overlay .ea866-menu{position:fixed!important;z-index:2147483600!important;min-width:210px!important;padding:6px!important;border:1px solid #bcd2dc!important;border-radius:10px!important;background:#fff!important;box-shadow:0 16px 44px rgba(14,52,70,.24)!important;color:#173e53!important;font:12px/1.3 'Segoe UI',Arial,sans-serif!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-menu[hidden]{display:none!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-menu button{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;width:100%!important;min-height:34px!important;padding:7px 9px!important;border:0!important;border-radius:7px!important;background:transparent!important;color:#214d61!important;text-align:left!important;font:650 12px/1.3 'Segoe UI',Arial,sans-serif!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-menu button:hover{background:#edf6f9!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-menu hr{border:0!important;border-top:1px solid #dce7eb!important;margin:5px 2px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-menu small{color:#718995!important;font-size:9px!important;font-weight:700!important;}
+html[data-connect-ui="777"] #rp-overlay dialog.ea866-dialog{margin:auto!important;width:min(440px,calc(100vw - 32px))!important;max-height:calc(100dvh - 32px)!important;padding:0!important;border:1px solid #afcad6!important;border-radius:15px!important;background:#fff!important;color:#173e53!important;box-shadow:0 24px 80px rgba(16,55,75,.35)!important;font:14px/1.5 'Segoe UI',Arial,sans-serif!important;}
+html[data-connect-ui="777"] #rp-overlay dialog.ea866-dialog::backdrop{background:#12384f66!important;backdrop-filter:blur(2px)!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;padding:13px 15px!important;background:#16495b!important;color:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-head strong{font-size:16px!important;color:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-head button{border:1px solid #ffffff55!important;border-radius:7px!important;background:transparent!important;color:#fff!important;width:30px!important;height:30px!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-body{padding:15px!important;display:grid!important;gap:11px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-body label{display:grid!important;gap:5px!important;color:#48697a!important;font-size:12px!important;font-weight:700!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-body input,
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-body select{width:100%!important;min-height:40px!important;border:1px solid #bdd2dc!important;border-radius:8px!important;background:#fff!important;color:#173e53!important;padding:8px 9px!important;font:14px/1.3 'Segoe UI',Arial,sans-serif!important;box-sizing:border-box!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-color-row{display:grid!important;grid-template-columns:repeat(8,1fr)!important;gap:7px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-color-swatch{height:32px!important;border:2px solid #fff!important;border-radius:8px!important;box-shadow:0 0 0 1px #b9cfd8!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-color-swatch.on{box-shadow:0 0 0 2px #173e53!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-actions{display:flex!important;justify-content:flex-end!important;gap:7px!important;padding:0 15px 15px!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-actions button{min-height:38px!important;padding:8px 12px!important;border:1px solid #bdd2dc!important;border-radius:8px!important;background:#fff!important;color:#17455d!important;font-weight:750!important;cursor:pointer!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-actions .primary{background:#007fa8!important;border-color:#007fa8!important;color:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .ea866-dialog-actions .danger{margin-right:auto!important;color:#9a3b30!important;border-color:#debab5!important;}
+
+@media(max-width:1280px){
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-mailgrid{--ea866-nav:210px;--ea866-list:300px;--ea866-context:340px;grid-template-columns:var(--ea866-nav) 6px var(--ea866-list) 6px minmax(360px,1fr) 6px var(--ea866-context)!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-customer-grid{grid-template-columns:1fr!important;}
+}
+@media(max-width:1040px){
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page{overflow:auto!important;height:auto!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-mailgrid{display:grid!important;grid-template-columns:56px minmax(280px,.85fr) minmax(420px,1.3fr)!important;grid-auto-rows:minmax(620px,auto)!important;overflow:visible!important;gap:8px!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-col{grid-column:1!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea865-inbox-panel{grid-column:2!important;height:620px!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-email-col{grid-column:3!important;height:620px!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-context-col{grid-column:2/4!important;height:620px!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-resizer{display:none!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-col{overflow:hidden!important;}
+ html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-head strong,html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-head [data-ea866-new-folder],html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-scroll>.ea866-nav-section:not(:first-of-type),html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-compose-main span,html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-copy,html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-count,html[data-connect-ui="777"] #rp-overlay .ea865-email-page .ea866-folder-more{display:none!important;}
+}
+</style>
+<script id="connect-v866-email-four-column-js">
+(function(w,d){
+'use strict';
+const PREF='tcp.connect.email.v866.settings',MAIL='tcp_connect_demo_email_v756';
+const COLORS=['#087b89','#007fa8','#4b7e6f','#9b6c22','#a34b40','#6f659b','#56788a','#8a6b55'];
+const ICONS=['◆','★','$','✓','◷','▣','◎','↗','⚑','✉'];
+const SYSTEM=[
+ {id:'inbox',label:'Inbox',icon:'✉',color:'#007fa8'},
+ {id:'attention',label:'Needs Attention',icon:'!',color:'#a34b40'},
+ {id:'sent',label:'Sent',icon:'↗',color:'#4b7e6f'},
+ {id:'drafts',label:'Drafts',icon:'▣',color:'#8a6b55'},
+ {id:'all',label:'All Mail',icon:'◆',color:'#56788a'}
+];
+const QUICK=[
+ {id:'new-order',label:'New Order',match:/New Order|Reorder|Buying Signal/i},
+ {id:'quote',label:'Quote / Pricing',match:/Quote|Pricing/i},
+ {id:'product',label:'Product Question',match:/Product Question|Sizing Question/i},
+ {id:'issue',label:'Order Issue',match:/Order Issue|Customer Issue|Missing Items|Damaged Items|Return Request/i},
+ {id:'artwork',label:'Artwork',match:/Artwork/i},
+ {id:'followup',label:'Follow-Up',match:/Follow.?Up|Voicemail/i},
+ {id:'priority',label:'Priority',special:'priority'}
+];
+let runtime={checked:new Set(),customerQuery:'',menuThread:'',folderEdit:'',drag:null,raf:0};
+function clean(v){return String(v==null?'':v).trim()}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function rep(){return w._rp2&&w._rp2.rep||'Alex Morgan'}
+function def(){return{collapsed:false,widths:{nav:238,list:340,context:390},folders:[],pins:[],source:{type:'system',id:'inbox'},tag:'',search:{query:'',status:'any',from:'',to:'',attachments:false},meta:{}}}
+function load(){let s=def();try{Object.assign(s,JSON.parse(localStorage.getItem(PREF)||'null')||{})}catch(_){}s.widths={...def().widths,...(s.widths||{})};s.search={...def().search,...(s.search||{})};s.source=s.source||{type:'system',id:'inbox'};s.folders=Array.isArray(s.folders)?s.folders:[];s.pins=Array.isArray(s.pins)?s.pins.slice(0,5):[];s.meta=s.meta&&typeof s.meta==='object'?s.meta:{};return s}
+let S=load();
+function save(){try{localStorage.setItem(PREF,JSON.stringify(S))}catch(_){}}
+function meta(id){S.meta[id]=S.meta[id]||{};return S.meta[id]}
+function localBucket(){try{const all=JSON.parse(localStorage.getItem(MAIL)||'null'),b=all&&all.reps&&all.reps[rep()];if(b)return b}catch(_){}return{threads:[],sent:[],drafts:[]}}
+function inbox(){try{return w.CONNECT_DEMO_EMAIL_AI_V756&&w.CONNECT_DEMO_EMAIL_AI_V756.inboxSnapshot(rep())||[]}catch(_){return[]}}
+function buckets(){const b=localBucket(),map=new Map();[...(b.threads||[]),...inbox()].forEach(t=>t&&t.id&&map.set(t.id,t));return{threads:[...map.values()],sent:b.sent||[],drafts:b.drafts||[]}}
+function unique(list){const m=new Map();(list||[]).forEach(t=>t&&t.id&&m.set(t.id,t));return[...m.values()]}
+function allThreads(){const b=buckets();return unique([...(b.threads||[]),...(b.sent||[]),...(b.drafts||[])])}
+function getThread(id){try{return w.CONNECT_DEMO_EMAIL_AI_V756&&w.CONNECT_DEMO_EMAIL_AI_V756.getThread(rep(),id)||allThreads().find(t=>t.id===id)||null}catch(_){return allThreads().find(t=>t.id===id)||null}}
+function last(t){return t&&t.messages&&t.messages[t.messages.length-1]||{}}
+function fmt(iso){try{const x=new Date(iso);if(!Number.isFinite(x.getTime()))return'';const n=new Date();return x.toDateString()===n.toDateString()?x.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):x.toLocaleDateString([],{month:'short',day:'numeric'})}catch(_){return''}}
+function tags(t){try{return w.CONNECT_EMAIL_CONTEXT_V861?w.CONNECT_EMAIL_CONTEXT_V861.tags(t):[t.category].filter(Boolean)}catch(_){return[t.category].filter(Boolean)}}
+function isRead(t){const m=meta(t.id);return typeof m.read==='boolean'?m.read:!!t.read}
+function isFlagged(t){const m=meta(t.id);return typeof m.flagged==='boolean'?m.flagged:!!t.flagged}
+function completed(t){return !!meta(t.id).completed}
+function assigned(t){return meta(t.id).folderId||''}
+function hasAttachments(t){return (t.messages||[]).some(m=>Array.isArray(m.attachments)&&m.attachments.length)}
+function overdue(t){try{const s=w.CONNECT_RESPONSE_V862&&w.CONNECT_RESPONSE_V862.status(t);return !!(s&&!s.excluded&&!s.responded&&s.overdue)}catch(_){return false}}
+function hay(t){return [t.company,t.contact,t.email,t.subject,t.category,t.signal,t.context,t.snippet,tags(t).join(' '),(t.messages||[]).map(m=>[m.from,m.to,m.cc,m.bcc,m.body].join(' ')).join(' ')].join(' ').toLowerCase()}
+function quickMatch(t,id){const q=QUICK.find(x=>x.id===id);if(!q)return true;if(q.special==='priority')return isFlagged(t)||t.priority==='high';return q.match.test([tags(t).join(' '),t.category,t.signal].join(' '))}
+function searchMatch(t){const q=clean(S.search.query).toLowerCase();if(q&&!hay(t).includes(q))return false;const st=S.search.status;if(st==='unread'&&isRead(t))return false;if(st==='flagged'&&!isFlagged(t))return false;if(st==='action'&&!t.requiresAction)return false;if(st==='completed'&&!completed(t))return false;if(S.search.attachments&&!hasAttachments(t))return false;const dt=Date.parse(last(t).date||0);if(S.search.from&&dt<Date.parse(S.search.from+'T00:00:00'))return false;if(S.search.to&&dt>Date.parse(S.search.to+'T23:59:59'))return false;return true}
+function sourceBase(){const b=buckets(),src=S.source||{type:'system',id:'inbox'};let list=[],label='Inbox';if(src.type==='system'){
+  if(src.id==='attention'){list=(b.threads||[]).filter(t=>t.requiresAction&&!completed(t));label='Needs Attention';}
+  else if(src.id==='sent'){list=b.sent||[];label='Sent';}
+  else if(src.id==='drafts'){list=b.drafts||[];label='Drafts';}
+  else if(src.id==='all'){list=allThreads();label='All Mail';}
+  else{list=(b.threads||[]).filter(t=>!completed(t)&&!assigned(t));label='Inbox';}
+ }else if(src.type==='folder'){const f=S.folders.find(x=>x.id===src.id);list=allThreads().filter(t=>assigned(t)===src.id);label=f?f.name:'Folder';}
+ else if(src.type==='customer'){list=allThreads().filter(t=>String(t.company||'')===String(src.id||''));label=src.id||'Customer';}
+ else if(src.type==='search'){list=allThreads().filter(searchMatch);label='Search results';}
+ list=unique(list);
+ if(S.tag)list=list.filter(t=>quickMatch(t,S.tag));
+ list.sort((a,b)=>Date.parse(last(b).date||0)-Date.parse(last(a).date||0));
+ return{list,label};
+}
+function counts(){const b=buckets(),all=allThreads(),out={};out.inbox=(b.threads||[]).filter(t=>!completed(t)&&!assigned(t)).length;out.attention=(b.threads||[]).filter(t=>t.requiresAction&&!completed(t)).length;out.sent=(b.sent||[]).length;out.drafts=(b.drafts||[]).length;out.all=all.length;S.folders.forEach(f=>out[f.id]=all.filter(t=>assigned(t)===f.id).length);return out}
+function companyRows(){const map=new Map();allThreads().forEach(t=>{if(t.company&&!map.has(t.company))map.set(t.company,t)});return[...map.entries()].sort((a,b)=>a[0].localeCompare(b[0]))}
+function companyLogo(company){const row=companyRows().find(x=>x[0]===company),t=row&&row[1];let p={};try{p=w.CONNECT_EMAIL_ANALYSIS_V861&&t?w.CONNECT_EMAIL_ANALYSIS_V861.account(t)?.profile||{}:{}}catch(_){}const url=p.logoUrl||p.logo||p.brandLogo||p.image||p.avatar||'';if(/^https?:|^data:image\//i.test(url))return'<img src="'+esc(url)+'" alt="">';const i=company.split(/\s+/).slice(0,2).map(x=>x.charAt(0)).join('').toUpperCase()||'CO';return esc(i)}
+function threadByCompany(company){return companyRows().find(x=>x[0]===company)?.[1]||null}
+function contextId(){const host=d.querySelector('.ea866-email-col connect-mail-workspace');return host&&host.getAttribute('data-thread-id')||''}
+function selectedThread(){const id=contextId();return id?getThread(id):null}
+function icon(title,cls,text){return'<span class="ea866-status '+cls+'" title="'+esc(title)+'" aria-label="'+esc(title)+'">'+text+'</span>'}
+function rowHTML(t){const l=last(t),read=isRead(t),flag=isFlagged(t),done=completed(t),ov=overdue(t),action=!!t.requiresAction&&!done,active=contextId()===t.id?' on':'';const shown=tags(t).slice(0,3);return'<article class="ea756-thread ea866-mail-row'+active+(read?'':' is-unread')+(done?' is-completed':'')+'" draggable="true" data-thread="'+esc(t.id)+'" tabindex="0" aria-label="'+esc(t.subject||'Email')+'">'+
+ '<label class="ea866-row-check" title="Select email"><input type="checkbox" data-check-thread="'+esc(t.id)+'" '+(runtime.checked.has(t.id)?'checked':'')+' aria-label="Select '+esc(t.subject||'email')+'"></label>'+
+ '<div class="ea756-thread-top"><div class="ea756-thread-name">'+esc(l.direction==='out'?'To: '+(t.contact||t.email):t.contact||t.email||t.company)+'</div><div class="ea866-status-icons">'+(flag?icon('Flagged','flagged','⚑'):'')+(ov?icon('Outside approved response time','overdue','◷'):'')+(action?icon('Needs action','action','!'):'')+'<span class="ea756-thread-time">'+esc(fmt(l.date))+'</span></div></div>'+
+ '<div class="ea756-thread-subj">'+esc(t.subject||'(No subject)')+'</div><div class="ea756-thread-snippet">'+esc(l.body||t.snippet||'')+'</div><div class="ea756-thread-foot"><div class="ea866-row-tags">'+shown.map(x=>'<span class="ea866-row-tag">'+esc(x)+'</span>').join('')+'</div>'+(done?'<span class="ea866-completed-mark">✓ Completed</span>':'')+'</div></article>'}
+function renderTags(){const bar=d.querySelector('.ea865-email-page .ea865-folder-tabs');if(!bar)return;const all=allThreads();bar.innerHTML=QUICK.map(q=>{const n=all.filter(t=>quickMatch(t,q.id)).length;return'<button type="button" class="ea866-tag-filter '+(S.tag===q.id?'on':'')+'" data-ea866-tag="'+q.id+'">'+esc(q.label)+' <small>'+n+'</small></button>'}).join('')+(S.tag?'<button type="button" class="ea866-tag-filter ea866-tag-clear" data-ea866-tag="">Clear filter</button>':'');}
+function sourceOn(type,id){return S.source&&S.source.type===type&&String(S.source.id)===String(id)}
+function renderNav(){const col=d.querySelector('.ea866-folder-col');if(!col)return;const c=counts(),query=runtime.customerQuery.toLowerCase(),companies=companyRows().filter(([name,t])=>!query||[name,t.contact,t.email].join(' ').toLowerCase().includes(query)).slice(0,6);col.innerHTML='<div class="ea866-folder-head"><strong>Mail</strong><div class="ea866-folder-head-actions"><button type="button" data-ea866-new-folder title="Create folder">＋</button><button type="button" data-ea866-collapse title="'+(S.collapsed?'Expand folders':'Collapse folders')+'">'+(S.collapsed?'›':'‹')+'</button></div></div><div class="ea866-folder-scroll">'+
+ '<button type="button" class="ea866-compose-main" data-ea866-compose><b>＋</b><span>New Email</span></button><section class="ea866-nav-section"><div class="ea866-nav-label"><span>Folders</span><button type="button" data-ea866-new-folder>New</button></div>'+SYSTEM.map(f=>'<button type="button" class="ea866-folder-item '+(sourceOn('system',f.id)?'on':'')+'" style="--folder-color:'+f.color+'" data-ea866-source="system:'+f.id+'" data-drop-system="'+f.id+'" title="'+esc(f.label)+'"><span class="ea866-folder-icon">'+f.icon+'</span><span class="ea866-folder-copy"><strong>'+esc(f.label)+'</strong></span><span class="ea866-folder-count">'+(c[f.id]||0)+'</span></button>').join('')+
+ S.folders.map(f=>'<div class="ea866-folder-item '+(sourceOn('folder',f.id)?'on':'')+'" draggable="true" style="--folder-color:'+esc(f.color||COLORS[0])+'" data-custom-folder="'+esc(f.id)+'" data-ea866-source="folder:'+esc(f.id)+'" title="'+esc(f.name)+'"><span class="ea866-folder-icon">'+esc(f.icon||'◆')+'</span><span class="ea866-folder-copy"><strong>'+esc(f.name)+'</strong></span><span style="display:flex;align-items:center;gap:2px"><span class="ea866-folder-count">'+(c[f.id]||0)+'</span><button type="button" class="ea866-folder-more" data-ea866-folder-menu="'+esc(f.id)+'" aria-label="Folder options">···</button></span></div>').join('')+'</section>'+
+ '<section class="ea866-nav-section"><div class="ea866-nav-label"><span>Pinned Customers</span><span>'+S.pins.length+'/5</span></div>'+S.pins.map(company=>'<div class="ea866-pin-item '+(sourceOn('customer',company)?'on':'')+'" draggable="true" data-pin-company="'+esc(company)+'" data-ea866-source="customer:'+esc(company)+'" title="'+esc(company)+'"><span class="ea866-pin-logo">'+companyLogo(company)+'</span><span class="ea866-pin-name">'+esc(company)+'</span><button type="button" class="ea866-pin-remove" data-unpin="'+esc(company)+'" aria-label="Unpin '+esc(company)+'">×</button></div>').join('')+(S.pins.length? '':'<div style="padding:6px 7px;color:#78909d;font-size:11px">Pin up to five key customers.</div>')+'</section>'+
+ '<section class="ea866-nav-section"><div class="ea866-nav-label"><span>Customer Search</span></div><div class="ea866-nav-search"><input data-customer-search placeholder="Company, contact, email…" value="'+esc(runtime.customerQuery)+'"></div><div class="ea866-search-results">'+(runtime.customerQuery?companies.map(([name])=>'<div class="ea866-customer-result"><button type="button" data-ea866-customer="'+esc(name)+'">'+esc(name)+'</button><button type="button" class="ea866-pin-add" data-pin-add="'+esc(name)+'" title="Pin customer">'+(S.pins.includes(name)?'✓':'＋')+'</button></div>').join(''):'')+'</div></section>'+
+ '<section class="ea866-nav-section"><div class="ea866-nav-label"><span>Email Search</span></div><div class="ea866-nav-search"><input data-global-search placeholder="Search name, email, subject, tags…" value="'+esc(S.search.query||'')+'"></div><details class="ea866-search-options"><summary>Filters</summary><div class="ea866-search-grid"><label class="full">Status<select data-search-status><option value="any">Any status</option><option value="unread">Unread</option><option value="flagged">Flagged</option><option value="action">Needs action</option><option value="completed">Completed</option></select></label><label>From<input type="date" data-search-from value="'+esc(S.search.from||'')+'"></label><label>To<input type="date" data-search-to value="'+esc(S.search.to||'')+'"></label><label class="full" style="display:flex;grid-template-columns:auto 1fr;align-items:center"><input type="checkbox" data-search-attachments '+(S.search.attachments?'checked':'')+' style="width:16px!important;height:16px!important;min-height:16px!important">Has attachments</label></div></details></section></div>';
+ const status=col.querySelector('[data-search-status]');if(status)status.value=S.search.status||'any';
+}
+function renderBulk(){const panel=d.querySelector('.ea865-inbox-panel');if(!panel)return;let bar=panel.querySelector('.ea866-list-tools');if(!bar){bar=d.createElement('div');bar.className='ea866-list-tools';panel.querySelector('.ea756-thread-list').before(bar)}const n=runtime.checked.size;bar.hidden=!n;if(!n){bar.innerHTML='';return}bar.innerHTML='<strong>'+n+' selected</strong><button type="button" data-bulk="read">Read</button><button type="button" data-bulk="unread">Unread</button><button type="button" data-bulk="flag">Flag</button><button type="button" data-bulk="complete">Complete</button><select data-bulk-move aria-label="Move selected emails"><option value="">Move to…</option><option value="inbox">Inbox</option>'+S.folders.map(f=>'<option value="'+esc(f.id)+'">'+esc(f.name)+'</option>').join('')+'</select>';}
+function renderList(){const panel=d.querySelector('.ea865-inbox-panel');if(!panel)return;const src=sourceBase(),head=panel.querySelector('.ea756-panel-head');if(head)head.innerHTML='<strong>'+esc(src.label)+(S.tag?' · '+esc(QUICK.find(x=>x.id===S.tag)?.label||'Filter'):'')+'</strong><span>'+src.list.length+' conversation'+(src.list.length===1?'':'s')+'</span>';const list=panel.querySelector('.ea756-thread-list');if(list)list.innerHTML=src.list.length?src.list.map(rowHTML).join(''):'<div style="padding:32px 18px;text-align:center;color:#6c8492;font-size:12px;line-height:1.5"><strong style="display:block;color:#31586b;font-size:14px;margin-bottom:4px">Nothing here</strong>No emails match this view.</div>';renderBulk();}
+function threadChain(t){if(!t||!Array.isArray(t.messages)||t.messages.length<2)return'';const msgs=t.messages.slice(0,-1).reverse();return'<section class="ea866-chain"><div>Earlier messages · '+msgs.length+'</div>'+msgs.map(m=>'<details><summary><strong>'+esc(m.direction==='out'?(m.from||rep()):(m.from||t.contact))+'</strong><span>'+esc(new Date(m.date||Date.now()).toLocaleString())+'</span></summary><div class="ea866-chain-body">'+(w.CONNECT_EMAIL_EDITOR_V858?w.CONNECT_EMAIL_EDITOR_V858.readHTML(m):esc(m.body||''))+'</div></details>').join('')+'</section>'}
+function renderChain(){const body=d.querySelector('.ea866-email-col .ea865-workspace-body'),host=body&&body.querySelector('connect-mail-workspace');if(!body||!host)return;body.querySelector('.ea866-chain')?.remove();const t=getThread(host.getAttribute('data-thread-id'));const html=threadChain(t);if(html)body.insertAdjacentHTML('beforeend',html)}
+function responseHTML(t){try{return w.CONNECT_RESPONSE_V862?w.CONNECT_RESPONSE_V862.button(t):''}catch(_){return''}}
+function reminderText(id){try{const r=w.CONNECT_EMAIL_CONTEXT_V861&&w.CONNECT_EMAIL_CONTEXT_V861.entry(id)?.reminder;if(r&&r.active)return (r.date||'')+(r.time?' · '+r.time:'');return'Not scheduled'}catch(_){return'Not scheduled'}}
+function renderContext(){const col=d.querySelector('.ea866-context-col');if(!col)return;const id=contextId(),t=id&&getThread(id);col.innerHTML='<div class="ea866-context-head"><div><strong>Connect Context</strong><span>CRM + sales intelligence</span></div></div><div class="ea866-context-scroll">'+(!t?'<div class="ea866-empty-context">Select a customer email to load account context, next steps, history, and the action checklist.</div>':contextInner(t,id))+'</div>';if(t){setTimeout(configureContext,0);setTimeout(configureContext,140)}}
+function contextInner(t,id){let p={};try{p=w.CONNECT_EMAIL_ANALYSIS_V861&&w.CONNECT_EMAIL_ANALYSIS_V861.account(t)?.profile||{}}catch(_){}const tg=tags(t);return'<section class="ea866-customer-card"><div class="ea866-customer-grid"><div><span class="ea866-kicker">Customer</span><strong>'+esc(t.contact||'Customer')+'</strong><small>'+esc(t.email||'')+'</small></div><div><span class="ea866-kicker">Account</span><strong>'+esc(t.company||'Account')+'</strong><small>Owner: '+esc(p.owner||rep())+'</small></div><div><span class="ea866-kicker">Next follow-up</span><strong>'+esc(reminderText(id))+'</strong><small><button type="button" data-ea866-followup style="border:0;background:transparent;color:#00799d;padding:0;font:700 10px Segoe UI,Arial;cursor:pointer">Open reminder ↗</button></small></div><div><span class="ea866-kicker">Response</span><div class="ea866-response-slot">'+responseHTML(t)+'</div></div></div></section><section class="ea866-label-block"><div class="ea866-label-head"><strong>Email labels</strong><button type="button" data-ea866-labels>Edit labels</button></div><div class="ea866-labels">'+tg.map(x=>'<span>'+esc(x)+'</span>').join('')+'</div></section><connect-mail-context mode="details" thread-id="'+esc(id)+'"></connect-mail-context><connect-mail-context mode="checklist" thread-id="'+esc(id)+'"></connect-mail-context>';}
+function configureContext(){const col=d.querySelector('.ea866-context-col'),details=col&&col.querySelector('connect-mail-context[mode="details"]');if(details&&details.shadowRoot){try{details.tab='account';if(typeof details.renderTab==='function')details.renderTab()}catch(_){}if(!details.shadowRoot.querySelector('#ea866-shadow-hide')){const st=d.createElement('style');st.id='ea866-shadow-hide';st.textContent='button[data-tab="chain"]{display:none!important}';details.shadowRoot.append(st)}}}
+function applyGrid(){const page=d.querySelector('.ea865-email-page'),grid=page&&page.querySelector('.ea865-mailgrid');if(!grid)return;page.classList.toggle('ea866-nav-collapsed',!!S.collapsed);grid.style.setProperty('--ea866-nav',(S.collapsed?54:Math.max(190,Math.min(330,Number(S.widths.nav)||238)))+'px');grid.style.setProperty('--ea866-list',Math.max(270,Math.min(470,Number(S.widths.list)||340))+'px');grid.style.setProperty('--ea866-context',Math.max(300,Math.min(520,Number(S.widths.context)||390))+'px');}
+function addStructure(){const page=d.querySelector('.ea865-email-page'),grid=page&&page.querySelector('.ea865-mailgrid');if(!page||!grid)return false;if(!grid.querySelector('.ea866-folder-col')){const nav=d.createElement('section');nav.className='ea866-folder-col';grid.insertBefore(nav,grid.firstElementChild);const inboxPanel=grid.querySelector('.ea865-inbox-panel'),emailPanel=grid.querySelector('.ea865-workspace-panel');if(!inboxPanel||!emailPanel)return false;const r1=resizer('nav'),r2=resizer('list'),r3=resizer('context');nav.after(r1);inboxPanel.after(r2);emailPanel.classList.add('ea866-email-col');emailPanel.after(r3);const ctx=d.createElement('aside');ctx.className='ea866-context-col';r3.after(ctx);}return true}
+function resizer(kind){const x=d.createElement('div');x.className='ea866-resizer';x.dataset.resize=kind;x.setAttribute('role','separator');x.setAttribute('aria-orientation','vertical');x.tabIndex=0;return x}
+function renderAll(){if(!addStructure())return;applyGrid();renderTags();renderNav();renderList();renderContext();setTimeout(renderChain,80);}
+function enhance(){const page=d.querySelector('.ea865-email-page');if(!page)return;page.dataset.v866='true';renderAll();ensureDialogs();}
+function setSource(type,id){S.source={type,id};S.tag='';runtime.checked.clear();save();renderAll()}
+function setTag(id){S.tag=id||'';runtime.checked.clear();save();renderTags();renderList()}
+function openThread(id){meta(id).read=true;save();runtime.checked.delete(id);try{w._ea756Select&&w._ea756Select(id)}catch(_){}}
+function moveThreads(ids,folderId){ids.forEach(id=>{const m=meta(id);if(folderId==='inbox'){delete m.folderId;m.completed=false;}else{m.folderId=folderId;m.completed=false;}});save();runtime.checked.clear();renderAll()}
+function completeThreads(ids){ids.forEach(id=>{const m=meta(id);m.completed=true;m.read=true;});save();runtime.checked.clear();renderAll()}
+function flagThreads(ids,value){ids.forEach(id=>{const m=meta(id),t=getThread(id);m.flagged=value==null?!isFlagged(t):value;});save();renderAll()}
+function readThreads(ids,value){ids.forEach(id=>meta(id).read=value);save();renderAll()}
+function pin(company){if(S.pins.includes(company)){setSource('customer',company);return}if(S.pins.length>=5){toast('You can pin up to 5 customers.');return}S.pins.push(company);save();renderNav()}
+function unpin(company){S.pins=S.pins.filter(x=>x!==company);if(sourceOn('customer',company))S.source={type:'system',id:'inbox'};save();renderAll()}
+function toast(msg){try{const x=d.createElement('div');x.className='ea756-toast';x.textContent=msg;d.body.append(x);setTimeout(()=>x.remove(),1800)}catch(_){}}
+function ensureDialogs(){const overlay=d.getElementById('rp-overlay');if(!overlay)return;if(!overlay.querySelector('#ea866-folder-dialog'))overlay.insertAdjacentHTML('beforeend','<dialog id="ea866-folder-dialog" class="ea866-dialog"><div class="ea866-dialog-head"><strong>Folder</strong><button type="button" data-dialog-close>×</button></div><form method="dialog"><div class="ea866-dialog-body"><label>Folder name<input id="ea866-folder-name" maxlength="42" required></label><label>Icon<select id="ea866-folder-icon">'+ICONS.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')+'</select></label><div><span style="display:block;font-size:12px;font-weight:700;color:#48697a;margin-bottom:6px">Color</span><div class="ea866-color-row">'+COLORS.map(x=>'<button type="button" class="ea866-color-swatch" data-folder-color="'+x+'" style="background:'+x+'" aria-label="Choose '+x+'"></button>').join('')+'</div></div></div><div class="ea866-dialog-actions"><button type="button" class="danger" data-folder-delete hidden>Delete</button><button type="button" data-dialog-close>Cancel</button><button type="submit" class="primary">Save folder</button></div></form></dialog>');if(!overlay.querySelector('#ea866-label-dialog'))overlay.insertAdjacentHTML('beforeend','<dialog id="ea866-label-dialog" class="ea866-dialog"><div class="ea866-dialog-head"><strong>Email labels</strong><button type="button" data-dialog-close>×</button></div><form method="dialog"><div class="ea866-dialog-body" id="ea866-label-body"></div><div class="ea866-dialog-actions"><button type="button" data-label-reset>Use suggested</button><button type="button" data-dialog-close>Cancel</button><button type="submit" class="primary">Save labels</button></div></form></dialog>');if(!overlay.querySelector('#ea866-menu'))overlay.insertAdjacentHTML('beforeend','<div id="ea866-menu" class="ea866-menu" hidden></div>')}
+function folderDialog(id){ensureDialogs();const dlg=d.getElementById('ea866-folder-dialog'),f=S.folders.find(x=>x.id===id)||{name:'',icon:'◆',color:COLORS[0]};runtime.folderEdit=id||'';dlg.querySelector('.ea866-dialog-head strong').textContent=id?'Edit folder':'New folder';dlg.querySelector('#ea866-folder-name').value=f.name||'';dlg.querySelector('#ea866-folder-icon').value=f.icon||'◆';dlg.dataset.color=f.color||COLORS[0];dlg.querySelectorAll('[data-folder-color]').forEach(x=>x.classList.toggle('on',x.dataset.folderColor===dlg.dataset.color));dlg.querySelector('[data-folder-delete]').hidden=!id;dlg.showModal();setTimeout(()=>dlg.querySelector('#ea866-folder-name').focus(),0)}
+function saveFolder(){const dlg=d.getElementById('ea866-folder-dialog'),name=clean(dlg.querySelector('#ea866-folder-name').value);if(!name)return false;const existing=S.folders.find(x=>x.id===runtime.folderEdit);if(existing){existing.name=name;existing.icon=dlg.querySelector('#ea866-folder-icon').value;existing.color=dlg.dataset.color||COLORS[0]}else S.folders.push({id:'folder-'+Date.now().toString(36),name,icon:dlg.querySelector('#ea866-folder-icon').value,color:dlg.dataset.color||COLORS[0]});save();renderAll();return true}
+function deleteFolder(){const id=runtime.folderEdit;if(!id)return;S.folders=S.folders.filter(x=>x.id!==id);Object.values(S.meta).forEach(m=>{if(m.folderId===id)delete m.folderId});if(sourceOn('folder',id))S.source={type:'system',id:'inbox'};save();d.getElementById('ea866-folder-dialog')?.close();renderAll()}
+function labelDialog(){const id=contextId(),t=id&&getThread(id);if(!t)return;ensureDialogs();const dlg=d.getElementById('ea866-label-dialog'),A=w.CONNECT_EMAIL_ANALYSIS_V861,C=w.CONNECT_EMAIL_CONTEXT_V861,current=tags(t),taxonomy=[...(A?.taxonomy||[]),'Needs Review','Call Follow-up'];dlg.dataset.thread=id;dlg.querySelector('#ea866-label-body').innerHTML='<p style="margin:0;color:#5c7786;font-size:12px">Choose the labels that should describe the latest customer email.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+[...new Set(taxonomy)].map(x=>'<label style="display:flex;grid-template-columns:auto 1fr;align-items:center;gap:7px;font-weight:600"><input type="checkbox" data-label-value="'+esc(x)+'" '+(current.includes(x)?'checked':'')+' style="width:16px!important;height:16px!important;min-height:16px!important">'+esc(x)+'</label>').join('')+'</div>';dlg.showModal()}
+async function saveLabels(reset){const dlg=d.getElementById('ea866-label-dialog'),id=dlg.dataset.thread,t=getThread(id),C=w.CONNECT_EMAIL_CONTEXT_V861,A=w.CONNECT_EMAIL_ANALYSIS_V861;if(!t||!C||!A)return;const entry=C.entry(id);entry.labels=reset?null:{revision:A.analyze(t).revision,values:[...dlg.querySelectorAll('[data-label-value]:checked')].map(x=>x.dataset.labelValue)};try{await C.save();dlg.close();renderContext();renderList();renderTags()}catch(e){toast(e.message||'Labels could not save.')};}
+function openMenu(id,x,y){ensureDialogs();runtime.menuThread=id;const t=getThread(id),m=meta(id),menu=d.getElementById('ea866-menu');if(!t||!menu)return;const read=isRead(t),flag=isFlagged(t);menu.innerHTML='<button type="button" data-menu="read">'+(read?'Mark unread':'Mark read')+'<small>R</small></button><button type="button" data-menu="flag">'+(flag?'Unflag':'Flag')+'<small>F</small></button><button type="button" data-menu="complete">Complete<small>✓</small></button><hr><button type="button" data-menu-move="inbox">Move to Inbox</button>'+S.folders.map(f=>'<button type="button" data-menu-move="'+esc(f.id)+'">Move to '+esc(f.name)+'</button>').join('');menu.hidden=false;const wv=innerWidth,hv=innerHeight,box=menu.getBoundingClientRect();menu.style.left=Math.min(x,wv-box.width-12)+'px';menu.style.top=Math.min(y,hv-box.height-12)+'px'}
+function closeMenu(){const m=d.getElementById('ea866-menu');if(m)m.hidden=true}
+function startResize(e,kind){const page=d.querySelector('.ea865-email-page'),grid=page&&page.querySelector('.ea865-mailgrid');if(!grid)return;const start=e.clientX,base={...S.widths},el=e.currentTarget;el.classList.add('dragging');el.setPointerCapture?.(e.pointerId);function move(ev){const dx=ev.clientX-start;if(kind==='nav')S.widths.nav=Math.max(190,Math.min(330,base.nav+dx));else if(kind==='list')S.widths.list=Math.max(270,Math.min(470,base.list+dx));else if(kind==='context')S.widths.context=Math.max(300,Math.min(520,base.context-dx));applyGrid()}function up(){el.classList.remove('dragging');save();d.removeEventListener('pointermove',move);d.removeEventListener('pointerup',up)}d.addEventListener('pointermove',move);d.addEventListener('pointerup',up,{once:true})}
+function reorderFolder(from,to){if(from===to)return;const a=S.folders.findIndex(x=>x.id===from),b=S.folders.findIndex(x=>x.id===to);if(a<0||b<0)return;const [f]=S.folders.splice(a,1);S.folders.splice(b,0,f);save();renderNav()}
+function reorderPin(from,to){if(from===to)return;const a=S.pins.indexOf(from),b=S.pins.indexOf(to);if(a<0||b<0)return;const [p]=S.pins.splice(a,1);S.pins.splice(b,0,p);save();renderNav()}
+function searchNow(){S.source={type:'search',id:'global'};save();renderTags();renderList()}
+function wire(){if(d.documentElement.dataset.ea866Wired)return;d.documentElement.dataset.ea866Wired='true';d.addEventListener('click',e=>{const page=e.target.closest('.ea865-email-page');if(!page){if(!e.target.closest('#ea866-menu'))closeMenu();return}const source=e.target.closest('[data-ea866-source]');if(source&&!e.target.closest('[data-unpin],[data-ea866-folder-menu]')){const raw=source.dataset.ea866Source,i=raw.indexOf(':');setSource(raw.slice(0,i),raw.slice(i+1));return}if(e.target.closest('[data-ea866-collapse]')){S.collapsed=!S.collapsed;save();renderAll();return}if(e.target.closest('[data-ea866-new-folder]')){folderDialog('');return}const fm=e.target.closest('[data-ea866-folder-menu]');if(fm){folderDialog(fm.dataset.ea866FolderMenu);return}if(e.target.closest('[data-ea866-compose]')){w._ea756Compose?.();return}const tag=e.target.closest('[data-ea866-tag]');if(tag){setTag(tag.dataset.ea866Tag);return}const pinAdd=e.target.closest('[data-pin-add]');if(pinAdd){pin(pinAdd.dataset.pinAdd);return}const un=e.target.closest('[data-unpin]');if(un){unpin(un.dataset.unpin);return}const customer=e.target.closest('[data-ea866-customer]');if(customer){setSource('customer',customer.dataset.ea866Customer);return}const row=e.target.closest('.ea866-mail-row');if(row&&!e.target.closest('input')){openThread(row.dataset.thread);return}const bulk=e.target.closest('[data-bulk]');if(bulk){const ids=[...runtime.checked];if(bulk.dataset.bulk==='read')readThreads(ids,true);else if(bulk.dataset.bulk==='unread')readThreads(ids,false);else if(bulk.dataset.bulk==='flag')flagThreads(ids,true);else if(bulk.dataset.bulk==='complete')completeThreads(ids);return}if(e.target.closest('[data-ea866-labels]')){labelDialog();return}if(e.target.closest('[data-ea866-followup]')){const box=d.querySelector('.ea866-context-col connect-mail-context[mode="details"]');const details=box&&box.shadowRoot&&box.shadowRoot.querySelector('.followup>details');if(details){details.open=true;box.scrollIntoView({block:'nearest'})}return}const mc=e.target.closest('[data-menu]');if(mc){const id=runtime.menuThread,t=getThread(id);if(mc.dataset.menu==='read')readThreads([id],!isRead(t));if(mc.dataset.menu==='flag')flagThreads([id]);if(mc.dataset.menu==='complete')completeThreads([id]);closeMenu();return}const mm=e.target.closest('[data-menu-move]');if(mm){moveThreads([runtime.menuThread],mm.dataset.menuMove);closeMenu();return}if(e.target.closest('[data-dialog-close]')){e.target.closest('dialog')?.close();return}const sw=e.target.closest('[data-folder-color]');if(sw){const dlg=sw.closest('dialog');dlg.dataset.color=sw.dataset.folderColor;dlg.querySelectorAll('[data-folder-color]').forEach(x=>x.classList.toggle('on',x===sw));return}if(e.target.closest('[data-folder-delete]')){deleteFolder();return}if(e.target.closest('[data-label-reset]')){saveLabels(true);return}},true);
+ d.addEventListener('change',e=>{if(e.target.matches('[data-check-thread]')){e.target.checked?runtime.checked.add(e.target.dataset.checkThread):runtime.checked.delete(e.target.dataset.checkThread);renderBulk();return}if(e.target.matches('[data-bulk-move]')&&e.target.value){moveThreads([...runtime.checked],e.target.value);return}if(e.target.matches('[data-search-status]')){S.search.status=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-from]')){S.search.from=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-to]')){S.search.to=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-attachments]')){S.search.attachments=e.target.checked;save();searchNow();return}});
+ d.addEventListener('input',e=>{if(e.target.matches('[data-customer-search]')){runtime.customerQuery=e.target.value;renderNav();const el=d.querySelector('[data-customer-search]');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length)}return}if(e.target.matches('[data-global-search]')){S.search.query=e.target.value;save();clearTimeout(runtime.searchTimer);runtime.searchTimer=setTimeout(searchNow,180);return}});
+ d.addEventListener('keydown',e=>{if(e.target.matches('[data-global-search]')&&e.key==='Enter'){e.preventDefault();searchNow()}const row=e.target.closest('.ea866-mail-row');if(row&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openThread(row.dataset.thread)}});
+ d.addEventListener('contextmenu',e=>{const row=e.target.closest('.ea866-mail-row');if(row){e.preventDefault();openMenu(row.dataset.thread,e.clientX,e.clientY)}});
+ d.addEventListener('pointerdown',e=>{const r=e.target.closest('.ea866-resizer');if(r)startResize(e,r.dataset.resize)});
+ d.addEventListener('dragstart',e=>{const row=e.target.closest('.ea866-mail-row'),folder=e.target.closest('[data-custom-folder]'),pinEl=e.target.closest('[data-pin-company]');if(row){runtime.drag={kind:'thread',id:row.dataset.thread};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','thread:'+row.dataset.thread)}else if(folder){runtime.drag={kind:'folder',id:folder.dataset.customFolder};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','folder:'+folder.dataset.customFolder)}else if(pinEl){runtime.drag={kind:'pin',id:pinEl.dataset.pinCompany};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain','pin:'+pinEl.dataset.pinCompany)}});
+ d.addEventListener('dragover',e=>{const folder=e.target.closest('[data-custom-folder],[data-drop-system="inbox"],[data-pin-company]');if(!folder||!runtime.drag)return;if(runtime.drag.kind==='thread'&&(folder.hasAttribute('data-custom-folder')||folder.dataset.dropSystem==='inbox')){e.preventDefault();folder.classList.add('drop-target')}else if(runtime.drag.kind==='folder'&&folder.hasAttribute('data-custom-folder'))e.preventDefault();else if(runtime.drag.kind==='pin'&&folder.hasAttribute('data-pin-company'))e.preventDefault()});
+ d.addEventListener('dragleave',e=>{e.target.closest('.drop-target')?.classList.remove('drop-target')});
+ d.addEventListener('drop',e=>{const folder=e.target.closest('[data-custom-folder],[data-drop-system="inbox"],[data-pin-company]');if(!folder||!runtime.drag)return;e.preventDefault();d.querySelectorAll('.drop-target').forEach(x=>x.classList.remove('drop-target'));if(runtime.drag.kind==='thread'){moveThreads([runtime.drag.id],folder.dataset.customFolder||'inbox')}else if(runtime.drag.kind==='folder'&&folder.dataset.customFolder)reorderFolder(runtime.drag.id,folder.dataset.customFolder);else if(runtime.drag.kind==='pin'&&folder.dataset.pinCompany)reorderPin(runtime.drag.id,folder.dataset.pinCompany);runtime.drag=null});
+ d.addEventListener('dragend',()=>{runtime.drag=null;d.querySelectorAll('.drop-target').forEach(x=>x.classList.remove('drop-target'))});
+ d.addEventListener('submit',e=>{if(e.target.closest('#ea866-folder-dialog')){e.preventDefault();if(saveFolder())e.target.closest('dialog').close()}else if(e.target.closest('#ea866-label-dialog')){e.preventDefault();saveLabels(false)}});
+ d.addEventListener('email-compose-request',e=>{if(e.target.closest?.('.ea866-context-col')){e.stopPropagation();const ws=d.querySelector('.ea866-email-col connect-mail-workspace');ws?.dispatchEvent(new CustomEvent('email-compose-request'))}},true);
+ d.addEventListener('email-open-record',e=>{if(!e.target.closest?.('.ea866-context-col'))return;const flow=w.CONNECT_WORKFLOW_V789,detail=e.detail||{};if(detail.kind==='quote')flow?.openQuote(detail.id);else if(detail.kind==='order')flow?.openOrder(detail.id)},true);
+ d.addEventListener('click',e=>{if(!e.target.closest('#ea866-menu')&&!e.target.closest('.ea866-mail-row'))closeMenu()});
+}
+function boot(){wire();const root=d.getElementById('rp2-page');if(root)new MutationObserver(()=>{cancelAnimationFrame(runtime.raf);runtime.raf=requestAnimationFrame(enhance)}).observe(root,{childList:true});requestAnimationFrame(enhance);setTimeout(enhance,180);setTimeout(enhance,650)}
+if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+w.CONNECT_EMAIL_V866={state:()=>JSON.parse(JSON.stringify(S)),refresh:renderAll,reset:function(){localStorage.removeItem(PREF);S=def();runtime.checked.clear();renderAll()}};
+})(window,document);
+</script>
+<script type="application/json" id="connect-v866-change-log">{"version":"V866","base":"V865","approved_changes":["Four-column Email workspace: folders, folder contents, email, Connect context","Collapsible customizable folder rail with custom folders, folder icons/colors, drag reorder, pinned customers and customer search","Pinned customers use company logo when available with initials fallback; maximum five pins","Global email search across company, contact, email, subject, message content and tags with status/date/attachment filters","Inbox processing controls: drag email to folder, flag, complete, read/unread, right-click actions and multi-select bulk actions","Inbox status indicators for flagged, overdue response clock, needs-action exclamation and unread state","Top quick-tag filters limited to high-value sales tags","Email workspace header text forced white","Resizable Email columns with persisted widths","Dedicated email column keeps customer message/thread and composer; CRM intelligence, follow-up, labels, account/history and checklist live in the fourth column","Inbox is the default Email folder and user Email personalization persists"]}</script>
+
+</body></html>';
 }
 
 function rKPI(val,lbl,sub,col){return'<div class="mc"><div class="lbl">'+lbl+'</div><div class="val"'+(col?' style="color:'+col+'"':'')+'>'+val+'</div>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
@@ -76745,7 +77079,7 @@ function restoreEmailReminders861(reminders){
 'use strict';
 var TCP='Alex Morgan',MAX='Jordan Reed';
 var MAILKEY='tcp_connect_demo_email_v756',CRM='tcp_rp_company_crm_v510',ACTION='tcp_rp_action_center_v504';
-var UI={folder:'attention',selected:'',search:'',compose:null,aiPreview:'',aiChat:{}};
+var UI={folder:'inbox',selected:'',search:'',compose:null,aiPreview:'',aiChat:{}};
 function clean(v){return String(v==null?'':v).replace(/\s+/g,' ').trim()}
 function norm(v){return clean(v).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -76934,7 +77268,7 @@ window.CONNECT_DEMO_EMAIL_AI_V756={workspaceDeleteDraft862:function(threadId){re
  getThread:function(r,id){var t=isDemo(r)&&thread(r,id);return t?JSON.parse(JSON.stringify(t)):null;},
  markRead:function(r,id){if(isDemo(r))markRead(r,id);},
  openThread:function(id){var t=thread(rep(),id);if(!t)return false;if(t.callEmailStatus==='pending')return window.CONNECT_MYDAY_CALL_V841.openEmail(id);UI.folder='inbox';UI.search='';UI.selected=id;markRead(rep(),id);window._rp2Go('email');return true;},
- reset:function(){localStorage.removeItem(MAILKEY);UI.folder='attention';UI.selected='';UI.compose=null;UI.aiPreview='';UI.aiChat={};toast('Email + AI demo reset')},emailPage:emailPage,aiPage:aiPage};
+ reset:function(){localStorage.removeItem(MAILKEY);UI.folder='inbox';UI.selected='';UI.compose=null;UI.aiPreview='';UI.aiChat={};toast('Email + AI demo reset')},emailPage:emailPage,aiPage:aiPage};
 document.addEventListener('email-template',function(e){var f=e.target.closest('.ea756-compose');if(f){var sub=f.querySelector('#ea756Subject');if(sub)sub.value=e.detail.subject;collectCompose();}});
 mailState();
 })();
