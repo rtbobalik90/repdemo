@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v870-email-mailbox-tools">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v877-mail-navigation">
 <head>
 <style id="connect-v876-mail-rail-css">
-/* V876: one mail-rail layout. This earliest layer overrides legacy important
+/* V877: one mail-rail layout and a staged header mailbox switcher. This earliest layer overrides legacy important
    declarations without changing the My Day or shared Crown components. */
 @layer connect-mail-rail876;
 @layer connect-mail-rail876 {
@@ -23,10 +23,9 @@
  #rp-overlay .ea865-email-page.ea866-ready .ea866-compose-main *{color:#fff!important;-webkit-text-fill-color:#fff!important;font-style:normal!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea866-compose-main .ea876-compose-label{display:inline!important;font:inherit!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea866-compose-main .ea876-compose-label>span{display:inline!important;font:inherit!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-mailbox-short{display:none!important;}
  /* Collapsed and drag-narrowed states use exactly the same class and layout. */
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-head{justify-content:center!important;padding:10px 6px!important;min-height:56px!important;gap:0!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-head>strong,
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea877-mail-heading,
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact [data-ea866-new-folder],
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea868-search-section,
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-nav-section:not(.ea869-folders-section),
@@ -37,23 +36,17 @@
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-head-actions{margin:0!important;justify-content:center!important;width:auto!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact [data-ea866-collapse]{width:34px!important;height:34px!important;padding:0!important;display:grid!important;place-items:center!important;font:700 20px/1 'Segoe UI',Arial,sans-serif!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-scroll{padding:10px 6px!important;overflow-y:auto!important;overflow-x:hidden!important;scrollbar-gutter:auto!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-compose-main{flex-direction:column!important;width:100%!important;max-width:100px!important;min-height:76px!important;margin:0 auto 14px!important;padding:10px 4px!important;gap:5px!important;border-radius:9px!important;font-size:12px!important;box-sizing:border-box!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-compose-main{flex-direction:column!important;width:100%!important;max-width:none!important;min-height:84px!important;margin:0 0 14px!important;padding:12px 4px!important;gap:5px!important;border-radius:9px!important;font-size:12px!important;box-sizing:border-box!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-compose-main>b{display:block!important;font-size:16px!important;line-height:1!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-compose-main .ea876-compose-label{display:block!important;text-align:center!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea876-compose-label>span{display:block!important;font:inherit!important;line-height:1.2!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea869-folders-section{display:block!important;padding:0!important;margin:0!important;border:0!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-item{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:100%!important;max-width:100px!important;min-height:48px!important;height:auto!important;margin:0 auto 7px!important;padding:7px 5px!important;box-sizing:border-box!important;border-radius:9px!important;overflow:hidden!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-icon{width:28px!important;height:28px!important;min-width:28px!important;flex:0 0 28px!important;box-shadow:none!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-item{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:6px!important;width:100%!important;max-width:none!important;min-height:56px!important;height:auto!important;margin:0 0 8px!important;padding:8px 5px!important;box-sizing:border-box!important;border-radius:9px!important;overflow:hidden!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-icon{width:30px!important;height:30px!important;min-width:30px!important;flex:0 0 30px!important;box-shadow:none!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-count{flex:0 0 auto!important;min-width:23px!important;height:23px!important;min-height:23px!important;font-size:11px!important;padding:0 4px!important;position:static!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea868-folder-actions{display:flex!important;gap:0!important;width:auto!important;flex:none!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea868-subfolders{margin:0!important;padding:0!important;border:0!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea868-subfolders .ea866-folder-item{border-left-style:dashed!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea871-mailbox-switcher{max-width:100px!important;padding:0!important;margin:0 auto 10px!important;box-shadow:none!important;overflow:hidden!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea871-mailbox-switcher label{display:block!important;position:relative!important;min-height:44px!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea871-mailbox-switcher :is(.ea876-mailbox-label,small){display:none!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea876-mailbox-short{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:44px!important;color:#174a5a!important;font:700 13px/1 'Segoe UI',Arial,sans-serif!important;letter-spacing:0!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea871-mailbox-switcher select{display:block!important;position:absolute!important;inset:0!important;opacity:0!important;width:100%!important;height:100%!important;min-width:0!important;cursor:pointer!important;}
- #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea871-mailbox-switcher:focus-within{outline:2px solid #007fa3!important;outline-offset:2px!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-item:focus-visible{outline:2px solid #007fa3!important;outline-offset:-3px!important;}
  #rp-overlay .ea865-email-page.ea866-ready .ea876-compact .ea866-folder-item.on{border-color:#0083a6!important;background:#def1f5!important;box-shadow:inset 2px 0 #007fa3!important;}
  html body>dialog.ea869-control .ea876-demo-share{max-width:660px!important;}
@@ -66,6 +59,53 @@
  html body>dialog.ea869-control .ea876-demo-share [hidden]{display:none!important;}
  @media(max-width:1040px){#rp-overlay .ea865-email-page.ea866-ready .ea865-mailgrid{grid-template-columns:92px minmax(280px,.85fr) minmax(420px,1.3fr)!important;}}
  @media(max-width:760px){html body>dialog.ea869-control .ea876-demo-share{grid-template-columns:minmax(0,1fr)!important;}}
+
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-mail-heading{display:grid!important;gap:4px!important;min-width:0!important;flex:1!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-mail-heading strong{font:700 18px/1.25 'Segoe UI',Arial,sans-serif!important;color:#fff!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-mail-heading small{font:500 12px/1.4 'Segoe UI',Arial,sans-serif!important;color:#d7edf3!important;white-space:normal!important;overflow-wrap:anywhere!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea866-folder-head .ea877-mailbox-swap{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;border:1px solid #a8cbd5!important;border-radius:8px!important;background:#ffffff14!important;color:#fff!important;-webkit-text-fill-color:#fff!important;cursor:pointer!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-mailbox-swap>span{font:600 24px/1 'Segoe UI',Arial,sans-serif!important;color:#fff!important;-webkit-text-fill-color:#fff!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-mailbox-swap:is(:hover,[aria-expanded=true]){background:#ffffff2c!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-folder-add{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:28px!important;width:28px!important;min-height:28px!important;height:28px!important;margin:0!important;padding:0!important;background:#fff!important;border:1px solid #b9d7e1!important;border-radius:7px!important;color:#007c97!important;cursor:pointer!important;font:600 21px/1 'Segoe UI',Arial,sans-serif!important;box-shadow:none!important;text-transform:none!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-folder-add>span{font:inherit!important;letter-spacing:0!important;line-height:1!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-folder-add:hover{background:#e3f3f7!important;border-color:#0085a4!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-folder-add:disabled{opacity:.45!important;cursor:not-allowed!important;}
+ #rp-overlay .ea865-email-page.ea866-ready :is(.ea877-folder-add,.ea877-mailbox-swap):focus-visible{outline:2px solid #007fa3!important;outline-offset:3px!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea877-mailbox-swap:focus-visible{outline-color:#fff!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact.ea877-compact-roomy .ea866-folder-scroll{padding:12px 10px!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact.ea877-compact-roomy .ea866-folder-head-actions{width:100%!important;justify-content:space-between!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact.ea877-compact-roomy .ea866-folder-head{padding:12px 14px!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact.ea877-compact-roomy .ea866-folder-item{min-height:62px!important;padding:10px 14px!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact.ea877-compact-roomy .ea866-folder-icon{width:36px!important;height:36px!important;min-width:36px!important;flex-basis:36px!important;font-size:18px!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact.ea877-compact-roomy .ea866-folder-count{min-width:26px!important;height:26px!important;min-height:26px!important;font-size:12px!important;}
+ #rp-overlay .ea865-email-page.ea866-ready .ea876-compact.ea877-compact-roomy .ea866-compose-main{font-size:14px!important;}
+ html body>dialog.ea877-mailbox-dialog{position:fixed!important;inset:auto!important;margin:0!important;width:352px;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - 24px)!important;padding:0!important;overflow:auto!important;border:1px solid #aacdd9!important;border-radius:13px!important;background:#fff!important;color:#173e51!important;box-shadow:0 16px 42px #143a4e30!important;font:14px/1.5 'Segoe UI',Arial,sans-serif!important;}
+ html body>dialog.ea877-mailbox-dialog:not([open]){display:none!important;}
+ html body>dialog.ea877-mailbox-dialog::backdrop{background:#103c4e0d!important;backdrop-filter:none!important;}
+ .ea877-mailbox-dialog *{box-sizing:border-box!important;}
+ .ea877-mailbox-dialog [hidden]{display:none!important;}
+ .ea877-mailbox-dialog form{margin:0!important;padding:0!important;}
+ .ea877-mailbox-dialog .ea877-switch-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:12px!important;padding:18px!important;background:#f1f8fa!important;border-bottom:1px solid #d7e6ec!important;}
+ .ea877-mailbox-dialog h3{font:700 18px/1.35 'Segoe UI',Arial,sans-serif!important;color:#174a5a!important;margin:0 0 3px!important;}
+ .ea877-mailbox-dialog p{font:13px/1.5 'Segoe UI',Arial,sans-serif!important;color:#526e7f!important;margin:0!important;}
+ .ea877-mailbox-dialog button{font:650 14px/1.3 'Segoe UI',Arial,sans-serif!important;min-height:38px!important;border:1px solid #b9d2de!important;border-radius:8px!important;padding:8px 16px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#214f65!important;background:#fff!important;cursor:pointer!important;box-shadow:none!important;}
+ .ea877-mailbox-dialog .ea877-switch-head>button{width:30px!important;min-width:30px!important;height:30px!important;min-height:30px!important;padding:0!important;font-size:20px!important;}
+ .ea877-mailbox-dialog .ea877-mailbox-options{display:grid!important;gap:8px!important;margin:0!important;padding:14px!important;border:0!important;min-width:0!important;}
+ .ea877-mailbox-dialog legend{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;}
+ .ea877-mailbox-dialog .ea877-mailbox-option{display:grid!important;grid-template-columns:18px 34px minmax(0,1fr)!important;align-items:center!important;gap:10px!important;margin:0!important;padding:12px!important;border:1px solid #d4e4eb!important;border-radius:9px!important;background:white!important;cursor:pointer!important;}
+ .ea877-mailbox-dialog .ea877-mailbox-option.is-selected{background:#e9f6f9!important;border-color:#5aa7ba!important;}
+ .ea877-mailbox-dialog .ea877-mailbox-option input[type=radio]{position:static!important;display:block!important;appearance:auto!important;width:18px!important;height:18px!important;min-width:18px!important;min-height:18px!important;max-width:18px!important;max-height:18px!important;padding:0!important;margin:0!important;accent-color:#007f99!important;}
+ .ea877-mailbox-dialog .ea877-mailbox-avatar{width:34px!important;height:34px!important;display:grid!important;place-items:center!important;background:#dcedf3!important;color:#006d87!important;border-radius:9px!important;font:700 12px/1 'Segoe UI',Arial,sans-serif!important;}
+ .ea877-mailbox-dialog .ea877-mailbox-choice{display:grid!important;gap:3px!important;min-width:0!important;}
+ .ea877-mailbox-dialog .ea877-mailbox-choice strong{font:700 14px/1.4 'Segoe UI',Arial,sans-serif!important;color:#17475b!important;overflow-wrap:anywhere!important;}
+ .ea877-mailbox-dialog .ea877-mailbox-choice small{font:12px/1.5 'Segoe UI',Arial,sans-serif!important;color:#557487!important;overflow-wrap:anywhere!important;}
+ .ea877-mailbox-dialog .ea877-switch-footer{display:flex!important;justify-content:flex-end!important;gap:8px!important;padding:12px 16px!important;border-top:1px solid #d9e7ed!important;background:#f7fafc!important;}
+ .ea877-mailbox-dialog .primary{background:#007f96!important;border-color:#007f96!important;color:#fff!important;-webkit-text-fill-color:#fff!important;min-width:78px!important;}
+ .ea877-mailbox-dialog button:hover:not(:disabled){filter:brightness(.96)!important;}
+ .ea877-mailbox-dialog button:disabled{opacity:.5!important;cursor:default!important;}
+ .ea877-mailbox-dialog .ea877-switch-error{margin:0!important;padding:0 16px 12px!important;color:#973e32!important;}
+ .ea877-mailbox-dialog :is(button,input):focus-visible{outline:2px solid #007fa3!important;outline-offset:3px!important;}
+
 }
 
 </style>
@@ -1955,11 +1995,11 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 </style>
 <!-- Connect v622: dashboard explainability layer + readable coaching metric provenance; retains v620 integrity and v621 readability -->
 <!-- v617 second sweep: removed unused globals/theme tokens after v616 cleanup; preserved v614 durable autosave + v615 full-state safety. -->
-<title>Connect V876 — Mailbox & Rail Repair</title>
+<title>Connect V877 — Mail Navigation</title>
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v876',display:'V876',title:'Connect V876 — Mailbox & Rail Repair'});
+  var release=Object.freeze({version:'v877',display:'V877',title:'Connect V877 — Mail Navigation'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -91729,7 +91769,87 @@ function rememberMailbox(owner){owner=clean(owner)||viewerRep();S.mailboxStates=
 function restoreMailbox(owner){owner=clean(owner)||viewerRep();const snap=S.mailboxStates&&S.mailboxStates[owner];const base=def();MAILBOX_STATE_FIELDS.forEach(k=>S[k]=cloneState(snap&&Object.prototype.hasOwnProperty.call(snap,k)?snap[k]:base[k]));normalizeMailboxState()}
 function sharedInfo(owner){try{return w.CONNECT_EMAIL_SHARING_V871?.shareForOwner?.(owner)||null}catch(_){return null}}
 function canShared(action){if(rep()===viewerRep())return true;const info=sharedInfo(rep());return !!(info&&Array.isArray(info.permissions)&&info.permissions.includes(action))}
-function sharedSelectorHTML(){try{return w.CONNECT_EMAIL_SHARING_V871?.selectorHTML?.()||''}catch(_){return''}}
+// Header switching uses the existing sharing registry and switchMailbox transaction.
+// Selecting a radio option is local to this dialog; only Save changes the mailbox.
+function mailboxChoices(){
+ const sharing=w.CONNECT_EMAIL_SHARING_V871;
+ const own={owner:viewerRep(),label:'My Inbox',detail:'Your mailbox',own:true};
+ return [own,...(sharing?.available?.()||[]).map(x=>({owner:x.owner,label:x.owner+'’s Inbox',detail:mailboxPermissionLabel(x.permissions),own:false}))];
+}
+function mailboxPermissionLabel(permissions){
+ const labels={view:'View',reply:'Reply',complete:'Complete',move:'Move / organize',send:'Send as'};
+ return (permissions||[]).map(p=>labels[p]||p).join(' · ')||'View only';
+}
+function mailboxHeaderHTML(){
+ const choices=mailboxChoices(),current=choices.find(x=>x.owner===rep()),label=current?.label||(rep()===viewerRep()?'My Inbox':rep()+'’s Inbox');
+ const open=!!d.getElementById('ea877-mailbox-dialog')?.open;
+ return '<div class="ea877-mail-heading"><strong>Mail</strong><small title="'+esc(label)+'">'+esc(label)+'</small></div><div class="ea866-folder-head-actions">'+
+ (choices.length>1?'<button type="button" class="ea877-mailbox-swap" data-ea877-switch-inbox aria-label="Switch inbox. Currently '+esc(label)+'" title="Switch inbox · '+esc(label)+'" aria-haspopup="dialog" aria-controls="ea877-mailbox-dialog" aria-expanded="'+open+'"><span aria-hidden="true">⇄</span></button>':'')+
+ '<button type="button" class="ea868-collapse" data-ea866-collapse title="'+(S.collapsed?'Expand folders':'Collapse folders')+'">'+(S.collapsed?'›':'‹')+'</button></div>';
+}
+let mailboxPickerBusy=false;
+function positionMailboxPicker(dlg){
+ if(!dlg.open)return;
+ const trigger=d.querySelector('[data-ea877-switch-inbox]'),r=trigger?.getBoundingClientRect();
+ const vw=d.documentElement.clientWidth||innerWidth,vh=innerHeight;
+ dlg.style.width=Math.min(352,Math.max(220,vw-24))+'px';
+ const b=dlg.getBoundingClientRect();
+ dlg.style.setProperty('left',Math.max(12,Math.min(r?.left||12,vw-b.width-12))+'px','important');
+ dlg.style.setProperty('top',Math.max(12,Math.min((r?.bottom||12)+8,vh-b.height-12))+'px','important');
+}
+function ensureMailboxPicker(){
+ let dlg=d.getElementById('ea877-mailbox-dialog');if(dlg)return dlg;
+ dlg=d.createElement('dialog');dlg.id='ea877-mailbox-dialog';dlg.className='ea877-mailbox-dialog';
+ dlg.setAttribute('aria-labelledby','ea877-switch-title');
+ dlg.setAttribute('aria-describedby','ea877-switch-description');
+ d.body.append(dlg);
+ dlg.addEventListener('click',e=>{
+  if(mailboxPickerBusy)return;
+  const target=e.target instanceof Element?e.target:null;
+  if(target?.closest('[data-ea877-switch-cancel]')){dlg.close('cancel');return;}
+  if(target===dlg){const r=dlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dlg.close('cancel');}
+ });
+ dlg.addEventListener('change',e=>{
+  if(!e.target.matches('[name="mailbox877"]'))return;
+  dlg.querySelectorAll('.ea877-mailbox-option').forEach(row=>row.classList.toggle('is-selected',!!row.querySelector('input')?.checked));
+  const save=dlg.querySelector('[data-ea877-switch-save]');if(save)save.disabled=e.target.value===rep();
+  const error=dlg.querySelector('[data-ea877-switch-error]');if(error){error.hidden=true;error.textContent='';}
+ });
+ dlg.addEventListener('submit',async e=>{
+  e.preventDefault();e.stopPropagation();if(mailboxPickerBusy)return;
+  const owner=dlg.querySelector('[name="mailbox877"]:checked')?.value;
+  const error=dlg.querySelector('[data-ea877-switch-error]');
+  if(!owner)return;
+  if(!w.CONNECT_EMAIL_SHARING_V871?.canViewOwner?.(owner)){error.textContent='That shared inbox is no longer available. Close this menu and choose an available inbox.';error.hidden=false;return;}
+  if(owner===rep()){dlg.close('unchanged');return;}
+  const save=dlg.querySelector('[data-ea877-switch-save]');
+  mailboxPickerBusy=true;dlg.setAttribute('aria-busy','true');
+  dlg.querySelectorAll('button,input').forEach(el=>el.disabled=true);save.textContent='Switching…';
+  try{
+   const ok=await switchMailbox(owner);
+   if(ok&&rep()===owner){dlg.close('saved');}
+   else{error.textContent='Your current draft could not be saved. The mailbox was not changed. Please save the draft and try again.';error.hidden=false;}
+  }catch(err){console.error('[Connect mailbox switch]',err);error.textContent='The mailbox could not be opened. Your current work has been retained. Please try again.';error.hidden=false;}
+  finally{
+   mailboxPickerBusy=false;dlg.removeAttribute('aria-busy');
+   dlg.querySelectorAll('button,input').forEach(el=>el.disabled=false);save.textContent='Save';
+   save.disabled=dlg.querySelector('[name="mailbox877"]:checked')?.value===rep();
+  }
+ });
+ dlg.addEventListener('cancel',e=>{if(mailboxPickerBusy)e.preventDefault();});
+ dlg.addEventListener('close',()=>{const trigger=d.querySelector('[data-ea877-switch-inbox]');trigger?.setAttribute('aria-expanded','false');if(trigger?.isConnected)trigger.focus({preventScroll:true});});
+ return dlg;
+}
+function openMailboxPicker(){
+ const choices=mailboxChoices();if(choices.length<2)return;
+ const dlg=ensureMailboxPicker();if(dlg.open)return;
+ dlg.innerHTML='<form><header class="ea877-switch-head"><div><h3 id="ea877-switch-title">Switch Inbox</h3><p id="ea877-switch-description">Choose a mailbox, then save.</p></div><button type="button" data-ea877-switch-cancel aria-label="Close mailbox switcher">×</button></header><fieldset class="ea877-mailbox-options"><legend>Available inboxes</legend>'+
+ choices.map(x=>'<label class="ea877-mailbox-option '+(x.owner===rep()?'is-selected':'')+'"><input type="radio" name="mailbox877" value="'+esc(x.owner)+'" '+(x.owner===rep()?'checked':'')+'><span class="ea877-mailbox-avatar" aria-hidden="true">'+esc(x.owner.split(/\s+/).map(n=>n[0]).slice(0,2).join(''))+'</span><span class="ea877-mailbox-choice"><strong>'+esc(x.label)+'</strong><small>'+esc(x.detail)+'</small></span></label>').join('')+
+ '</fieldset><p class="ea877-switch-error" data-ea877-switch-error role="alert" hidden></p><footer class="ea877-switch-footer"><button type="button" data-ea877-switch-cancel>Cancel</button><button type="submit" class="primary" data-ea877-switch-save disabled>Save</button></footer></form>';
+ dlg.showModal();positionMailboxPicker(dlg);
+ d.querySelector('[data-ea877-switch-inbox]')?.setAttribute('aria-expanded','true');
+ dlg.querySelector('[name="mailbox877"]:checked')?.focus({preventScroll:true});
+}
 async function switchMailbox(owner,opts){
  opts=opts||{};owner=clean(owner)||viewerRep();
  if(owner!==viewerRep()&&!w.CONNECT_EMAIL_SHARING_V871?.canViewOwner?.(owner)){toast('You no longer have access to that shared inbox.');owner=viewerRep();}
@@ -91852,11 +91972,11 @@ function folderMoveOptions(){return S.folders.map(f=>'<option value="'+esc(f.id)
 function sortThreads(list){const key=S.sort||'newest',newest=(a,b)=>Date.parse(last(b).date||0)-Date.parse(last(a).date||0),oldest=(a,b)=>-newest(a,b),bool=(fn)=>(a,b)=>Number(fn(b))-Number(fn(a))||newest(a,b);const f={newest,oldest,action:bool(t=>!!t.requiresAction&&!completed(t)),overdue:bool(overdue),flagged:bool(isFlagged),unread:bool(t=>!isRead(t)),customer:(a,b)=>String(a.company||a.contact||'').localeCompare(String(b.company||b.contact||''))||newest(a,b),subject:(a,b)=>String(a.subject||'').localeCompare(String(b.subject||''))||newest(a,b)}[key]||newest;return list.slice().sort(f)}
 
 function renderNav(){const col=q867('.ea866-folder-col');if(!col)return;const keep=rememberNav(col),c=counts(),query=runtime.customerQuery.toLowerCase(),companies=companyRows().filter(([name,t])=>!query||[name,t.contact,t.email].join(' ').toLowerCase().includes(query)).slice(0,6);const empPins=(S.pinnedEmployees||[]).map(employeeByKey).filter(Boolean);
- col.innerHTML='<div class="ea866-folder-head"><strong>Mail</strong><div class="ea866-folder-head-actions"><button type="button" class="ea868-new-folder" data-ea866-new-folder '+(!canShared('move')?'disabled title="Folder changes are not permitted in this shared inbox"':'')+'>New Folder</button><button type="button" class="ea868-collapse" data-ea866-collapse title="'+(S.collapsed?'Expand folders':'Collapse folders')+'">'+(S.collapsed?'›':'‹')+'</button></div></div><div class="ea866-folder-scroll">'+sharedSelectorHTML()+
+ col.innerHTML='<div class="ea866-folder-head">'+mailboxHeaderHTML()+'</div><div class="ea866-folder-scroll">'+
  '<section class="ea866-nav-section ea868-search-section"><div class="ea866-nav-label"><span>Email Search</span></div><div class="ea866-nav-search"><input data-global-search placeholder="Search name, email, subject, tags…" value="'+esc(S.search.query||'')+'"></div><details class="ea866-search-options"><summary>Filters</summary><div class="ea866-search-grid"><label class="full">Status<select data-search-status><option value="any">Any status</option><option value="unread">Unread</option><option value="flagged">Flagged</option><option value="action">Needs action</option><option value="completed">Completed</option></select></label><label>From<input type="date" data-search-from value="'+esc(S.search.from||'')+'"></label><label>To<input type="date" data-search-to value="'+esc(S.search.to||'')+'"></label><label class="full ea868-checkline"><input type="checkbox" data-search-attachments '+(S.search.attachments?'checked':'')+'>Has attachments</label></div></details></section>'+
  '<section class="ea866-nav-section ea868-search-section"><div class="ea866-nav-label"><span>Customer Search</span></div><div class="ea866-nav-search"><input data-customer-search placeholder="Company, contact, email…" value="'+esc(runtime.customerQuery)+'"></div><div class="ea866-search-results">'+(runtime.customerQuery?companies.map(([name])=>'<div class="ea866-customer-result"><button type="button" data-ea866-customer="'+esc(name)+'">'+esc(name)+'</button><button type="button" class="ea866-pin-add" data-pin-add="'+esc(name)+'" title="Pin customer">'+(S.pins.includes(name)?'✓':'＋')+'</button></div>').join(''):'')+'</div></section>'+
  '<button type="button" class="ea866-compose-main" data-ea866-compose title="'+(canShared('reply')?'New Email':'Reply permission is required in this shared inbox')+'" '+(!canShared('reply')?'disabled':'')+'><b aria-hidden="true">✉</b><span class="ea876-compose-label"><span>New</span> <span>Email</span></span></button>'+
- '<section class="ea866-nav-section ea869-folders-section"><div class="ea866-nav-label"><span>Folders</span></div>'+topFolderHTML(c)+'</section>'+
+ '<section class="ea866-nav-section ea869-folders-section"><div class="ea866-nav-label"><span>Folders</span><button type="button" class="ea877-folder-add" data-ea866-new-folder aria-label="Create new folder" title="New folder" '+(!canShared('move')?'disabled':'')+'><span aria-hidden="true">+</span></button></div>'+topFolderHTML(c)+'</section>'+
  '<section class="ea866-nav-section"><div class="ea866-nav-label"><span>Pinned Customers</span><span>'+S.pins.length+'/5</span></div>'+S.pins.map(company=>'<div class="ea866-pin-item '+(sourceOn('customer',company)?'on':'')+'" draggable="true" data-pin-company="'+esc(company)+'" data-ea866-source="customer:'+esc(company)+'" title="'+esc(company)+'"><span class="ea866-pin-logo">'+companyLogo(company)+'</span><span class="ea866-pin-name">'+esc(company)+'</span><button type="button" class="ea866-pin-remove" data-unpin="'+esc(company)+'" aria-label="Unpin '+esc(company)+'">×</button></div>').join('')+(S.pins.length?'':'<div class="ea868-empty-pin">Pin up to five key customers.</div>')+'</section>'+
  '<section class="ea866-nav-section ea869-employee-section"><div class="ea866-nav-label"><button type="button" class="ea869-employee-toggle" data-employees-toggle><span>Pinned Employees</span><b>'+(S.employeesCollapsed?'▸':'▾')+'</b></button><span>'+empPins.length+'</span></div><div '+(S.employeesCollapsed?'hidden':'')+'>'+empPins.map(e=>'<div class="ea866-pin-item ea869-employee-item '+(sourceOn('employee',employeeKey(e))?'on':'')+'" draggable="true" data-pin-employee="'+esc(employeeKey(e))+'" data-ea866-source="employee:'+esc(employeeKey(e))+'" title="'+esc([e.name,e.title,e.company].filter(Boolean).join(' · '))+'"><span class="ea866-pin-logo ea869-employee-avatar">'+employeeAvatar(e)+'</span><span class="ea866-pin-name"><strong>'+esc(e.name||e.email)+'</strong><small>'+esc(e.title||e.company||'TCP employee')+'</small></span><button type="button" class="ea866-pin-remove" data-unpin-employee="'+esc(employeeKey(e))+'" aria-label="Unpin '+esc(e.name||e.email)+'">×</button></div>').join('')+'<button type="button" class="ea869-pin-employee" data-pin-employee-open>＋ Pin employee</button></div></section></div>';
  const status=col.querySelector('[data-search-status]');if(status)status.value=S.search.status||'any';restoreNav(col,keep);updateRailMode(col,renderRoot?(S.collapsed?92:S.widths.nav):col.clientWidth);watchRail();
@@ -91888,7 +92008,7 @@ function configureContext(){const follow=q867('.ea866-context-col .ea868-followu
 let observedRail=null,railResizeObserver=null;
 function updateRailMode(col,width){
  if(!col)return;const compact=!!S.collapsed||(Number(width)>0&&Number(width)<236);
- col.classList.toggle('ea876-compact',compact);col.dataset.railMode=compact?'compact':'expanded';
+ col.classList.toggle('ea876-compact',compact);col.classList.toggle('ea877-compact-roomy',compact&&Number(width)>=150);col.dataset.railMode=compact?'compact':'expanded';
  col.querySelectorAll('.ea866-folder-item[title]').forEach(row=>row.setAttribute('aria-label',row.title));
  const button=col.querySelector('[data-ea866-collapse]');
  if(button){const label=compact?'Expand mail folders':'Collapse mail folders';button.textContent=compact?'›':'‹';button.title=label;button.setAttribute('aria-label',label);button.setAttribute('aria-expanded',String(!compact));}
@@ -91995,8 +92115,9 @@ function searchNow(){runtime.checked.clear();S.source={type:'search',id:'global'
 function wire(){if(d.documentElement.dataset.ea869Wired)return;d.documentElement.dataset.ea869Wired='true';
  d.addEventListener('click',e=>{const target=e.target instanceof Element?e.target:e.target.parentElement;if(!target)return;const page=target.closest('.ea865-email-page'),aux=target.closest('#ea866-menu,#ea869-folder-menu,#ea866-folder-dialog,#ea866-label-dialog,#ea868-dialer,#ea869-employee-dialog');if(!page&&!aux){closeMenu();closeFolderMenu();return;}
  const source=target.closest('[data-ea866-source]');if(source&&!target.closest('[data-unpin],[data-unpin-employee],[data-ea866-folder-menu],[data-folder-toggle]')){const raw=source.dataset.ea866Source,i=raw.indexOf(':');setSource(raw.slice(0,i),raw.slice(i+1));return}
+ if(target.closest('[data-ea877-switch-inbox]')){openMailboxPicker();return;}
  if(target.closest('[data-ea866-collapse]')){const compact=target.closest('.ea866-folder-col')?.classList.contains('ea876-compact');S.collapsed=!compact;if(compact)S.widths.nav=Math.max(252,Number(S.widths.nav)||252);save();renderAll();return}
- if(target.closest('[data-ea866-new-folder]')){if(!canShared('move')){toast('Move / organize permission is required for folder changes in this shared inbox.');return}folderDialog('');return}
+ if(target.closest('[data-ea866-new-folder]')){if(!canShared('move')){toast('Move / organize permission is required for folder changes in this shared inbox.');return}runtime.folderParentHint='';folderDialog('');return}
  const tog=target.closest('[data-folder-toggle]');if(tog){const id=tog.dataset.folderToggle;S.folderOpen[id]=S.folderOpen[id]===false;save();renderNav();return}
  const fm=target.closest('[data-ea866-folder-menu]');if(fm){folderDialog(fm.dataset.ea866FolderMenu);return}
  if(target.closest('[data-ea866-compose]')){if(!canShared('reply')){toast('Reply permission is required to send from this shared inbox.');return}runtime.composeContextId='';runtime.composeRecipient=null;newEmail();return}
@@ -92028,7 +92149,7 @@ if(target.closest('[data-ea870-dialog-close]')){target.closest('dialog')?.close(
  if(target.closest('[data-folder-delete]')){deleteFolder();return}
  if(target.closest('[data-label-reset]')){saveLabels(true);return}
  },true);
- d.addEventListener('change',e=>{if(e.target.matches('[data-ea871-mailbox-switcher]')){switchMailbox(e.target.value);return}if(e.target.matches('[data-check-thread]')){e.target.checked?runtime.checked.add(e.target.dataset.checkThread):runtime.checked.delete(e.target.dataset.checkThread);renderBulk();return}if(e.target.matches('[data-bulk-move]')&&e.target.value){moveThreads([...runtime.checked],e.target.value);return}if(e.target.matches('[data-ea866-sort]')){S.sort=e.target.value;save();renderList();return}if(e.target.matches('[data-search-status]')){S.search.status=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-from]')){S.search.from=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-to]')){S.search.to=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-attachments]')){S.search.attachments=e.target.checked;save();searchNow();return}if(e.target.matches('[data-v860-recipient="to"],#ea756To')){const r=resolveComposeRecipient(e.target.value);runtime.composeContextId=r?.thread&&getThread(r.thread.id)?r.thread.id:'';runtime.composeRecipient=r;renderContext();return}});
+ d.addEventListener('change',e=>{if(e.target.matches('[data-check-thread]')){e.target.checked?runtime.checked.add(e.target.dataset.checkThread):runtime.checked.delete(e.target.dataset.checkThread);renderBulk();return}if(e.target.matches('[data-bulk-move]')&&e.target.value){moveThreads([...runtime.checked],e.target.value);return}if(e.target.matches('[data-ea866-sort]')){S.sort=e.target.value;save();renderList();return}if(e.target.matches('[data-search-status]')){S.search.status=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-from]')){S.search.from=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-to]')){S.search.to=e.target.value;save();searchNow();return}if(e.target.matches('[data-search-attachments]')){S.search.attachments=e.target.checked;save();searchNow();return}if(e.target.matches('[data-v860-recipient="to"],#ea756To')){const r=resolveComposeRecipient(e.target.value);runtime.composeContextId=r?.thread&&getThread(r.thread.id)?r.thread.id:'';runtime.composeRecipient=r;renderContext();return}});
  d.addEventListener('input',e=>{if(e.target.matches('[data-customer-search]')){runtime.customerQuery=e.target.value;renderNav();const el=q867('[data-customer-search]');if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length)}return}if(e.target.matches('[data-global-search]')){S.search.query=e.target.value;save();clearTimeout(runtime.searchTimer);runtime.searchTimer=setTimeout(searchNow,180);return}if(e.target.matches('[data-ea869-employee-search]')){renderEmployeePicker(e.target.value);return}if(e.target.matches('[data-v860-recipient="to"],#ea756To')){const r=resolveComposeRecipient(e.target.value);runtime.composeContextId=r?.thread&&getThread(r.thread.id)?r.thread.id:'';runtime.composeRecipient=r;renderContext();return}});
  d.addEventListener('keydown',e=>{const folder=e.target.closest?.('.ea866-folder-item[role=button]');if(folder&&e.target===folder&&(e.key==='Enter'||e.key===' ')){e.preventDefault();const raw=folder.dataset.ea866Source,i=raw.indexOf(':');setSource(raw.slice(0,i),raw.slice(i+1));return;}if(e.target.matches('[data-global-search]')&&e.key==='Enter'){e.preventDefault();searchNow()}const row=e.target.closest('.ea866-mail-row');if(row&&!e.target.matches('input,button,select')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openThread(row.dataset.thread)}});
  d.addEventListener('contextmenu',e=>{const folder=e.target.closest('[data-folder-token]');if(folder){e.preventDefault();openFolderMenu(folder.dataset.folderToken,e.clientX,e.clientY);return}const row=e.target.closest('.ea866-mail-row');if(row){e.preventDefault();openMenu(row.dataset.thread,e.clientX,e.clientY)}});
@@ -92054,6 +92175,7 @@ w._ea756Compose=newEmail;
 w.CONNECT_EMAIL_V869={renderPage,mount,hydrateHost,capture,takeDraft,enter,openThread,refresh:renderAll,state:()=>JSON.parse(JSON.stringify(S)),viewer:viewerRep,mailboxOwner:rep,switchMailbox,canShared,completeThread:function(id){if(id&&canShared('complete'))completeThreads([id])},keepThread:function(id){if(!id)return;const m=meta(id);m.completed=false;delete m.completedMessageId;save();renderAll()},setComposeRecipient:function(value){const r=resolveComposeRecipient(value);runtime.composeContextId=r?.thread&&getThread(r.thread.id)?r.thread.id:'';runtime.composeRecipient=r;renderContext()},diagnostics:()=>({version:'v871',owner:q867('.ea865-email-page')?.dataset.emailOwner,mailboxOwner:rep(),viewer:viewerRep(),shared:rep()!==viewerRep(),columns:q867('.ea865-mailgrid')?.children.length||0,selected:contextId(),observer:false}),reset:function(){localStorage.removeItem(settingsKey());S=def();runtime.checked.clear();renderAll();}};
 w.CONNECT_EMAIL_V868=w.CONNECT_EMAIL_V869;w.CONNECT_EMAIL_V867=w.CONNECT_EMAIL_V869;w.CONNECT_EMAIL_V866=w.CONNECT_EMAIL_V869;
 function boot(){wire();mount();w.CONNECT_DEMO_V789?.subscribe(scheduleDataRefresh);}
+w.addEventListener('resize',()=>{const picker=d.getElementById('ea877-mailbox-dialog');if(picker?.open)positionMailboxPicker(picker);});
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 w.addEventListener('connect-email-received',e=>{const t=getThread(e.detail?.threadId);if(t){const m=meta(t.id);m.read=false;m.readMessageId=lastIncomingId(t);m.completed=false;save();}scheduleDataRefresh();});
 d.addEventListener('email-workspace-rendered',e=>{if(e.target.closest?.('.ea866-email-col')){renderChain();scheduleDataRefresh();}});
@@ -92479,7 +92601,7 @@ function rulesPanel(){return '<section class="ea869-settings-section"><h3>Rules 
 function accessPanel(){const people=employees();return '<section class="ea869-settings-section"><h3>Access & Delegation</h3><p>See who can access your Email workspace and grant ongoing or temporary access deliberately.</p><div class="ea869-delegate-form"><label class="ea869-setting"><span>Employee '+h('Delegation is for internal TCP employees. Out-of-office coverage can be scheduled separately and expires automatically.')+'</span><select data-delegate-employee><option value="">Choose employee</option>'+people.map(e=>'<option value="'+esc(e.email||e.name)+'">'+esc(e.name||e.email)+'</option>').join('')+'</select></label><label class="ea869-setting"><span>Access level '+h('View can read only. Reply can respond. Full coverage adds Complete and Move/Organize. Send As should be granted only when appropriate.')+'</span><select data-delegate-level><option value="view">View</option><option value="reply">View + Reply</option><option value="coverage">Coverage</option><option value="send-as">Send As</option><option value="on-behalf">Send on Behalf</option></select></label><label class="ea869-setting"><span>Expires</span><input type="date" data-delegate-expiry></label><button type="button" class="primary" data-delegate-add>Add Access</button></div><div class="ea869-card-list" style="margin-top:14px">'+(draft.delegates.length?draft.delegates.map(x=>'<div class="ea869-record-card"><div><strong>'+esc(x.employee)+'</strong><span>'+esc(x.level)+(x.expires?' · Expires '+esc(x.expires):' · No expiration')+'</span></div><div class="ea869-record-actions"><button data-delegate-delete="'+esc(x.id)+'">Remove</button></div></div>').join(''):'<div class="ea869-empty-state">No additional ongoing access is configured.</div>')+'</div></section>'+demoControlsHTML()}
 function demoControlsHTML(){
  const enabled=!!w.CONNECT_EMAIL_SHARING_V871?.demoEnabled?.();
- return '<section class="ea875-demo-share ea876-demo-share" aria-label="Shared mailbox demo"><div><strong>Demo Controls</strong><small>Preview a shared inbox with synthetic messages. This does not grant access to anyone’s real email.</small></div><label class="ea875-demo-toggle" for="ea876-demo-shared"><input type="checkbox" id="ea876-demo-shared" data-ea876-demo-shared '+(enabled?'checked':'')+'>Enable Scott’s shared inbox</label><div class="ea875-demo-status" '+(!enabled?'hidden':'')+'><span><strong>Scott’s Inbox is enabled.</strong> Close settings and use Viewing Inbox above Email Search, or open it here.</span><button type="button" data-ea876-view-shared>View Scott’s Inbox</button></div><p class="ea876-demo-notice" role="status" aria-live="polite" hidden></p></section>';
+ return '<section class="ea875-demo-share ea876-demo-share" aria-label="Shared mailbox demo"><div><strong>Demo Controls</strong><small>Preview a shared inbox with synthetic messages. This does not grant access to anyone’s real email.</small></div><label class="ea875-demo-toggle" for="ea876-demo-shared"><input type="checkbox" id="ea876-demo-shared" data-ea876-demo-shared '+(enabled?'checked':'')+'>Enable Scott’s shared inbox</label><div class="ea875-demo-status" '+(!enabled?'hidden':'')+'><span><strong>Scott’s Inbox is enabled.</strong> Close settings and use the swap icon in the Mail header, or open it here.</span><button type="button" data-ea876-view-shared>View Scott’s Inbox</button></div><p class="ea876-demo-notice" role="status" aria-live="polite" hidden></p></section>';
 }
 function renderDemoStatus(message){
  const dlg=d.getElementById('ea869-control');if(!dlg)return;
@@ -92608,13 +92730,6 @@ function available(){const keys=viewerKeys(),now=Date.now(),by=new Map();loadReg
 function shareForOwner(owner){return available().find(x=>norm(x.owner)===norm(owner))||null}
 function canViewOwner(owner){return norm(owner)===norm(viewer())||!!shareForOwner(owner)}
 function labelPerms(p){const map={view:'View',reply:'Reply',complete:'Complete',move:'Move / organize',send:'Send as'};return(p||[]).map(x=>map[x]||x).join(' · ')}
-function selectorHTML(){
- const list=available();if(!list.length)return'';
- const active=w.CONNECT_EMAIL_ACTIVE_MAILBOX_OWNER||viewer(),share=shareForOwner(active);
- const initials=clean(active).split(/\s+/).map(n=>n[0]).slice(0,2).join('').toUpperCase();
- const label=share?share.owner+"’s Inbox":'My Inbox';
- return '<section class="ea871-mailbox-switcher" title="'+esc(label)+'"><label><span class="ea876-mailbox-label">Viewing Inbox</span><span class="ea876-mailbox-short" aria-hidden="true">'+esc(initials)+'<b>⌄</b></span><select data-ea871-mailbox-switcher aria-label="Viewing inbox"><option value="'+esc(viewer())+'" '+(!share?'selected':'')+'>My Inbox</option>'+list.map(x=>'<option value="'+esc(x.owner)+'" '+(norm(active)===norm(x.owner)?'selected':'')+'>'+esc(x.owner)+'’s Inbox</option>').join('')+'</select><small>'+(share?'Shared by '+esc(share.owner)+' · '+esc(labelPerms(share.permissions)):'Your mailbox')+'</small></label></section>';
-}
 const DEMO_ID='demo-v875-shared',DEMO_OWNER='Scott';
 const legacyDemoIds=['demo-v872-shared','demo-v873-shared','demo-v874-shared',DEMO_ID];
 let demoPersistence={persisted:true};
@@ -92635,7 +92750,7 @@ async function setDemoEnabled(on){
  w.dispatchEvent(new CustomEvent('connect-email-demo-share-changed',{detail:{enabled:demoEnabled(),owner:DEMO_OWNER,persisted:demoPersistence.persisted}}));
  return{ok:demoEnabled()===on,enabled:demoEnabled(),persisted:demoPersistence.persisted,message:demoPersistence.persisted?'':'This change applies only to this session. Browser storage is full or unavailable, so it may not survive closing the page.'};
 }
-const sharing={syncOwner,available,shareForOwner,canViewOwner,selectorHTML,permissions:owner=>shareForOwner(owner)?.permissions||[],demoEnabled,setDemoEnabled,demoStatus:()=>({...demoPersistence,enabled:demoEnabled()})};
+const sharing={syncOwner,available,shareForOwner,canViewOwner,permissions:owner=>shareForOwner(owner)?.permissions||[],demoEnabled,setDemoEnabled,demoStatus:()=>({...demoPersistence,enabled:demoEnabled()})};
 w.CONNECT_EMAIL_SHARING_V871=sharing;
 try{if(localStorage.getItem('tcp.connect.email.v875.demoSharedMailbox')==='1'&&!demoEnabled())setDemoEnabled(true)}catch(_){}
 try{const st=w.CONNECT_EMAIL_FINAL_V869?.settings?.();if(st)syncOwner(viewer(),st)}catch(_){}
@@ -92649,7 +92764,7 @@ if(Editor&&!Editor.prototype.__v871AiPatched){Editor.prototype.__v871AiPatched=t
 
 // Escape closes settings help; clicking a help button remains keyboard-native.
 d.addEventListener('keydown',e=>{if(e.key==='Escape'){const p=d.querySelector('.ea869-help-popover');if(p){p.remove();e.stopPropagation()}}},true);
-// Shared inbox selector is injected and handled by the four-column renderer.
+// The header switcher is rendered and handled by the four-column renderer.
 // Refresh after this late audit layer initializes so Email reflects sharing and permissions immediately.
 requestAnimationFrame(()=>{try{w.CONNECT_EMAIL_V869?.refresh?.()}catch(_){}});
 w.CONNECT_EMAIL_AUDIT_V871={sharing,version:'V871'};
@@ -92722,5 +92837,6 @@ html body>dialog.ea869-control .ea875-demo-status[hidden]{display:none!important
   ],
   "productionAccessChanged": false
 }</script>
+<script type="application/json" id="connect-v877-change-log">{"version": "V877", "base": "V876", "scope": "Change 44 and compact rail occupancy", "changes": ["Mailbox swap icon in Mail header opens a staged selection popover; only Save switches using the existing mailbox transaction", "Cancel, outside click and Escape dismiss without switching", "Active mailbox subtitle replaces the large Viewing Inbox block", "Create-folder plus beside Folders heading reuses the existing dialog and permissions", "Compact rows and New Email fill available width; larger consistent icon/count targets when the rail is drag-narrowed", "Obsolete immediate-switch dropdown renderer, handler, and collapsed dropdown styling removed"], "unchanged": ["Shared-mailbox registry, grants, demo enable/disable and mailbox data isolation", "My Day", "Crown Bot", "Email reading and composing functionality"]}</script>
 </body>
 </html>
