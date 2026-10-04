@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v877-mail-navigation">
+<html lang="en" class="connect-alex-standalone connect-srep-prep" data-connect-ui="777" data-connect-layout="778" data-rp-theme="light" data-connect-release="v878-call-workspace">
 <head>
 <style id="connect-v876-mail-rail-css">
 /* V877: one mail-rail layout and a staged header mailbox switcher. This earliest layer overrides legacy important
@@ -1995,11 +1995,11 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 </style>
 <!-- Connect v622: dashboard explainability layer + readable coaching metric provenance; retains v620 integrity and v621 readability -->
 <!-- v617 second sweep: removed unused globals/theme tokens after v616 cleanup; preserved v614 durable autosave + v615 full-state safety. -->
-<title>Connect V877 — Mail Navigation</title>
+<title>Connect V878 — Call Workspace</title>
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v877',display:'V877',title:'Connect V877 — Mail Navigation'});
+  var release=Object.freeze({version:'v878',display:'V878',title:'Connect V878 — Call Workspace'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -92838,5 +92838,143 @@ html body>dialog.ea869-control .ea875-demo-status[hidden]{display:none!important
   "productionAccessChanged": false
 }</script>
 <script type="application/json" id="connect-v877-change-log">{"version": "V877", "base": "V876", "scope": "Change 44 and compact rail occupancy", "changes": ["Mailbox swap icon in Mail header opens a staged selection popover; only Save switches using the existing mailbox transaction", "Cancel, outside click and Escape dismiss without switching", "Active mailbox subtitle replaces the large Viewing Inbox block", "Create-folder plus beside Folders heading reuses the existing dialog and permissions", "Compact rows and New Email fill available width; larger consistent icon/count targets when the rail is drag-narrowed", "Obsolete immediate-switch dropdown renderer, handler, and collapsed dropdown styling removed"], "unchanged": ["Shared-mailbox registry, grants, demo enable/disable and mailbox data isolation", "My Day", "Crown Bot", "Email reading and composing functionality"]}</script>
+
+<style id="connect-v878-call-workspace-css">
+@layer connect-v854 {
+
+/* V878 · Call Workspace facelift. Scoped only to the Call Hub (.c656.c792). */
+html[data-connect-ui="777"] #rp-overlay .c656.c792.c878-upgraded{
+  --c878-navy:#174a5a;--c878-teal:#087fa4;--c878-teal-dark:#05678a;--c878-ink:#153b53;
+  --c878-muted:#5b7485;--c878-line:#cddfe8;--c878-soft:#eef5f7;--c878-blue-soft:#e7f3f8;
+  gap:14px!important;padding:18px 20px 42px!important;background:#edf3f5!important;
+}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-hero{
+  display:grid!important;grid-template-columns:minmax(280px,1fr) minmax(520px,1.35fr)!important;
+  gap:18px 26px!important;padding:22px 24px 16px!important;border:1px solid #0d5c70!important;
+  border-radius:16px!important;background:linear-gradient(135deg,#174a5a 0%,#164f61 62%,#11647a 100%)!important;
+  box-shadow:0 12px 28px rgba(23,74,90,.16)!important;color:#fff!important;
+}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-title{font:750 28px/1.15 'Segoe UI',Arial,sans-serif!important;color:#fff!important;letter-spacing:-.45px!important;margin:0 0 5px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-copy{font-size:13px!important;line-height:1.55!important;color:#d6e9ef!important;margin:0!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-hero :is(.c656-copy,.c656-title) *{color:inherit!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-hero-metrics{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important;min-width:0!important;align-self:stretch!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-metric{min-width:0!important;padding:11px 12px!important;border:1px solid rgba(255,255,255,.24)!important;border-radius:10px!important;background:rgba(255,255,255,.085)!important;box-shadow:none!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-metric span{font-size:9px!important;font-weight:800!important;letter-spacing:.07em!important;text-transform:uppercase!important;color:#cde3ea!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-metric strong{font-size:25px!important;line-height:1.1!important;color:#fff!important;margin-top:2px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-metric small{font-size:10px!important;line-height:1.35!important;color:#d3e5eb!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-cycle{grid-column:1/-1!important;display:grid!important;grid-template-columns:auto minmax(180px,1fr) auto!important;align-items:center!important;gap:12px 16px!important;padding:13px 0 0!important;border-top:1px solid rgba(255,255,255,.2)!important;color:#d4e7ed!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-cycle>div:first-child{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:wrap!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-cycle strong{color:#fff!important;font-size:11px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-cycle span{color:#c7dde4!important;font-size:10.5px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-progress{height:7px!important;max-width:none!important;border-radius:999px!important;background:rgba(255,255,255,.2)!important;overflow:hidden!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-progress i{background:#62c2de!important;border-radius:999px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tabs{
+  display:flex!important;gap:6px!important;min-height:0!important;margin:0!important;padding:5px!important;border:1px solid #c9dce5!important;border-radius:12px!important;background:#fff!important;box-shadow:0 4px 14px rgba(21,59,83,.06)!important;
+}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tab{min-height:38px!important;padding:8px 14px!important;border:1px solid transparent!important;border-radius:8px!important;background:transparent!important;color:#365b70!important;font-size:12px!important;font-weight:700!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tab:hover{background:#eef6f9!important;color:#087fa4!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tab.on{background:#087fa4!important;border-color:#087fa4!important;color:#fff!important;box-shadow:0 2px 6px rgba(8,127,164,.18)!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tab em{display:inline-grid!important;place-items:center!important;min-width:19px!important;height:19px!important;padding:0 5px!important;margin-left:5px!important;border-radius:999px!important;background:#edf4f6!important;color:#45677a!important;font-size:9px!important;font-style:normal!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tab.on em{background:#fff!important;color:#087fa4!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-panel{margin:0!important;border:1px solid #c8dce5!important;border-radius:15px!important;background:#fff!important;box-shadow:0 8px 24px rgba(21,59,83,.07)!important;overflow:hidden!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-panel-head{padding:16px 18px 12px!important;border-bottom:0!important;background:#fff!important;align-items:center!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-panel-head h2{font-size:21px!important;line-height:1.25!important;color:#153b53!important;margin:0 0 3px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-panel-head p{font-size:12px!important;color:#607989!important;margin:0!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-next{min-width:175px!important;min-height:42px!important;border-radius:8px!important;background:#087fa4!important;border-color:#087fa4!important;color:#fff!important;font-size:12px!important;box-shadow:0 3px 8px rgba(8,127,164,.18)!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-next:hover{background:#05678a!important;border-color:#05678a!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-toolbar{padding:0 18px 10px!important;border:0!important;background:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tools{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:wrap!important;width:100%!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-search,html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-select{min-height:38px!important;border:1px solid #bfd4df!important;border-radius:8px!important;background:#fff!important;color:#234a61!important;font-size:12px!important;padding:8px 10px!important;box-shadow:none!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-search{width:300px!important;max-width:360px!important;flex:1 1 260px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-select{flex:0 0 auto!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-filterbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:0 18px 12px;background:#fff;border-bottom:1px solid #dce8ee;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-filterbar>span{margin-right:2px;color:#60798a;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-filter{min-height:30px;padding:5px 10px;border:1px solid #c2d7e1;border-radius:999px;background:#fff;color:#3a6176;font:700 11px/1.3 'Segoe UI',Arial,sans-serif;cursor:pointer;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-filter:hover{background:#edf6f9;border-color:#8bbdcd;color:#087fa4;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-filter.on{background:#087fa4;border-color:#087fa4;color:#fff;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-modebar{padding:8px 18px!important;border:0!important;border-bottom:1px solid #dce8ee!important;background:#f5f9fb!important;color:#60798a!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-help summary{color:#087fa4!important;font-weight:700!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-table-scroll{max-height:calc(100dvh - 430px)!important;min-height:350px!important;overflow:auto!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-table{width:100%!important;min-width:980px!important;background:#fff!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-table-head{position:sticky!important;top:0!important;z-index:4!important;box-shadow:0 1px 0 #d4e3ea!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-th{min-height:40px!important;padding:11px 14px!important;background:#eaf2f5!important;color:#47677a!important;font-size:9.5px!important;font-weight:800!important;letter-spacing:.07em!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-row{position:relative!important;min-height:78px!important;background:#fff!important;border-bottom:1px solid #e3edf2!important;transition:background .14s ease,box-shadow .14s ease!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-row:nth-of-type(even){background:#f8fbfc!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-row:hover{background:#eef7fa!important;box-shadow:inset 3px 0 #66b9cd!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-row.c878-callable{box-shadow:inset 3px 0 #4fa78f!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-row.c878-later{box-shadow:inset 3px 0 #c6a06c!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-cell{padding:12px 14px!important;font-size:12px!important;color:#35596e!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-company-btn{font-size:14px!important;font-weight:750!important;color:#153b53!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-contact{font-size:11.5px!important;color:#6a8190!important;margin-top:3px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-why{display:block;margin-top:5px;color:#627b8b;font-size:10px;line-height:1.35;white-space:normal;overflow-wrap:anywhere;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-why strong{color:#3a6175;font-weight:800;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-local-clock{gap:3px!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-local-clock strong{font-size:12.5px!important;color:#244e64!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-local-clock span{font-size:9px!important;color:#758b98!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-window{display:inline-flex;align-items:center;width:max-content;margin-top:5px;padding:3px 7px;border:1px solid #d1e2e9;border-radius:999px;background:#f4f8fa;color:#587384;font-size:9px;font-weight:800;line-height:1.2;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-callable .c878-window{border-color:#b8dccf;background:#edf8f4;color:#267157;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-later .c878-window{border-color:#e7d2b9;background:#fff7ec;color:#966329;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-level{min-width:0!important;min-height:26px!important;padding:4px 9px!important;border-radius:999px!important;font-size:10px!important;border:1px solid #c7dce4!important;background:#eef5f7!important;color:#466778!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-level.c878-tier-gold{background:#fff6dc!important;border-color:#ead28b!important;color:#87641d!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-level.c878-tier-silver{background:#f1f5f7!important;border-color:#cbd9df!important;color:#526a78!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-level.c878-tier-platinum,html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-level.c878-tier-diamond{background:#e8f5f7!important;border-color:#9cccd5!important;color:#12677c!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-money{font-size:12.5px!important;font-weight:800!important;color:#183f55!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-date{color:#5e7787!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-call{min-width:118px!important;min-height:38px!important;border-radius:8px!important;background:#087fa4!important;border:1px solid #087fa4!important;color:#fff!important;font-size:11.5px!important;font-weight:750!important;box-shadow:none!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-row:not(.c878-next-row) .c656-call{background:#fff!important;color:#087fa4!important;border-color:#91c2d1!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-row:not(.c878-next-row) .c656-call:hover{background:#eaf6fa!important;border-color:#087fa4!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-next-row .c656-call{box-shadow:0 3px 8px rgba(8,127,164,.18)!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-group-title{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px;padding:8px 14px;background:#f1f6f8;border-bottom:1px solid #dce8ee;color:#31596e;font-size:10px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-group-title small{font-size:9.5px;font-weight:650;letter-spacing:0;text-transform:none;color:#6e8492;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c878-hidden{display:none!important;}
+html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-pager{padding:11px 18px!important;border-top:1px solid #dce8ee!important;background:#f8fbfc!important;color:#60798a!important;}
+@media(max-width:1100px){
+ html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-hero{grid-template-columns:1fr!important;}
+ html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-hero-metrics{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+}
+@media(max-width:760px){
+ html[data-connect-ui="777"] #rp-overlay .c656.c792.c878-upgraded{padding:12px!important;}
+ html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-hero-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+ html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c792-cycle{grid-template-columns:1fr!important;}
+ html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tabs{flex-wrap:wrap!important;}
+ html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-tab{flex:1 1 42%!important;}
+ html[data-connect-ui="777"] #rp-overlay .c878-upgraded .c656-search{max-width:none!important;width:100%!important;flex-basis:100%!important;}
+}
+
+}
+</style>
+<script id="connect-v878-call-workspace-js">
+(function(){
+ 'use strict';
+ var FILTER_KEY='tcp.callWorkspace.v878.quickFilter',filter='all',scheduled=false;
+ try{filter=sessionStorage.getItem(FILTER_KEY)||'all'}catch(_){filter='all'}
+ function q(root,sel){return (root||document).querySelector(sel)}
+ function qa(root,sel){return Array.prototype.slice.call((root||document).querySelectorAll(sel))}
+ function clean(v){return String(v==null?'':v).trim()}
+ function norm(v){return clean(v).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+ function countValue(metric){var s=metric&&q(metric,'strong');return s?Number(clean(s.textContent).replace(/[^0-9.-]/g,''))||0:0}
+ function todayReasons(){var map={};try{var api=window.TCP_PHASED_CALL_HUB_V663;if(!api||!api.todayState)return map;var ts=api.todayState(api.desktop&&api.desktop(),api.pace&&api.pace());(ts&&ts.items||[]).forEach(function(x){var name=clean(x&&x.company||x&&x.customer);if(!name)return;map[norm(name)]={reason:clean(x.reason||x.detail||'Account update due today'),follow:!!(x.callAttemptAt&&!x.emailAt),priority:/priority|urgent|vip|loyalty/i.test(clean(x.reason||x.detail||''))}})}catch(_){}return map}
+ function tierClass(el){var t=norm(el.textContent);['gold','silver','platinum','diamond'].forEach(function(k){el.classList.toggle('c878-tier-'+k,t.indexOf(k)>=0)})}
+ function isCallable(row){var l=q(row,'.c656-local');return !!l&&!l.classList.contains('after-hours')&&!l.classList.contains('too-early')&&!l.classList.contains('unknown')}
+ function isLater(row){return !isCallable(row)}
+ function isPriority(row){var tier=norm((q(row,'.c656-level')||{}).textContent||''),why=norm((q(row,'.c878-why')||{}).textContent||'');return /gold|platinum|diamond/.test(tier)||/priority|urgent|vip/.test(why)}
+ function isFollow(row){return row.dataset.c878Follow==='1'}
+ function match(row){if(filter==='callable')return isCallable(row);if(filter==='later')return isLater(row);if(filter==='priority')return isPriority(row);if(filter==='follow')return isFollow(row);return true}
+ function addFilterbar(root){var panel=q(root,'.c656-panel'),toolbar=q(panel,'.c792-toolbar');if(!panel||!toolbar||q(panel,'.c878-filterbar'))return;var bar=document.createElement('div');bar.className='c878-filterbar';bar.innerHTML='<span>Quick filters</span>'+[
+  ['all','All'],['callable','Call Now'],['priority','Priority'],['follow','Follow-Up Due'],['later','After Hours']
+ ].map(function(x){return '<button type="button" class="c878-filter'+(filter===x[0]?' on':'')+'" data-c878-filter="'+x[0]+'">'+x[1]+'</button>'}).join('');toolbar.insertAdjacentElement('afterend',bar)}
+ function addMetric(root){var metrics=q(root,'.c656-hero-metrics');if(!metrics||q(metrics,'.c878-pace-metric'))return;var cards=qa(metrics,'.c656-metric'),target=countValue(cards[0]),done=countValue(cards[1]),pct=target?Math.min(100,Math.round(done/target*100)):0,m=document.createElement('div');m.className='c656-metric c878-pace-metric';m.innerHTML='<span>Daily Pace</span><strong>'+pct+'%</strong><small>'+done+' of '+target+' completed</small>';metrics.appendChild(m)}
+ function enhanceRows(root){var panel=q(root,'.c656-panel'),title=q(panel,'.c656-panel-head h2');if(!panel||!title)return;var isToday=/today/i.test(title.textContent||''),reasons=isToday?todayReasons():{},rows=qa(panel,'.c656-row');rows.forEach(function(row,i){row.classList.remove('c878-callable','c878-later','c878-next-row','c878-hidden');row.classList.add(isCallable(row)?'c878-callable':'c878-later');if(i===0)row.classList.add('c878-next-row');var level=q(row,'.c656-level');if(level)tierClass(level);var local=q(row,'.c656-local');if(local&&!q(local,'.c878-window')){var badge=document.createElement('small');badge.className='c878-window';badge.textContent=isCallable(row)?'Call now':'Next window · 8:00 AM local';local.appendChild(badge)}var company=clean((q(row,'.c656-company-btn')||{}).textContent||''),meta=reasons[norm(company)];if(meta){row.dataset.c878Follow=meta.follow?'1':'0';var cell=q(row,'.c658-companycell');if(cell&&!q(cell,'.c878-why')){var why=document.createElement('div');why.className='c878-why';why.innerHTML='<strong>Why today:</strong> '+meta.reason.replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c]});cell.appendChild(why)}}else row.dataset.c878Follow='0';row.classList.toggle('c878-hidden',!match(row))});if(isToday)groupRows(panel,rows)}
+ function groupRows(panel,rows){var table=q(panel,'.c656-table');if(!table)return;qa(table,'.c878-group-title').forEach(function(x){x.remove()});var visible=rows.filter(function(r){return !r.classList.contains('c878-hidden')}),available=visible.filter(isCallable),later=visible.filter(isLater),groups=[];if(filter==='priority'||filter==='follow'){groups.push([filter==='priority'?'Priority':'Follow-Up Due',visible,'Filtered from today’s assigned calls'])}else{if(available.length)groups.push(['Available Now',available,'Inside customer business hours']);if(later.length)groups.push(['Later / After Hours',later,'Next call window begins at 8:00 AM local'])}var head=q(table,'.c792-table-head'),anchor=head;groups.forEach(function(g){var label=document.createElement('div');label.className='c878-group-title';label.innerHTML='<span>'+g[0]+' · '+g[1].length+'</span><small>'+g[2]+'</small>';anchor.insertAdjacentElement('afterend',label);anchor=label;g[1].forEach(function(r){anchor.insertAdjacentElement('afterend',r);anchor=r})});var mode=q(panel,'.c656-modebar>span');if(mode)mode.textContent=visible.length+' customers in this view'}
+ function enhance(){scheduled=false;var root=q(document,'#rp-overlay .c656.c792');if(!root)return;root.classList.add('c878-upgraded');var copy=q(root,'.c656-copy');if(copy)copy.textContent='Your outbound calling plan for today.';addMetric(root);addFilterbar(root);enhanceRows(root)}
+ function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(enhance)}
+ document.addEventListener('click',function(e){var b=e.target.closest('[data-c878-filter]');if(!b)return;filter=b.getAttribute('data-c878-filter')||'all';try{sessionStorage.setItem(FILTER_KEY,filter)}catch(_){}var root=b.closest('.c656.c792');qa(root,'.c878-filter').forEach(function(x){x.classList.toggle('on',x===b)});enhanceRows(root)},true);
+ var obs=new MutationObserver(function(muts){for(var i=0;i<muts.length;i++){var r=muts[i],nodes=Array.prototype.slice.call(r.addedNodes||[]);for(var j=0;j<nodes.length;j++){var n=nodes[j];if(n&&n.nodeType===1&&((n.matches&&n.matches('.c656.c792'))||(n.querySelector&&n.querySelector('.c656.c792')))){schedule();return}}}});
+ function boot(){var host=q(document,'#rp-overlay')||document.body;obs.observe(host,{childList:true,subtree:true});schedule();window.addEventListener('resize',schedule,{passive:true})}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+ window.CONNECT_CALL_V878={refresh:enhance,filter:function(v){filter=v||'all';enhance()},version:'v878'};
+})();
+</script>
+<script type="application/json" id="connect-v878-change-log">{"version": "V878", "base": "V877", "scope": "Call Workspace facelift", "changes": ["Dark-teal Call Workspace command header with integrated KPI treatment and Daily Pace", "Refined segmented navigation aligned to My Day and Email", "Cleaner Today\u2019s Calls toolbar and quick filters", "Sticky table header, stronger row hierarchy, call-window treatment and loyalty badges", "Available Now vs Later / After Hours grouping for Today\u2019s Calls", "Why today context surfaced from the existing assigned-call reason", "Prepare Call emphasis reduced on non-next rows while Prepare Next Call stays primary"], "unchanged": ["Call Workspace data and completion logic", "My Day", "Email", "Crown Bot sizing and behavior"]}</script>
 </body>
 </html>
