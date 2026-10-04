@@ -1887,11 +1887,11 @@ html.connect-srep-prep #rp-overlay{visibility:hidden!important;}
 </style>
 <!-- Connect v622: dashboard explainability layer + readable coaching metric provenance; retains v620 integrity and v621 readability -->
 <!-- v617 second sweep: removed unused globals/theme tokens after v616 cleanup; preserved v614 durable autosave + v615 full-state safety. -->
-<title>Connect V873 - Email Stable Settings Repair</title>
+<title>Connect V874 - Shared Mailbox Demo Fix</title>
 <script id="connect-build-authority-v723">(function(){
   'use strict';
   // V812: one release identity. Legacy modules delegate here instead of competing.
-  var release=Object.freeze({version:'v873',display:'V873',title:'Connect V873 - Email Stable Settings Repair'});
+  var release=Object.freeze({version:'v874',display:'V874',title:'Connect V874 - Shared Mailbox Demo Fix'});
   window.CONNECT_RELEASE=release;
   window.CONNECT_SET_RELEASE_ATTR=function(target,name){
     if(target&&target.getAttribute(name)!==release.version)target.setAttribute(name,release.version);
@@ -92563,5 +92563,81 @@ w.CONNECT_EMAIL_SETTINGS_V873={setDemo,enabled,mountDemo};
 })(window,document);
 </script>
 <script type="application/json" id="connect-v873-change-log">{"version":"V873","base":"V871","scope":"Repair malformed V872 insertion, restore approved settings polish, and normalize Crown Bot sizing","changes":["Downloads & Exports uses normal Connect-sized checkboxes and tighter layout","Out of Office coverage permissions use consistent normal-sized checkboxes including Move / Organize","Access & Delegation includes a demo-only Scott shared-inbox toggle","Removed Email-only Crown Bot scale so mascot and chat panel use the same component size as the rest of Connect"]}</script>
+
+<style id="connect-v874-shared-mailbox-demo-fix-css">
+.ea874-demo-status{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;margin-top:8px!important;color:#557482!important;font:600 11px/1.4 'Segoe UI',Arial,sans-serif!important}
+.ea874-demo-status strong{display:inline!important;color:#187653!important;font-size:11px!important}
+.ea874-demo-status button{min-height:30px!important;padding:6px 9px!important;border:1px solid #9ec6d2!important;border-radius:7px!important;background:#fff!important;color:#087b89!important;font:750 11px/1.2 'Segoe UI',Arial,sans-serif!important;cursor:pointer!important}
+.ea874-demo-status[hidden]{display:none!important}
+</style>
+<script id="connect-v874-shared-mailbox-demo-fix-js">
+(function(w,d){
+'use strict';
+if(w.CONNECT_EMAIL_DEMO_SHARE_V874)return;
+const KEY='tcp.connect.email.v874.demoSharedMailbox';
+const OLD_KEYS=['tcp.connect.email.v873.demoSharedMailbox','tcp.connect.email.v872.demoSharedMailbox'];
+const OWNER='Scott';
+const clean=v=>String(v==null?'':v).trim();
+const norm=v=>clean(v).toLowerCase();
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const viewer=()=>w._rp2?.rep||'Alex Morgan';
+function enabled(){try{return localStorage.getItem(KEY)==='1'}catch(_){return false}}
+function setStored(on){try{localStorage.setItem(KEY,on?'1':'0');OLD_KEYS.forEach(k=>localStorage.removeItem(k))}catch(_){}}
+function demoShare(){return{owner:OWNER,permissions:['view','reply','complete','move','send'],sources:['demo']}}
+function labelPerms(p){const map={view:'View',reply:'Reply',complete:'Complete',move:'Move / organize',send:'Send as'};return(p||[]).map(x=>map[x]||x).join(' · ')}
+function installSharingPatch(){
+ const api=w.CONNECT_EMAIL_SHARING_V871;if(!api||api.__v874Patched)return !!api;
+ const originalAvailable=typeof api.available==='function'?api.available.bind(api):()=>[];
+ const originalShare=typeof api.shareForOwner==='function'?api.shareForOwner.bind(api):()=>null;
+ function available(){
+   const list=[];const seen=new Set();
+   [...(originalAvailable()||[]),...(enabled()?[demoShare()]:[])].forEach(x=>{const k=norm(x&&x.owner);if(!k||k===norm(viewer())||seen.has(k))return;seen.add(k);list.push(x)});
+   return list.sort((a,b)=>clean(a.owner).localeCompare(clean(b.owner)));
+ }
+ function shareForOwner(owner){if(enabled()&&norm(owner)===norm(OWNER))return demoShare();return originalShare(owner)}
+ function canViewOwner(owner){return norm(owner)===norm(viewer())||!!shareForOwner(owner)}
+ function selectorHTML(){
+   const list=available();if(!list.length)return'';
+   const active=w.CONNECT_EMAIL_ACTIVE_MAILBOX_OWNER||viewer(),share=shareForOwner(active);
+   return '<section class="ea871-mailbox-switcher"><label><span>Viewing Inbox</span><select data-ea871-mailbox-switcher><option value="'+esc(viewer())+'">My Inbox</option>'+list.map(x=>'<option value="'+esc(x.owner)+'" '+(norm(active)===norm(x.owner)?'selected':'')+'>'+esc(x.owner)+'’s Inbox</option>').join('')+'</select>'+(share?'<small>Shared by '+esc(share.owner)+' · '+esc(labelPerms(share.permissions))+'</small>':'<small>Your mailbox</small>')+'</label></section>';
+ }
+ api.available=available;api.shareForOwner=shareForOwner;api.canViewOwner=canViewOwner;api.selectorHTML=selectorHTML;api.permissions=owner=>shareForOwner(owner)?.permissions||[];api.__v874Patched=true;
+ return true;
+}
+function refreshEmail(){try{w.CONNECT_EMAIL_V869?.refresh?.()}catch(_){}try{w.CONNECT_EMAIL_V871?.refresh?.()}catch(_){} }
+function setDemo(on){
+ setStored(!!on);installSharingPatch();
+ if(!on&&norm(w.CONNECT_EMAIL_ACTIVE_MAILBOX_OWNER)===norm(OWNER)){try{w.CONNECT_EMAIL_V869?.switchMailbox?.(viewer())}catch(_){}}
+ refreshEmail();syncDemoUI();
+}
+function syncDemoUI(){
+ const dlg=d.getElementById('ea869-control');if(!dlg?.open)return;
+ const input=dlg.querySelector('[data-ea873-demo-shared]');if(input&&input.checked!==enabled())input.checked=enabled();
+ const box=input?.closest('.ea873-demo-shared');if(!box)return;
+ let status=box.querySelector('.ea874-demo-status');
+ if(!status){status=d.createElement('div');status.className='ea874-demo-status';status.innerHTML='<span><strong>Scott’s shared inbox is enabled.</strong> Close settings to use the selector above Email Search.</span><button type="button" data-ea874-view-scott>View Scott’s Inbox</button>';box.append(status)}
+ status.hidden=!enabled();
+}
+function activateScott(){
+ if(!enabled())setDemo(true);installSharingPatch();
+ try{w.CONNECT_EMAIL_V869?.switchMailbox?.(OWNER)}catch(_){refreshEmail()}
+ const dlg=d.getElementById('ea869-control');try{dlg?.close()}catch(_){}
+}
+// Delegated capture handler survives Control Center re-renders and does not depend on the original anonymous listener.
+d.addEventListener('change',e=>{const el=e.target;if(el&&el.matches?.('[data-ea873-demo-shared]')){e.stopPropagation();setDemo(el.checked)}},true);
+d.addEventListener('click',e=>{const b=e.target.closest?.('[data-ea874-view-scott]');if(!b)return;e.preventDefault();activateScott()},true);
+const obs=new MutationObserver(()=>{installSharingPatch();syncDemoUI()});
+function start(){
+ installSharingPatch();
+ const dlg=d.getElementById('ea869-control');if(dlg&&!dlg.__v874Observed){dlg.__v874Observed=true;obs.observe(dlg,{subtree:true,childList:true,attributes:true,attributeFilter:['class','open']})}
+ syncDemoUI();
+ if(!w.CONNECT_EMAIL_SHARING_V871)setTimeout(start,200);
+}
+start();
+if(enabled()){installSharingPatch();requestAnimationFrame(refreshEmail)}
+w.CONNECT_EMAIL_DEMO_SHARE_V874={setDemo,enabled,activateScott,refresh:()=>{installSharingPatch();refreshEmail();syncDemoUI()}};
+})(window,document);
+</script>
+<script type="application/json" id="connect-v874-change-log">{"version":"V874","base":"V873","scope":"Repair demo shared-mailbox toggle","changes":["Shared mailbox demo toggle is wired through delegated events so it survives settings re-renders","Sharing API now exposes Scott immediately when the demo toggle is enabled","Mailbox selector refreshes above Email Search","Turning the demo off removes Scott and returns an active Scott mailbox to My Inbox","Enabled state displays a View Scott's Inbox shortcut in Access & Delegation"]}</script>
 </body>
 </html>
